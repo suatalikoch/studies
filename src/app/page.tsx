@@ -1,102 +1,136 @@
+"use client";
+
+import Testimonials from "@/components/ui/testimonials";
+import { FileText, Clock, CheckSquare, BookOpen } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
-export default function Home() {
+const features = [
+  {
+    Icon: FileText,
+    title: "Organize Notes",
+    desc: "Keep all your lecture notes in one place with easy access and search.",
+    color: "text-blue-600",
+  },
+  {
+    Icon: BookOpen,
+    title: "Track Assignments",
+    desc: "Never miss a deadline again with smart reminders and priority tags.",
+    color: "text-orange-600",
+  },
+  {
+    Icon: CheckSquare,
+    title: "Manage Tasks",
+    desc: "Plan, complete, and review your daily tasks efficiently.",
+    color: "text-green-600",
+  },
+  {
+    Icon: Clock,
+    title: "Track Study Time",
+    desc: "Monitor how much time you spend studying to improve productivity.",
+    color: "text-purple-600",
+  },
+];
+
+export default function HomePage() {
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+    <div className="min-h-screen flex flex-col bg-gray-50">
+      {/* Hero Section */}
+      <header
+        className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white"
+        role="banner"
+      >
+        {/* Decorative shapes */}
+        <div aria-hidden="true" className="absolute inset-0 overflow-hidden">
+          <div className="absolute -top-20 -left-20 w-96 h-96 bg-indigo-500 rounded-full opacity-50 animate-pulse"></div>
+          <div className="absolute top-25 right-20 w-36 h-36 bg-purple-500 rounded-full opacity-50 animate-pulse delay-2000"></div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
+        <div className="relative max-w-7xl mx-auto px-6 py-20 text-center">
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">
+            All-in-One Study Workspace
+          </h1>
+          <p className="text-lg text-indigo-100 max-w-2xl mx-auto mb-8">
+            Organize your notes, track assignments, and boost your productivity
+            with our modern and intuitive student dashboard.
+          </p>
+          <div className="flex justify-center gap-4">
+            <Link
+              href="/register"
+              className="bg-white text-indigo-600 font-semibold px-6 py-3 rounded-lg shadow-md
+          hover:scale-105 hover:opacity-90 transition-transform focus:outline-none focus:ring-4 focus:ring-indigo-300"
+            >
+              Get Started
+            </Link>
+            <Link
+              href="/login"
+              className="bg-transparent border border-white font-semibold px-6 py-3 rounded-lg
+          hover:bg-white hover:scale-105 hover:text-indigo-600 transition-transform transition-colors focus:outline-none focus:ring-4 focus:ring-indigo-300"
+            >
+              Sign In
+            </Link>
+          </div>
+        </div>
+      </header>
+
+      {/* Features Section */}
+      <section className="max-w-7xl mx-auto px-6 py-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+        {features.map(({ Icon, title, desc, color }, idx) => (
+          <div
+            key={idx}
+            role="listitem"
+            tabIndex={0}
+            className="bg-white rounded-xl shadow-lg p-6 text-center cursor-pointer
+      focus:outline-none focus:ring-4 focus:ring-indigo-300
+      hover:shadow-xl hover:scale-105 transition-transform duration-300"
+          >
+            <Icon
+              aria-hidden="true"
+              className={`w-10 h-10 mx-auto mb-4 ${color}`}
+            />
+            <h3 className="text-lg font-semibold mb-2">{title}</h3>
+            <p className="text-gray-600">{desc}</p>
+          </div>
+        ))}
+      </section>
+
+      {/* Preview Section */}
+      <section className="bg-white py-16">
+        <div className="max-w-7xl mx-auto px-6 text-center">
+          <h2 className="text-3xl font-bold mb-4">See It In Action</h2>
+          <p className="text-gray-600 max-w-2xl mx-auto mb-8">
+            Our dashboard is designed for simplicity and efficiency — everything
+            you need is just a click away.
+          </p>
+          <div className="rounded-xl shadow-lg overflow-hidden">
+            {/* Replace this with your real screenshot */}
+            <Image
+              src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwallpapers.com%2Fimages%2Fhd%2Fgraduation-pictures-pz75cc67t4ica92t.jpg&f=1&nofb=1&ipt=31eae468326614722591fbd387aeab713f03fd920b8fc09bf919a870441c11a6"
+              alt="Graduation"
+              width={800} // set appropriate width
+              height={450} // set appropriate height
+              className="w-full rounded-lg shadow-md object-cover"
+            />
+          </div>
+        </div>
+      </section>
+
+      <Testimonials />
+
+      {/* Footer */}
+      <footer className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-6">
+        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center">
+          <p>
+            &copy; {new Date().getFullYear()} StudyApp. All rights reserved.
+          </p>
+          <div className="flex gap-4 mt-4 md:mt-0">
+            <Link href="/privacy" className="hover:underline">
+              Privacy Policy
+            </Link>
+            <Link href="/terms" className="hover:underline">
+              Terms of Service
+            </Link>
+          </div>
+        </div>
       </footer>
     </div>
   );
