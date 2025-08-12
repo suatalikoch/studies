@@ -31,9 +31,9 @@ Built with **Next.js**, **Supabase**, and **Tailwind CSS**, it’s designed for 
 
 ## 🖼 Screenshots
 
-| Dashboard                                               | Notes                                           | Progress                                              |
-| ------------------------------------------------------- | ----------------------------------------------- | ----------------------------------------------------- |
-| ![Dashboard Screenshot](docs/screenshots/dashboard.png) | ![Notes Screenshot](docs/screenshots/notes.png) | ![Progress Screenshot](docs/screenshots/progress.png) |
+| Dashboard                                              | Notes                                          | Progress                                             |
+| ------------------------------------------------------ | ---------------------------------------------- | ---------------------------------------------------- |
+| ![Dashboard Screenshot](./public/images/dashboard.png) | ![Notes Screenshot](./public/images/notes.png) | ![Progress Screenshot](./public/images/calendar.png) |
 
 ---
 
