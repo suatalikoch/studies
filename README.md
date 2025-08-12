@@ -160,8 +160,4 @@ git push origin feature/my-feature
 
 5. Create a Pull Request
 
-# 📜 License
-
-MIT License © 2025 Suat Alikoch
-
 ---
