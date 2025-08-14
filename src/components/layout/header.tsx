@@ -8,6 +8,7 @@ import {
   Upload,
   Download,
   Settings,
+  Bell,
 } from "lucide-react";
 import { IconButton } from "../ui/icon-button";
 
@@ -48,6 +49,11 @@ export default function Header() {
 
           {/* Action Buttons */}
           <div className="flex items-center space-x-2">
+            <Link href="/notifications">
+              <IconButton label="Notification">
+                <Bell className="w-5 h-5" />
+              </IconButton>
+            </Link>
             <Link href="/upload">
               <IconButton label="Upload">
                 <Upload className="w-5 h-5" />

@@ -5,54 +5,15 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { motion, useMotionValue, animate } from "framer-motion";
 
-export default function PricingClient() {
-  const plans: Plan[] = [
-    {
-      name: "Free",
-      price: { monthly: 0, yearly: 0 },
-      description: "Perfect for students getting started.",
-      features: [
-        "Access to basic tools",
-        "5 lecture uploads",
-        "1 GB storage",
-        "Community support",
-      ],
-      buttonText: "Get Started",
-      buttonLink: "/register",
-      highlighted: false,
-    },
-    {
-      name: "Pro",
-      price: { monthly: 9.99, yearly: 99.99 },
-      description: "For active students who need more.",
-      features: [
-        "Unlimited lectures",
-        "10 GB storage",
-        "Collaboration features",
-        "Priority support",
-      ],
-      buttonText: "Upgrade Now",
-      buttonLink: "/register",
-      highlighted: true,
-    },
-    {
-      name: "Premium",
-      price: { monthly: 19.99, yearly: 199.99 },
-      description: "For serious learners and educators.",
-      features: [
-        "Everything in Pro",
-        "50 GB storage",
-        "AI-powered search",
-        "1-on-1 mentor support",
-      ],
-      buttonText: "Join Premium",
-      buttonLink: "/register",
-      highlighted: false,
-    },
-  ];
-
+export default function PricingClient({ plans }: { plans: Plan[] }) {
   const formatPrice = (plan: Plan, cycle: BillingCycle) =>
-    plan.price[cycle] === 0 ? "$0" : `$${plan.price[cycle].toFixed(2)}`;
+    cycle === "monthly"
+      ? plan.price_monthly === 0
+        ? "$0"
+        : `$${plan.price_monthly.toFixed(2)}`
+      : plan.price_yearly === 0
+      ? "$0"
+      : `$${plan.price_yearly.toFixed(2)}`;
 
   const BillingToggle = ({
     billingCycle,
@@ -120,17 +81,20 @@ export default function PricingClient() {
     billingCycle: BillingCycle;
   }) => {
     const [pop, setPop] = useState(false);
-    const prevPriceRef = useRef(plan.price[billingCycle]);
+    const prevPriceRef = useRef(
+      billingCycle === "monthly" ? plan.price_monthly : plan.price_yearly
+    );
 
     useEffect(() => {
-      const currentPrice = plan.price[billingCycle];
+      const currentPrice =
+        billingCycle === "monthly" ? plan.price_monthly : plan.price_yearly;
       if (prevPriceRef.current !== currentPrice) {
         setPop(true);
         const timeout = setTimeout(() => setPop(false), 300);
         prevPriceRef.current = currentPrice;
         return () => clearTimeout(timeout);
       }
-    }, [billingCycle, plan.price]);
+    }, [billingCycle, plan.price_monthly, plan.price_yearly]);
 
     return (
       <motion.div
@@ -162,7 +126,13 @@ export default function PricingClient() {
             animate={{ scale: pop ? 1.1 : 1 }}
             transition={{ type: "spring", stiffness: 300, damping: 20 }}
           >
-            <AnimatedPrice price={plan.price[billingCycle]} />
+            <AnimatedPrice
+              price={
+                billingCycle === "monthly"
+                  ? plan.price_monthly
+                  : plan.price_yearly
+              }
+            />
             <span className="text-lg font-medium text-gray-500 ml-1">
               /{billingCycle === "monthly" ? "mo" : "yr"}
             </span>
@@ -183,14 +153,14 @@ export default function PricingClient() {
 
         <div className="p-6 border-t border-gray-200">
           <Link
-            href={plan.buttonLink}
+            href={plan.button_link}
             className={`block w-full text-center py-3 rounded-lg font-medium transition-colors ${
               plan.highlighted
                 ? "bg-indigo-600 text-white hover:bg-indigo-700"
                 : "bg-gray-100 text-gray-900 hover:bg-gray-200"
             }`}
           >
-            {plan.buttonText}
+            {plan.button_text}
           </Link>
         </div>
       </motion.div>
@@ -257,14 +227,14 @@ export default function PricingClient() {
               {plans.map((plan) => (
                 <td key={plan.name + "btn"} className="border p-4 text-center">
                   <Link
-                    href={plan.buttonLink}
+                    href={plan.button_link}
                     className={`px-4 py-2 rounded-lg font-medium inline-block ${
                       plan.highlighted
                         ? "bg-indigo-600 text-white hover:bg-indigo-700"
                         : "bg-gray-100 text-gray-900 hover:bg-gray-200"
                     }`}
                   >
-                    {plan.buttonText}
+                    {plan.button_text}
                   </Link>
                 </td>
               ))}

@@ -1,7 +1,7 @@
 "use client";
 
 import { ButtonHTMLAttributes } from "react";
-import { cn } from "@/utils/cn";
+import { cn } from "@/lib/utils/cn";
 
 interface IconButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   label: string;

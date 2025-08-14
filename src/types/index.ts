@@ -8,9 +8,16 @@ export interface Deadline {
 
 export interface Note {
   id: number;
+  user_id: string;
   title: string;
   subject: string;
-  updated_at: string; // ISO string or relative string
+  content?: string | null;
+  tags?: string[] | null;
+  status: "draft" | "published" | "archived";
+  priority: 1 | 2 | 3 | 4 | 5;
+  is_favourite: boolean;
+  updated_at: string;
+  created_at: string;
 }
 
 export interface ProgressDay {
@@ -29,12 +36,14 @@ export type CalendarEvent = {
 };
 
 export interface Plan {
+  id?: number; // optional if coming from DB
   name: string;
-  price: { monthly: number; yearly: number };
+  price_monthly: number;
+  price_yearly: number;
   description: string;
-  features: string[];
-  buttonText: string;
-  buttonLink: string;
+  features: string[]; // stored as array in Supabase (Postgres JSONB)
+  button_text: string;
+  button_link: string;
   highlighted: boolean;
 }
 
