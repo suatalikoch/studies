@@ -27,3 +27,15 @@ export type CalendarEvent = {
   color?: string; // Tailwind class e.g. "bg-indigo-500 text-white"
   meta?: string;
 };
+
+export interface Plan {
+  name: string;
+  price: { monthly: number; yearly: number };
+  description: string;
+  features: string[];
+  buttonText: string;
+  buttonLink: string;
+  highlighted: boolean;
+}
+
+export type BillingCycle = "monthly" | "yearly";
