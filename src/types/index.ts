@@ -2,8 +2,14 @@ export interface Deadline {
   id: number;
   title: string;
   subject: string;
-  due_date: string; // ISO date string
+  due_date: string;
   priority: "high" | "medium" | "low";
+}
+
+export interface ProgressDay {
+  day: string;
+  completed: number;
+  total: number;
 }
 
 export interface Note {
@@ -20,28 +26,35 @@ export interface Note {
   created_at: string;
 }
 
-export interface ProgressDay {
-  day: string;
-  completed: number;
-  total: number;
+export interface Task {
+  id: number;
+  title: string;
+  description?: string | null;
+  priority: "low" | "medium" | "high";
+  category: "Work" | "Personal" | "Shopping" | "Other";
+  due_date?: string | null;
+  completed: boolean;
+  starred: boolean;
+  created_at: string;
+  updated_at: string;
 }
 
 export type CalendarEvent = {
   id: string;
   title: string;
-  date: string; // ISO date 'YYYY-MM-DD'
-  time?: string; // optional e.g. "10:00 AM"
-  color?: string; // Tailwind class e.g. "bg-indigo-500 text-white"
+  date: string;
+  time?: string;
+  color?: string;
   meta?: string;
 };
 
 export interface Plan {
-  id?: number; // optional if coming from DB
+  id?: number;
   name: string;
   price_monthly: number;
   price_yearly: number;
   description: string;
-  features: string[]; // stored as array in Supabase (Postgres JSONB)
+  features: string[];
   button_text: string;
   button_link: string;
   highlighted: boolean;
