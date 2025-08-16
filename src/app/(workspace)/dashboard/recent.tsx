@@ -18,7 +18,7 @@ export default function RecentNotes({ notes }: { notes: Note[] }) {
         <Star className="w-5 h-5 text-yellow-500" aria-hidden="true" />
       </header>
       <div className="p-6 space-y-4">
-        {notes.map(({ id, title, subject, updated_at }) => (
+        {notes.slice(0, 3).map(({ id, title, subject, updated_at }) => (
           <div
             key={id}
             className="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 cursor-pointer transition-colors"
