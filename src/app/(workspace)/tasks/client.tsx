@@ -1,29 +1,7 @@
 "use client";
 
+import { Category, Filter, FormState, Priority, Task } from "@/types";
 import React, { useMemo, useRef, useState } from "react";
-
-type Priority = "low" | "medium" | "high";
-type Category = "Work" | "Personal" | "Shopping" | "Other";
-type Filter = "all" | "pending" | "completed" | "starred" | "high-priority";
-
-type Task = {
-  id: number;
-  title: string;
-  description: string;
-  priority: Priority;
-  category: Category;
-  due_date: string; // ISO date string (yyyy-mm-dd)
-  completed: boolean;
-  starred: boolean;
-};
-
-type FormState = {
-  title: string;
-  description: string;
-  priority: Priority;
-  category: Category;
-  due_date: string;
-};
 
 export default function TasksClient({ tasksDB }: { tasksDB: Task[] }) {
   const [tasks, setTasks] = useState<Task[]>(tasksDB);
@@ -56,6 +34,8 @@ export default function TasksClient({ tasksDB }: { tasksDB: Task[] }) {
       due_date: form.due_date,
       completed: false,
       starred: false,
+      updated_at: Date.now().toString(),
+      created_at: Date.now().toString(),
     };
     setTasks((t) => [newTask, ...t]);
     setForm({

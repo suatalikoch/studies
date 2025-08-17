@@ -14,8 +14,7 @@ import {
 import { useRouter } from "next/navigation";
 import { useUser } from "@/hooks/useUser";
 import { createClient } from "@/lib/supabase/client";
-
-type Tab = "profile" | "security" | "notifications" | "appearance" | "danger";
+import { Tab } from "@/types";
 
 export default function SettingsClient() {
   const user = useUser();

@@ -1,8 +1,7 @@
 "use client";
 
+import { Tool } from "@/types";
 import React, { useRef, useState, useEffect } from "react";
-
-type Tool = "pen" | "eraser" | "square" | "circle" | "line" | "text";
 
 export default function DrawingBoardClient() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -25,6 +24,8 @@ export default function DrawingBoardClient() {
     if (!canvas) return;
     canvas.width = canvas.offsetWidth * window.devicePixelRatio;
     canvas.height = canvas.offsetHeight * window.devicePixelRatio;
+    canvas.style.width = `${canvas.offsetWidth}px`;
+    canvas.style.height = `${canvas.offsetHeight}px`;
 
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
@@ -135,6 +136,13 @@ export default function DrawingBoardClient() {
         ctx.moveTo(startPos.x, startPos.y);
         ctx.lineTo(x, y);
         ctx.stroke();
+      } else if (tool === "text") {
+        const text = prompt("Enter text:");
+        if (text) {
+          ctx.fillStyle = color;
+          ctx.font = `${brushSize * 4}px sans-serif`;
+          ctx.fillText(text, startPos.x, startPos.y);
+        }
       }
     }
 
@@ -455,7 +463,7 @@ export default function DrawingBoardClient() {
           <canvas
             ref={canvasRef}
             className="w-full h-full cursor-crosshair"
-            style={{ transformOrigin: "top left" }}
+            style={{ transform: `scale(${zoom})`, transformOrigin: "top left" }}
             onPointerDown={handlePointerDown}
             onPointerMove={handlePointerMove}
             onPointerUp={handlePointerUp}
