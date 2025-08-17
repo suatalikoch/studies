@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Note } from "@/types";
 import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -9,6 +8,10 @@ import { Badge } from "@/components/ui/badge";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { List, Grid } from "lucide-react";
+import ReactMarkdown from "react-markdown";
+import { Note } from "@/types";
+import Toast from "./toast";
+import { useToast } from "@/hooks/useToast";
 
 export default function NotesClient({
   user_id,
@@ -25,9 +28,20 @@ export default function NotesClient({
   const [draftSubject, setDraftSubject] = useState("");
   const [draftTags, setDraftTags] = useState<string[]>([]);
   const [viewMode, setViewMode] = useState<"list" | "grid">("list");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [history, setHistory] = useState<Record<number, Note[]>>({});
+  const { toasts, showToast, removeToast } = useToast();
 
   useEffect(() => {
     if (selectedNote) {
+      // Save initial version if not already saved
+      setHistory((prev) => ({
+        ...prev,
+        [selectedNote.id]: prev[selectedNote.id]
+          ? prev[selectedNote.id]
+          : [selectedNote],
+      }));
+
       setDraftContent(selectedNote.content || "");
       setDraftTitle(selectedNote.title || "");
       setDraftSubject(selectedNote.subject || "");
@@ -36,7 +50,52 @@ export default function NotesClient({
     }
   }, [selectedNote]);
 
-  // ⭐ Toggle favorite
+  useEffect(() => {
+    if (!isEditing) return;
+    const timeout = setTimeout(() => {
+      if (
+        draftSubject !== selectedNote?.subject ||
+        draftContent !== selectedNote?.content
+      ) {
+        saveNote();
+      }
+    }, 2000);
+    return () => clearTimeout(timeout);
+  });
+
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.ctrlKey && e.key === "x") {
+        e.preventDefault();
+        addNote();
+      }
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  });
+
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.ctrlKey && e.key === "s") {
+        e.preventDefault();
+        if (isEditing) saveNote();
+      }
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  });
+
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (e.ctrlKey && e.key === "d") {
+        e.preventDefault();
+        if (selectedNote !== null) deleteNote(selectedNote.id);
+      }
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  });
+
   const toggleFavorite = async (noteId: number) => {
     const updatedNotes = notesState.map((note) =>
       note.id === noteId ? { ...note, is_favourite: !note.is_favourite } : note
@@ -47,16 +106,22 @@ export default function NotesClient({
         prev ? { ...prev, is_favourite: !prev.is_favourite } : null
       );
     }
+    const newFavourite = !notesState.find((n) => n.id === noteId)?.is_favourite;
     await createClient()
       .from("notes")
-      .update({
-        is_favourite: !notesState.find((n) => n.id === noteId)?.is_favourite,
-      })
+      .update({ is_favourite: newFavourite })
       .eq("id", noteId);
   };
 
   const saveNote = async () => {
     if (!selectedNote) return;
+
+    // Add current version to history
+    setHistory((prev) => ({
+      ...prev,
+      [selectedNote.id]: [...(prev[selectedNote.id] || []), selectedNote],
+    }));
+
     const updatedNote = {
       ...selectedNote,
       content: draftContent,
@@ -75,6 +140,8 @@ export default function NotesClient({
       .from("notes")
       .update(updatedNote)
       .eq("id", updatedNote.id);
+
+    showToast("success", "Note saved successfully!");
   };
 
   const addNote = async () => {
@@ -101,19 +168,67 @@ export default function NotesClient({
     setNotesState((prev) => [insertedNote, ...prev]);
     setSelectedNote(insertedNote);
     setIsEditing(true);
+
+    showToast("success", "Note added successfully!");
   };
 
   const deleteNote = async (noteId: number) => {
+    const previousNotes = notesState;
     setNotesState((prev) => prev.filter((note) => note.id !== noteId));
     if (selectedNote?.id === noteId) setSelectedNote(null);
-    await createClient().from("notes").delete().eq("id", noteId);
+
+    try {
+      await createClient().from("notes").delete().eq("id", noteId);
+    } catch (error) {
+      setNotesState(previousNotes);
+      alert("Failed to delete note.");
+      showToast("error", "Failed to delete note: " + error);
+    }
+
+    showToast("success", "Note deleted successfully!");
   };
 
   const addTag = (tag: string) => {
     if (!draftTags.includes(tag)) setDraftTags([...draftTags, tag]);
   };
+
   const removeTag = (tag: string) =>
     setDraftTags(draftTags.filter((t) => t !== tag));
+
+  const filteredNotes = notesState.filter(
+    (note) =>
+      note.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      note.subject.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      note.content?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      note.tags?.some((tag) => tag.includes(searchTerm.toLowerCase()))
+  );
+
+  const undo = () => {
+    if (!selectedNote) return;
+    const noteHistory = history[selectedNote.id];
+    if (!noteHistory || noteHistory.length === 0) return;
+
+    const lastVersion = noteHistory[noteHistory.length - 1];
+
+    // Remove last version from history
+    setHistory((prev) => ({
+      ...prev,
+      [selectedNote.id]: prev[selectedNote.id].slice(0, -1),
+    }));
+
+    // Revert note
+    setSelectedNote(lastVersion);
+    setDraftContent(lastVersion.content ? lastVersion.content : "");
+    setDraftTitle(lastVersion.title);
+    setDraftSubject(lastVersion.subject);
+    setDraftTags(lastVersion.tags ? lastVersion.tags : []);
+
+    setNotesState((prev) =>
+      prev.map((n) => (n.id === lastVersion.id ? lastVersion : n))
+    );
+
+    showToast("info", "Note reverted successfully!");
+  };
 
   return (
     <div className="h-full w-full bg-gray-50 flex flex-col">
@@ -123,6 +238,12 @@ export default function NotesClient({
           <div className="p-4 flex items-center justify-between border-b bg-white shadow-sm">
             <h2 className="text-xl font-bold text-gray-900">Notes</h2>
             <div className="flex items-center gap-2">
+              <Input
+                placeholder="Search notes..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="w-full max-w-sm"
+              />
               <Button onClick={addNote}>+ Add</Button>
               <Button
                 variant="outline"
@@ -147,7 +268,7 @@ export default function NotesClient({
                 : "space-y-2"
             }`}
           >
-            {notesState.map((note) => (
+            {filteredNotes.map((note) => (
               <div
                 key={note.id}
                 onClick={() => setSelectedNote(note)}
@@ -191,7 +312,9 @@ export default function NotesClient({
                 </p>
                 <div className="flex justify-between items-center mt-2 text-xs text-gray-500">
                   <Badge variant="secondary">{note.subject}</Badge>
-                  <span>{new Date(note.updated_at).toLocaleDateString()}</span>
+                  <span>
+                    {new Date(note.updated_at).toLocaleDateString("en-GB")}
+                  </span>
                 </div>
                 <div className="flex flex-wrap gap-1 mt-1">
                   {note.tags?.slice(0, 3).map((tag) => (
@@ -210,20 +333,41 @@ export default function NotesClient({
       {selectedNote && (
         <div className="flex flex-col h-full bg-white">
           <div className="p-4 border-b flex justify-between items-center sticky top-0 bg-white shadow-sm">
-            <Button variant="outline" onClick={() => setSelectedNote(null)}>
+            <Button
+              variant="outline"
+              onClick={() => {
+                if (isEditing && !confirm("Discard unsaved changes?")) {
+                  return;
+                }
+
+                setSelectedNote(null);
+              }}
+            >
               ← Back
             </Button>
             <div className="flex items-center gap-2">
-              <Button
-                onClick={() => setIsEditing(!isEditing)}
-                variant={isEditing ? "outline" : "default"}
-              >
-                {isEditing ? "Cancel" : "Edit"}
-              </Button>
-              {isEditing && (
-                <Button onClick={saveNote} variant="default">
-                  Save
+              {!isEditing ? (
+                <Button
+                  onClick={() => setIsEditing(!isEditing)}
+                  variant="default"
+                >
+                  Edit
                 </Button>
+              ) : (
+                <>
+                  <Button
+                    onClick={() => setIsEditing(!isEditing)}
+                    variant="outline"
+                  >
+                    Cancel
+                  </Button>
+                  <Button onClick={undo} variant="outline">
+                    Undo
+                  </Button>
+                  <Button onClick={saveNote} variant="default">
+                    Save
+                  </Button>
+                </>
               )}
               <Button
                 variant="destructive"
@@ -255,12 +399,16 @@ export default function NotesClient({
               <p className="text-sm text-gray-500">{selectedNote.subject}</p>
             )}
 
-            <Textarea
-              className="flex-1 resize-none"
-              value={draftContent}
-              onChange={(e) => setDraftContent(e.target.value)}
-              readOnly={!isEditing}
-            />
+            {!isEditing ? (
+              <ReactMarkdown>{draftContent}</ReactMarkdown>
+            ) : (
+              <Textarea
+                className="flex-1 resize-none"
+                value={draftContent}
+                onChange={(e) => setDraftContent(e.target.value)}
+                readOnly={!isEditing}
+              />
+            )}
 
             {isEditing && (
               <div className="flex flex-wrap gap-2">
@@ -279,7 +427,7 @@ export default function NotesClient({
                   placeholder="Add tag"
                   onKeyDown={(e) => {
                     if (e.key === "Enter" && e.currentTarget.value.trim()) {
-                      addTag(e.currentTarget.value.trim());
+                      addTag(e.currentTarget.value.trim().toLowerCase());
                       e.currentTarget.value = "";
                     }
                   }}
@@ -290,6 +438,9 @@ export default function NotesClient({
           </div>
         </div>
       )}
+
+      {/* Feedback messages (Toasts) */}
+      <Toast toasts={toasts} removeToast={removeToast} />
     </div>
   );
 }
