@@ -1,8 +1,7 @@
 "use client";
 
-import Footer from "@/components/layout/footer";
-import HeaderLanding from "@/components/layout/header-landing";
-import Testimonials from "@/components/ui/testimonials";
+import { Footer, HeaderLanding } from "@/components/layout";
+import { Testimonials } from "@/components/ui";
 import { FileText, Clock, CheckSquare, BookOpen } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";

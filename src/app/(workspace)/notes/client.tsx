@@ -2,16 +2,12 @@
 
 import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
-import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
 import { List, Grid } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import { Note } from "@/types";
 import Toast from "./toast";
 import { useToast } from "@/hooks/useToast";
+import { Badge, Button, Input, Label, Textarea } from "@/components/ui";
 
 export default function NotesClient({
   user_id,

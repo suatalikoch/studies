@@ -1,6 +1,5 @@
+import { Footer, HeaderLanding } from "@/components/layout";
 import { Metadata } from "next";
-import HeaderLanding from "@/components/layout/header-landing";
-import Footer from "@/components/layout/footer";
 
 export const metadata: Metadata = {
   title: "Studies | Landing",

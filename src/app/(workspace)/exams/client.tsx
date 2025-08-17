@@ -1,12 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Trash2, Check } from "lucide-react";
+import { Badge, Button, Card, Input, Label } from "@/components/ui";
+import { CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface Exam {
   id: number;
