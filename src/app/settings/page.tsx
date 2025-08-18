@@ -1,7 +1,8 @@
 import { Metadata } from "next";
-import { getCurrentUser } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import SettingsClient from "./client";
+import { getCurrentUser } from "@/lib/supabase/crud";
+import { Header } from "@/components/layout";
 
 export const metadata: Metadata = {
   title: "Studies | Settings",
@@ -14,5 +15,10 @@ export default async function SettingsPage() {
     redirect("/login");
   }
 
-  return <SettingsClient />;
+  return (
+    <div>
+      <Header />
+      <SettingsClient />
+    </div>
+  );
 }

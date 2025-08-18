@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { redirect } from "next/navigation";
 import NotesClient from "./client";
-import { getCurrentUser, getNotes } from "@/lib/supabase/server";
+import { getCurrentUser, getNotes } from "@/lib/supabase/crud";
 
 export const metadata: Metadata = {
   title: "Studies | Notes",

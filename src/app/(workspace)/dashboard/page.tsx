@@ -1,12 +1,12 @@
 import { Metadata } from "next";
+import { redirect } from "next/navigation";
+import DashboardClient from "./client";
 import {
   getCurrentUser,
   getDeadlines,
   getNotes,
   getProgress,
-} from "@/lib/supabase/server";
-import { redirect } from "next/navigation";
-import DashboardClient from "./client";
+} from "@/lib/supabase/crud";
 
 export const metadata: Metadata = {
   title: "Studies | Dashboard",

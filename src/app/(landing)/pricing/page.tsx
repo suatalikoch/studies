@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import PricingClient from "./client";
-import { getPlans } from "@/lib/supabase/server";
+import { getPlans } from "@/lib/supabase/crud";
 
 export const metadata: Metadata = {
   title: "Studies | Pricing",

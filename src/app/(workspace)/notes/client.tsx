@@ -1,13 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { List, Grid } from "lucide-react";
-import ReactMarkdown from "react-markdown";
 import { Note } from "@/types";
-import Toast from "./toast";
 import { useToast } from "@/hooks/useToast";
 import { Badge, Button, Input, Label, Textarea } from "@/components/ui";
+import MarkdownRenderer from "./markdown";
+import Toast from "./toast";
 
 export default function NotesClient({
   user_id,
@@ -57,40 +57,35 @@ export default function NotesClient({
       }
     }, 2000);
     return () => clearTimeout(timeout);
-  });
+  }, [draftSubject, draftContent, selectedNote, isEditing]);
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
-      if (e.ctrlKey && e.key === "x") {
-        e.preventDefault();
-        addNote();
+      if (e.ctrlKey) {
+        if (e.key === "x") {
+          e.preventDefault();
+          addNote();
+        }
+        if (e.key === "s" && isEditing) {
+          e.preventDefault();
+          saveNote();
+        }
+        if (e.key === "d" && selectedNote) {
+          e.preventDefault();
+          deleteNote(selectedNote.id);
+        }
       }
     };
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
-  });
-
-  useEffect(() => {
-    const handler = (e: KeyboardEvent) => {
-      if (e.ctrlKey && e.key === "s") {
-        e.preventDefault();
-        if (isEditing) saveNote();
-      }
-    };
-    window.addEventListener("keydown", handler);
-    return () => window.removeEventListener("keydown", handler);
-  });
-
-  useEffect(() => {
-    const handler = (e: KeyboardEvent) => {
-      if (e.ctrlKey && e.key === "d") {
-        e.preventDefault();
-        if (selectedNote !== null) deleteNote(selectedNote.id);
-      }
-    };
-    window.addEventListener("keydown", handler);
-    return () => window.removeEventListener("keydown", handler);
-  });
+  }, [
+    isEditing,
+    selectedNote,
+    draftContent,
+    draftTitle,
+    draftSubject,
+    draftTags,
+  ]);
 
   const toggleFavorite = async (noteId: number) => {
     const updatedNotes = notesState.map((note) =>
@@ -191,12 +186,16 @@ export default function NotesClient({
   const removeTag = (tag: string) =>
     setDraftTags(draftTags.filter((t) => t !== tag));
 
-  const filteredNotes = notesState.filter(
-    (note) =>
-      note.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      note.subject.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      note.content?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      note.tags?.some((tag) => tag.includes(searchTerm.toLowerCase()))
+  const filteredNotes = useMemo(
+    () =>
+      notesState.filter(
+        (note) =>
+          note.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          note.subject.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          note.content?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          note.tags?.some((tag) => tag.includes(searchTerm.toLowerCase()))
+      ),
+    [notesState, searchTerm]
   );
 
   const undo = () => {
@@ -268,7 +267,7 @@ export default function NotesClient({
               <div
                 key={note.id}
                 onClick={() => setSelectedNote(note)}
-                className={`p-3 rounded-lg cursor-pointer transition hover:shadow-lg bg-white border ${
+                className={`p-3 h-34 rounded-lg cursor-pointer transition hover:shadow-lg bg-white border ${
                   viewMode === "list"
                     ? "hover:border-indigo-400"
                     : "h-40 flex flex-col"
@@ -309,7 +308,7 @@ export default function NotesClient({
                 <div className="flex justify-between items-center mt-2 text-xs text-gray-500">
                   <Badge variant="secondary">{note.subject}</Badge>
                   <span>
-                    {new Date(note.updated_at).toLocaleDateString("en-GB")}
+                    {new Date(note.updated_at).toISOString().split("T")[0]}
                   </span>
                 </div>
                 <div className="flex flex-wrap gap-1 mt-1">
@@ -341,6 +340,7 @@ export default function NotesClient({
             >
               ← Back
             </Button>
+
             <div className="flex items-center gap-2">
               {!isEditing ? (
                 <Button
@@ -374,7 +374,9 @@ export default function NotesClient({
             </div>
           </div>
 
+          {/* Content */}
           <div className="p-4 flex-1 overflow-auto flex flex-col gap-4">
+            {/* Title */}
             {isEditing ? (
               <Input
                 value={draftTitle}
@@ -385,6 +387,7 @@ export default function NotesClient({
               <h1 className="text-2xl font-bold">{selectedNote.title}</h1>
             )}
 
+            {/* Subject */}
             {isEditing ? (
               <Input
                 value={draftSubject}
@@ -395,17 +398,19 @@ export default function NotesClient({
               <p className="text-sm text-gray-500">{selectedNote.subject}</p>
             )}
 
+            {/* Content */}
             {!isEditing ? (
-              <ReactMarkdown>{draftContent}</ReactMarkdown>
+              <MarkdownRenderer content={draftContent} />
             ) : (
               <Textarea
-                className="flex-1 resize-none"
+                className="flex-1 resize-note"
                 value={draftContent}
                 onChange={(e) => setDraftContent(e.target.value)}
                 readOnly={!isEditing}
               />
             )}
 
+            {/* Tags */}
             {isEditing && (
               <div className="flex flex-wrap gap-2">
                 <Label>Tags:</Label>

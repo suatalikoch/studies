@@ -1,7 +1,7 @@
 import { Metadata } from "next";
-import { getCurrentUser } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { Header, Sidebar } from "@/components/layout";
+import { getCurrentUser } from "@/lib/supabase/crud";
 
 export const metadata: Metadata = {
   title: "Studies | Dashboard",

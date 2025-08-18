@@ -1,7 +1,7 @@
 import { Metadata } from "next";
-import { getCurrentUser, getTasks } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import TasksClient from "./client";
+import { getCurrentUser, getTasks } from "@/lib/supabase/crud";
 
 export const metadata: Metadata = {
   title: "Studies | Tasks",
