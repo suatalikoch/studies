@@ -1,12 +1,12 @@
 export { Badge } from "@/components/UI/badge";
 export { Button } from "@/components/UI/button";
 export { Card } from "@/components/UI/card";
-export { default as Features } from "@/components/UI/features-a";
-export { default as Hero } from "@/components/UI/hero-a";
+export { default as Features } from "@/components/UI/features";
+export { default as Hero } from "@/components/UI/hero";
 export { IconButton } from "@/components/UI/icon-button";
 export { Input } from "@/components/UI/input";
 export { Label } from "@/components/UI/label";
-export { default as Preview } from "@/components/UI/preview-a";
-export { default as StatsCard } from "@/components/UI/stats-card";
+export { default as Preview } from "@/components/UI/preview";
+export { default as StatsCard } from "@/components/UI/StatsCard";
 export { default as Testimonials } from "@/components/UI/testimonials";
 export { Textarea } from "@/components/UI/textarea";
