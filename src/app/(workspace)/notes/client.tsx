@@ -6,8 +6,8 @@ import { List, Grid } from "lucide-react";
 import { Note } from "@/types";
 import { useToast } from "@/hooks/useToast";
 import { Badge, Button, Input, Label, Textarea } from "@/components/UI";
-import MarkdownRenderer from "./markdown";
-import Toast from "./toast";
+import MarkdownRenderer from "@/components/Workspace/Notes/Markdown";
+import Toast from "@/components/Workspace/Notes/Toast";
 
 export default function NotesClient({
   user_id,

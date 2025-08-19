@@ -1,7 +1,7 @@
 "use client";
 
-import UpcomingEvents from "./upcoming";
-import Calendar from "./calendar";
+import Calendar from "@/components/Workspace/Calendar/Calendar";
+import UpcomingEvents from "@/components/Workspace/Calendar/UpcomingEvents";
 
 export default function CalendarClient() {
   return (

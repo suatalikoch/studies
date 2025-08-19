@@ -1,10 +1,10 @@
 "use client";
 
-import Welcome from "./welcome";
-import Cards from "./cards";
-import UpcomingDeadlines from "./upcoming";
-import RecentNotes from "./recent";
-import WeeklyProgress from "./progress";
+import Cards from "@/components/Workspace/Dashboard/Cards";
+import RecentNotes from "@/components/Workspace/Dashboard/RecentNotes";
+import UpcomingDeadlines from "@/components/Workspace/Dashboard/UpcomingDeadlines";
+import WeeklyProgress from "@/components/Workspace/Dashboard/WeeklyProgress";
+import Welcome from "@/components/Workspace/Dashboard/Welcome";
 import { Deadline, Note, ProgressDay } from "@/types";
 
 export default function DashboardClient({
