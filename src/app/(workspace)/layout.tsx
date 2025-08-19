@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import { redirect } from "next/navigation";
-import { Header, Sidebar } from "@/components/layout";
+import { Header, Sidebar } from "@/components/Layout";
 import { getCurrentUser } from "@/lib/supabase/crud";
 
 export const metadata: Metadata = {

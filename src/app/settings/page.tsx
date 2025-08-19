@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { redirect } from "next/navigation";
 import SettingsClient from "./client";
 import { getCurrentUser } from "@/lib/supabase/crud";
-import { Header } from "@/components/layout";
+import { Header } from "@/components/Layout";
 
 export const metadata: Metadata = {
   title: "Studies | Settings",

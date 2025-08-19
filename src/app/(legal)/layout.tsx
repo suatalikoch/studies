@@ -1,4 +1,4 @@
-import { Footer, HeaderLanding } from "@/components/layout";
+import { Footer, HeaderLanding } from "@/components/Layout";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
