@@ -10,7 +10,7 @@ import {
   Settings,
   Bell,
 } from "lucide-react";
-import { IconButton } from "@/components/ui";
+import { IconButton } from "@/components/UI";
 
 export default function Header() {
   const [searchQuery, setSearchQuery] = useState("");

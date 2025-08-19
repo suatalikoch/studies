@@ -6,7 +6,7 @@ import {
   Upload,
 } from "lucide-react";
 import Link from "next/link";
-import { IconButton } from "@/components/ui";
+import { IconButton } from "@/components/UI";
 
 export default function HeaderLanding() {
   return (
