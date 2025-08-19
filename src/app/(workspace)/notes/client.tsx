@@ -5,7 +5,7 @@ import { createClient } from "@/lib/supabase/client";
 import { List, Grid } from "lucide-react";
 import { Note } from "@/types";
 import { useToast } from "@/hooks/useToast";
-import { Badge, Button, Input, Label, Textarea } from "@/components/UI";
+import { Badge, Button, Input, Label, Textarea } from "@/components/ui";
 import MarkdownRenderer from "./markdown";
 import Toast from "./toast";
 

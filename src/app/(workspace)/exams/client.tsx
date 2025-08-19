@@ -2,8 +2,8 @@
 
 import { useState } from "react";
 import { Trash2, Check } from "lucide-react";
-import { Badge, Button, Card, Input, Label } from "@/components/UI";
-import { CardContent, CardHeader, CardTitle } from "@/components/UI/card";
+import { Badge, Button, Card, Input, Label } from "@/components/ui";
+import { CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface Exam {
   id: number;

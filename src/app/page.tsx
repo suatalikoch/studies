@@ -1,7 +1,7 @@
 "use client";
 
 import { Footer, HeaderLanding } from "@/components/Layout";
-import { Features, Hero, Preview, Testimonials } from "@/components/UI";
+import { Features, Hero, Preview, Testimonials } from "@/components/ui";
 
 export default function HomePage() {
   return (

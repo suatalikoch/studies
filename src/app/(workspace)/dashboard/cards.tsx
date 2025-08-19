@@ -1,4 +1,4 @@
-import { StatsCard } from "@/components/UI";
+import { StatsCard } from "@/components/ui";
 import { BookOpen, CheckSquare, Clock, FileText } from "lucide-react";
 
 export default function Cards() {
