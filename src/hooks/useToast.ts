@@ -5,7 +5,7 @@ export function useToast() {
   const [toasts, setToasts] = useState<ToastMessage[]>([]);
 
   const showToast = (type: ToastType, message: string) => {
-    const id = Date.now();
+    const id = Date.now().toString();
     const newToast: ToastMessage = { id, type, message };
 
     setToasts((prev) => [...prev, newToast]);
@@ -15,7 +15,7 @@ export function useToast() {
     }, 3000);
   };
 
-  const removeToast = (id: number) => {
+  const removeToast = (id: string) => {
     setToasts((prev) => prev.filter((toast) => toast.id !== id));
   };
 

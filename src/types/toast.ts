@@ -1,12 +1,12 @@
 export type ToastType = "success" | "error" | "info";
 
 export interface ToastMessage {
-  id: number;
+  id: string;
   type: ToastType;
   message: string;
 }
 
 export type ToastProps = {
   toasts: ToastMessage[];
-  removeToast: (id: number) => void;
+  removeToast: (id: string) => void;
 };
