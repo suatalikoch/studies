@@ -2,13 +2,11 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { blogPosts } from "@/lib/constants";
 
-interface Props {
-  params: {
-    id: string;
-  };
-}
-
-export default async function BlogPostPage({ params }: Props) {
+export default async function BlogPostPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
   const { id } = await params;
   const postId = parseInt(id, 10);
   const post = blogPosts.find((p) => p.id === postId);
