@@ -17,6 +17,7 @@ import {
   Settings,
   LogOut,
 } from "lucide-react";
+import Image from "next/image";
 
 export const sidebarItems = [
   { id: "dashboard", path: "dashboard", label: "Dashboard", icon: Home },
@@ -141,12 +142,14 @@ export default function Sidebar() {
       <div className="border-t border-gray-200 p-4 relative" ref={flyoutRef}>
         <button
           onClick={() => setFlyoutOpen(!flyoutOpen)}
-          className="flex items-center w-full space-x-3 focus:outline-none"
+          className="flex items-center w-full space-x-3 focus:outline-none cursor-pointer"
         >
-          <img
-            src={user?.avatar}
+          <Image
+            src={user?.avatar || "/images/avatar.png"}
             alt="User Avatar"
-            className="w-10 h-10 rounded-full object-cover"
+            width={40}
+            height={40}
+            className="rounded-full object-cover"
           />
           <div className="flex-1 text-left">
             <p className="text-gray-900 font-semibold text-sm">{user?.name}</p>
@@ -183,7 +186,7 @@ export default function Sidebar() {
             </Link>
             <button
               onClick={handleLogout}
-              className="flex items-center w-full px-4 py-2 hover:bg-gray-100 text-gray-700"
+              className="flex items-center w-full px-4 py-2 hover:bg-gray-100 text-gray-700 cursor-pointer"
             >
               <LogOut className="w-4 h-4 mr-2" />
               Logout
