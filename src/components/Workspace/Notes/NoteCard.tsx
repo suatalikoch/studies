@@ -15,13 +15,38 @@ export default function NoteCard({
   };
 
   const color = note.color || subjectColors[note.subject] || "#ffffff";
+  const maxTags = 3;
+
+  function getContrastYIQ(hexcolor: string) {
+    // Remove hash if present
+    hexcolor = hexcolor.replace("#", "");
+
+    // Convert 3-digit hex to 6-digit
+    if (hexcolor.length === 3) {
+      hexcolor = hexcolor
+        .split("")
+        .map((c) => c + c)
+        .join("");
+    }
+
+    const r = parseInt(hexcolor.substr(0, 2), 16);
+    const g = parseInt(hexcolor.substr(2, 2), 16);
+    const b = parseInt(hexcolor.substr(4, 2), 16);
+
+    // Calculate YIQ (brightness)
+    const yiq = (r * 299 + g * 587 + b * 114) / 1000;
+
+    return yiq >= 128 ? "black" : "white";
+  }
 
   return (
     <div
       onClick={() => onSelect(note)}
-      className={`rounded-lg cursor-pointer transition hover:shadow-lg hover:border-indigo-400 bg-white border ${
+      className={`rounded-lg cursor-pointer transition hover:shadow-lg bg-white border border border-gray-200 ${
         viewMode === "list" ? "flex" : "flex flex-col"
       }`}
+      onMouseEnter={(e) => (e.currentTarget.style.borderColor = color)}
+      onMouseLeave={(e) => (e.currentTarget.style.borderColor = "#e5e7eb")}
     >
       {/* Color Bar */}
       <div
@@ -42,6 +67,7 @@ export default function NoteCard({
                 e.stopPropagation();
                 onToggleFavorite(note.id);
               }}
+              className="cursor-pointer"
             >
               {note.is_favourite ? (
                 <svg
@@ -75,7 +101,7 @@ export default function NoteCard({
             <span>{new Date(note.updated_at).toISOString().split("T")[0]}</span>
           </div>
           <div className="flex flex-wrap gap-1 mt-1">
-            {note.tags?.slice(0, 3).map((tag) => (
+            {note.tags?.slice(0, maxTags).map((tag) => (
               <Badge key={tag} variant="outline" className="text-xs">
                 #{tag}
               </Badge>
@@ -83,6 +109,15 @@ export default function NoteCard({
             {(!note.tags || note.tags.length === 0) && (
               <Badge variant="outline" className="text-xs text-gray-400">
                 #{"No tags available"}
+              </Badge>
+            )}
+            {note.tags && note.tags.length > maxTags && (
+              <Badge
+                variant="secondary"
+                className="text-xs"
+                style={{ backgroundColor: color, color: getContrastYIQ(color) }}
+              >
+                +{note.tags?.length - maxTags}
               </Badge>
             )}
           </div>
