@@ -1,16 +1,8 @@
 "use client";
 
 import { JSX, useEffect, useState } from "react";
-import {
-  User,
-  Lock,
-  Bell,
-  Moon,
-  Trash2,
-  Image,
-  Mail,
-  Shield,
-} from "lucide-react";
+import { User, Lock, Bell, Moon, Trash2, Mail, Shield } from "lucide-react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useUser } from "@/hooks/useUser";
 import { createClient } from "@/lib/supabase/client";
@@ -241,7 +233,7 @@ export default function SettingsClient() {
               key={id}
               onClick={() => setActiveTab(id)}
               disabled={loading}
-              className={`flex items-center gap-2 px-5 py-4 md:py-5 md:px-6 border-transparent border-b-4 md:border-b-0 md:border-l-4
+              className={`flex items-center gap-2 px-5 py-4 md:py-5 md:px-6 cursor-pointer border-transparent border-b-4 md:border-b-0 md:border-l-4
                 ${
                   activeTab === id
                     ? "border-indigo-600 bg-white font-semibold text-indigo-700"
@@ -281,15 +273,13 @@ export default function SettingsClient() {
                 </h2>
                 <div className="flex items-center gap-6 mb-6">
                   <div className="w-20 h-20 rounded-full overflow-hidden bg-gray-200 flex items-center justify-center">
-                    {avatar ? (
-                      <img
-                        src={avatar}
-                        alt="Avatar"
-                        className="w-full h-full object-cover"
-                      />
-                    ) : (
-                      <Image className="w-10 h-10 text-gray-400" />
-                    )}
+                    <Image
+                      src={avatar || "/images/avatar.png"}
+                      alt="Avatar"
+                      width={80}
+                      height={80}
+                      className="object-cover"
+                    />
                   </div>
                   <label
                     className={`bg-indigo-600 text-white px-4 py-2 rounded-lg cursor-pointer hover:opacity-90 transition ${
@@ -452,7 +442,7 @@ export default function SettingsClient() {
                 <button
                   type="button"
                   onClick={handleDeleteAccount}
-                  className="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg font-semibold transition disabled:opacity-50"
+                  className="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg cursor-pointer font-semibold transition disabled:opacity-50"
                   disabled={loading}
                 >
                   Delete My Account
@@ -464,7 +454,7 @@ export default function SettingsClient() {
             <div className="pt-6 border-t border-gray-200 flex justify-end">
               <button
                 type="submit"
-                className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-lg font-semibold transition disabled:opacity-50"
+                className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-lg cursor-pointer font-semibold transition disabled:opacity-50"
                 disabled={loading}
               >
                 {loading ? "Saving..." : "Save Changes"}
