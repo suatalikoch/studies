@@ -1,10 +1,4 @@
-import {
-  Download,
-  GraduationCap,
-  Search,
-  Settings,
-  Upload,
-} from "lucide-react";
+import { Bell, GraduationCap, Search, Settings } from "lucide-react";
 import Link from "next/link";
 import { IconButton } from "@/components/UI";
 
@@ -142,14 +136,9 @@ export default function HeaderLanding() {
 
           {/* Action Buttons */}
           <div className="flex items-center space-x-2">
-            <Link href="/upload">
-              <IconButton label="Upload">
-                <Upload className="w-5 h-5" />
-              </IconButton>
-            </Link>
-            <Link href="/download">
-              <IconButton label="Download">
-                <Download className="w-5 h-5" />
+            <Link href="/notifications">
+              <IconButton label="Notification">
+                <Bell className="w-5 h-5" />
               </IconButton>
             </Link>
             <Link href="/settings">

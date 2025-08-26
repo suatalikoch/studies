@@ -2,14 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import {
-  GraduationCap,
-  Search,
-  Upload,
-  Download,
-  Settings,
-  Bell,
-} from "lucide-react";
+import { GraduationCap, Search, Settings, Bell } from "lucide-react";
 import { IconButton } from "@/components/UI";
 
 export default function Header() {
@@ -52,17 +45,6 @@ export default function Header() {
             <Link href="/notifications">
               <IconButton label="Notification">
                 <Bell className="w-5 h-5" />
-              </IconButton>
-            </Link>
-            <Link href="/upload">
-              <IconButton label="Upload">
-                <Upload className="w-5 h-5" />
-              </IconButton>
-            </Link>
-
-            <Link href="/download">
-              <IconButton label="Download">
-                <Download className="w-5 h-5" />
               </IconButton>
             </Link>
 
