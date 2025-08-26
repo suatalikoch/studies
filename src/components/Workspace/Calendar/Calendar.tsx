@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from "react";
-import { Plus } from "lucide-react";
+import { Plus, X } from "lucide-react";
 import { CalendarEvent } from "@/types";
 
 type Props = {
@@ -22,13 +22,13 @@ function endOfMonth(date: Date) {
 }
 
 export default function Calendar({ events = [] }: Props) {
-  const [date, setDate] = useState<string | undefined>(() => {
-    const d = new Date();
-    return d.toISOString().slice(0, 10); // 'YYYY-MM-DD'
-  });
+  const [date, setDate] = useState<string>(toISO(new Date()));
 
   const todayISO = toISO(new Date());
   const [viewDate, setViewDate] = useState<Date>(new Date());
+  const [modalOpen, setModalOpen] = useState(false);
+  const [editingEvent, setEditingEvent] = useState<CalendarEvent | null>(null);
+  const [eventList, setEventList] = useState<CalendarEvent[]>(events);
 
   const monthMatrix = useMemo(() => {
     const start = startOfMonth(viewDate);
@@ -65,13 +65,13 @@ export default function Calendar({ events = [] }: Props) {
 
   const eventsByDate = useMemo(() => {
     const map = new Map<string, CalendarEvent[]>();
-    for (const ev of events) {
+    for (const ev of eventList) {
       const list = map.get(ev.date) ?? [];
       list.push(ev);
       map.set(ev.date, list);
     }
     return map;
-  }, [events]);
+  }, [eventList]);
 
   const label = viewDate.toLocaleString(undefined, {
     month: "long",
@@ -79,7 +79,9 @@ export default function Calendar({ events = [] }: Props) {
   });
 
   const goMonth = (delta: number) => {
-    setViewDate((v) => new Date(v.getFullYear(), v.getMonth() + delta, 1));
+    setViewDate(
+      new Date(viewDate.getFullYear(), viewDate.getMonth() + delta, 1)
+    );
   };
 
   const isSameMonth = (iso: string) => {
@@ -90,16 +92,44 @@ export default function Calendar({ events = [] }: Props) {
     );
   };
 
+  // --- Modal handlers ---
+  const openModal = (ev?: CalendarEvent) => {
+    setEditingEvent(ev ?? null);
+    setModalOpen(true);
+  };
+
+  const saveEvent = (e: CalendarEvent) => {
+    setEventList((prev) => {
+      if (editingEvent) {
+        // edit existing
+        return prev.map((ev) => (ev.id === editingEvent.id ? e : ev));
+      }
+      return [...prev, e];
+    });
+    setModalOpen(false);
+  };
+
+  const deleteEvent = (id: string) => {
+    setEventList((prev) => prev.filter((ev) => ev.id !== id));
+    setModalOpen(false);
+  };
+
   return (
     <div className="flex-1 bg-white rounded-xl shadow-lg p-6">
+      {/* Header */}
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-2xl font-bold text-gray-800">Calendar</h2>
-        <button className="flex items-center gap-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-4 py-2 rounded-lg hover:opacity-90 transition">
+        <button
+          onClick={() => openModal()}
+          className="flex items-center gap-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-4 py-2 rounded-lg hover:opacity-90 transition"
+        >
           <Plus className="w-4 h-4" /> Add Event
         </button>
       </div>
+
+      {/* Calendar Grid */}
       <div className="rounded-xl border bg-white shadow-sm overflow-hidden">
-        {/* Header */}
+        {/* Month controls */}
         <div className="flex items-center justify-between px-4 py-3 border-b bg-gray-50">
           <h2 className="text-lg font-semibold text-gray-800">{label}</h2>
           <div className="flex items-center gap-1">
@@ -127,9 +157,9 @@ export default function Calendar({ events = [] }: Props) {
         </div>
 
         {/* Weekday headers */}
-        <div className="grid grid-cols-7 text-sm text-gray-500 bg-gray-100 px-4 py-2">
+        <div className="grid grid-cols-7 gap-2 text-sm text-gray-500 bg-gray-100 p-3">
           {["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map((d) => (
-            <div key={d} className="text-center font-medium">
+            <div key={d} className="text-center uppercase font-medium">
               {d}
             </div>
           ))}
@@ -148,7 +178,7 @@ export default function Calendar({ events = [] }: Props) {
               return (
                 <button
                   key={`${wi}-${di}`}
-                  onClick={() => setDate?.(iso)}
+                  onClick={() => setDate(iso)}
                   className={`relative flex flex-col items-start p-2 rounded-lg text-left border hover:shadow transition
                   ${
                     muted
@@ -178,6 +208,10 @@ export default function Calendar({ events = [] }: Props) {
                           e.color ?? "bg-indigo-100 text-indigo-700"
                         }`}
                         style={{ maxWidth: "100%" }}
+                        onClick={(ev) => {
+                          ev.stopPropagation();
+                          openModal(e);
+                        }}
                       >
                         {e.title}
                       </span>
@@ -194,6 +228,114 @@ export default function Calendar({ events = [] }: Props) {
           )}
         </div>
       </div>
+
+      {/* Modal */}
+      {modalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+          <div className="bg-white rounded-xl p-6 w-96 relative">
+            <button
+              className="absolute top-3 right-3 text-gray-500 hover:text-gray-800"
+              onClick={() => setModalOpen(false)}
+            >
+              <X />
+            </button>
+
+            <h3 className="text-lg font-semibold mb-4">
+              {editingEvent ? "Edit Event" : "Add Event"}
+            </h3>
+
+            <EventForm
+              event={editingEvent}
+              onSave={saveEvent}
+              onDelete={
+                editingEvent ? () => deleteEvent(editingEvent.id) : undefined
+              }
+              selectedDate={date}
+            />
+          </div>
+        </div>
+      )}
     </div>
+  );
+}
+
+// --- Event Form Component ---
+type EventFormProps = {
+  event?: CalendarEvent | null;
+  onSave: (ev: CalendarEvent) => void;
+  onDelete?: () => void;
+  selectedDate: string;
+};
+
+function EventForm({ event, onSave, onDelete, selectedDate }: EventFormProps) {
+  const [title, setTitle] = useState(event?.title || "");
+  const [time, setTime] = useState(event?.time || "");
+  const [color, setColor] = useState(
+    event?.color || "bg-indigo-100 text-indigo-700"
+  );
+  const [date, setDate] = useState(event?.date || selectedDate);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    onSave({
+      id: event?.id || crypto.randomUUID(),
+      title,
+      time,
+      color,
+      date,
+    });
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+      <input
+        type="text"
+        placeholder="Event title"
+        className="border p-2 rounded"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+        required
+      />
+      <input
+        type="date"
+        className="border p-2 rounded"
+        value={date}
+        onChange={(e) => setDate(e.target.value)}
+        required
+      />
+      <input
+        type="time"
+        className="border p-2 rounded"
+        value={time}
+        onChange={(e) => setTime(e.target.value)}
+      />
+      <select
+        className="border p-2 rounded"
+        value={color}
+        onChange={(e) => setColor(e.target.value)}
+      >
+        <option value="bg-indigo-100 text-indigo-700">Indigo</option>
+        <option value="bg-green-100 text-green-700">Green</option>
+        <option value="bg-yellow-100 text-yellow-700">Yellow</option>
+        <option value="bg-red-100 text-red-700">Red</option>
+      </select>
+      <div className="flex justify-between items-center">
+        {onDelete && (
+          <button
+            type="button"
+            className="text-red-600 hover:underline"
+            onClick={onDelete}
+          >
+            Delete
+          </button>
+        )}
+        <button
+          type="submit"
+          className="bg-indigo-600 text-white px-4 py-2 rounded hover:opacity-90 transition"
+        >
+          Save
+        </button>
+      </div>
+    </form>
   );
 }
