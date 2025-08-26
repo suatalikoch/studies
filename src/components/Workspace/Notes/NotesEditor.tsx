@@ -19,7 +19,7 @@ export default function NotesEditor() {
 
   return (
     <div className="flex flex-col h-full bg-white">
-      <div className="p-4 border-b flex justify-between items-center sticky top-0 bg-white shadow-sm">
+      <div className="p-4 border-b flex justify-between items-center sticky top-0 bg-white">
         <Button
           variant="outline"
           onClick={() => {
