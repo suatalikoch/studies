@@ -1,6 +1,22 @@
 "use client";
 
 import { Tool } from "@/types";
+import {
+  Circle,
+  Download,
+  Eraser,
+  Minus,
+  Palette,
+  PenLine,
+  RotateCw,
+  Save,
+  Square,
+  Trash2,
+  Type,
+  Upload,
+  ZoomIn,
+  ZoomOut,
+} from "lucide-react";
 import React, { useRef, useState, useEffect } from "react";
 
 export default function DrawingBoardClient() {
@@ -177,86 +193,12 @@ export default function DrawingBoardClient() {
                   type="button"
                 >
                   {/* Icons simplified for brevity */}
-                  {t === "pen" && (
-                    <svg
-                      className="w-5 h-5"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      viewBox="0 0 24 24"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <path d="M12 20h9" />
-                      <path d="M16.5 3.5a2.121 2.121 0 113 3L7 19l-4 1 1-4 12.5-12.5z" />
-                    </svg>
-                  )}
-                  {t === "eraser" && (
-                    <svg
-                      className="w-5 h-5"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      viewBox="0 0 24 24"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <path d="M16 16l4-4-7-7-4 4 7 7z" />
-                      <path d="M12 12l-6 6" />
-                    </svg>
-                  )}
-                  {t === "square" && (
-                    <svg
-                      className="w-5 h-5"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      viewBox="0 0 24 24"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-                    </svg>
-                  )}
-                  {t === "circle" && (
-                    <svg
-                      className="w-5 h-5"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      viewBox="0 0 24 24"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <circle cx="12" cy="12" r="10" />
-                    </svg>
-                  )}
-                  {t === "line" && (
-                    <svg
-                      className="w-5 h-5"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      viewBox="0 0 24 24"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <line x1="5" y1="12" x2="19" y2="12" />
-                    </svg>
-                  )}
-                  {t === "text" && (
-                    <svg
-                      className="w-5 h-5"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      viewBox="0 0 24 24"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <path d="M4 7h16M4 17h16M9 7v10M15 7v10" />
-                    </svg>
-                  )}
+                  {t === "pen" && <PenLine className="w-5 h-5" />}
+                  {t === "eraser" && <Eraser className="w-5 h-5" />}
+                  {t === "square" && <Square className="w-5 h-5" />}
+                  {t === "circle" && <Circle className="w-5 h-5" />}
+                  {t === "line" && <Minus className="w-5 h-5" />}
+                  {t === "text" && <Type className="w-5 h-5" />}
                 </button>
               ))}
             </div>
@@ -281,20 +223,7 @@ export default function DrawingBoardClient() {
 
             {/* Colors */}
             <div className="flex items-center space-x-2">
-              <svg
-                className="w-5 h-5 text-gray-600"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                viewBox="0 0 24 24"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path d="M12 3c4.97 0 9 4.03 9 9s-4.03 9-9 9a9 9 0 01-9-9 9 9 0 019-9z" />
-                <circle cx="15" cy="9" r="1" />
-                <circle cx="9" cy="9" r="1" />
-                <circle cx="12" cy="15" r="1" />
-              </svg>
+              <Palette className="w-5 h-5 text-gray-600" />
               <div className="flex space-x-1">
                 {["#ef4444", "#f59e0b", "#10b981", "#3b82f6", "#8b5cf6"].map(
                   (c) => (
@@ -330,19 +259,7 @@ export default function DrawingBoardClient() {
               type="button"
             >
               {/* Zoom Out */}
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                viewBox="0 0 24 24"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <line x1="19" y1="19" x2="15" y2="15" />
-                <circle cx="11" cy="11" r="8" />
-                <line x1="8" y1="11" x2="14" y2="11" />
-              </svg>
+              <ZoomOut className="w-5 h-5" />
             </button>
             <span className="text-sm text-gray-600 dark:text-gray-300 px-2">
               {(zoom * 100).toFixed(0)}%
@@ -354,80 +271,25 @@ export default function DrawingBoardClient() {
               type="button"
             >
               {/* Zoom In */}
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                viewBox="0 0 24 24"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <line x1="12" y1="8" x2="12" y2="16" />
-                <line x1="8" y1="12" x2="16" y2="12" />
-                <circle cx="11" cy="11" r="8" />
-              </svg>
+              <ZoomIn className="w-5 h-5" />
             </button>
 
             <div className="border-l border-gray-300 pl-2 ml-2 flex space-x-2">
               {/* Upload */}
               <button className="p-2 text-gray-600 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors">
-                <svg
-                  className="w-5 h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M12 3v12m0 0l-4-4m4 4l4-4" />
-                  <path d="M20 21H4" />
-                </svg>
+                <Upload className="w-5 h-5" />
               </button>
               {/* Download */}
               <button className="p-2 text-gray-600 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors">
-                <svg
-                  className="w-5 h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M12 17v-12m0 12l4-4m-4 4l-4-4" />
-                  <path d="M20 21H4" />
-                </svg>
+                <Download className="w-5 h-5" />
               </button>
               {/* Save */}
               <button className="p-2 text-gray-600 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors">
-                <svg
-                  className="w-5 h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z" />
-                  <path d="M17 21v-8H7v8" />
-                </svg>
+                <Save className="w-5 h-5" />
               </button>
               {/* Rotate */}
               <button className="p-2 text-gray-600 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors">
-                <svg
-                  className="w-5 h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M2 12a10 10 0 0117.4-7.5M2 12v6h6" />
-                </svg>
+                <RotateCw className="w-5 h-5" />
               </button>
               {/* Trash */}
               <button
@@ -436,21 +298,7 @@ export default function DrawingBoardClient() {
                 title="Clear Canvas"
                 type="button"
               >
-                <svg
-                  className="w-5 h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <polyline points="3 6 5 6 21 6" />
-                  <path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6" />
-                  <path d="M10 11v6" />
-                  <path d="M14 11v6" />
-                  <path d="M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2" />
-                </svg>
+                <Trash2 className="w-5 h-5" />
               </button>
             </div>
           </div>

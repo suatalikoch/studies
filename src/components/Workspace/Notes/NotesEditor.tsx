@@ -2,6 +2,7 @@ import { Button, Input, Textarea } from "@/components/UI";
 import MarkdownRenderer from "./Markdown";
 import { useNotes } from "./NotesContext";
 import TagInput from "./TagInput";
+import { ChevronLeft } from "lucide-react";
 
 export default function NotesEditor() {
   const {
@@ -30,7 +31,8 @@ export default function NotesEditor() {
             setSelectedNote(null);
           }}
         >
-          ← Back
+          <ChevronLeft />
+          Back
         </Button>
 
         <div className="flex items-center gap-2">

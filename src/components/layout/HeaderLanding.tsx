@@ -18,7 +18,7 @@ export default function HeaderLanding() {
           <nav className="flex items-center space-x-4 z-1">
             {/* Example Dropdown 1 */}
             <div className="relative group">
-              <button className="text-lg font-medium text-gray-700 hover:text-indigo-600">
+              <button className="text-lg text-gray-700 hover:text-indigo-600">
                 Courses
               </button>
               <div className="absolute left-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg opacity-0 group-hover:opacity-100 group-hover:translate-y-0 transform translate-y-2 transition-all duration-200 pointer-events-none group-hover:pointer-events-auto">
@@ -45,7 +45,7 @@ export default function HeaderLanding() {
 
             {/* Example Dropdown 2 */}
             <div className="relative group">
-              <button className="text-lg font-medium text-gray-700 hover:text-indigo-600">
+              <button className="text-lg text-gray-700 hover:text-indigo-600">
                 Resources
               </button>
               <div className="absolute left-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg opacity-0 group-hover:opacity-100 group-hover:translate-y-0 transform translate-y-2 transition-all duration-200 pointer-events-none group-hover:pointer-events-auto">
@@ -72,7 +72,7 @@ export default function HeaderLanding() {
 
             {/* Example Dropdown 3 */}
             <div className="relative group">
-              <button className="text-lg font-medium text-gray-700 hover:text-indigo-600">
+              <button className="text-lg text-gray-700 hover:text-indigo-600">
                 Community
               </button>
               <div className="absolute left-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg opacity-0 group-hover:opacity-100 group-hover:translate-y-0 transform translate-y-2 transition-all duration-200 pointer-events-none group-hover:pointer-events-auto">
@@ -102,19 +102,19 @@ export default function HeaderLanding() {
           <nav className="flex items-center space-x-4">
             <Link
               href="/pricing"
-              className="text-gray-700 hover:text-indigo-600 font-medium"
+              className="text-lg text-gray-700 hover:text-indigo-600"
             >
               Pricing
             </Link>
             <Link
               href="/about"
-              className="text-gray-700 hover:text-indigo-600 font-medium"
+              className="text-lg text-gray-700 hover:text-indigo-600"
             >
               About
             </Link>
             <Link
               href="/blog"
-              className="text-gray-700 hover:text-indigo-600 font-medium"
+              className="text-lg text-gray-700 hover:text-indigo-600"
             >
               Blog
             </Link>

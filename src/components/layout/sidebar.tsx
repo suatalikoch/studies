@@ -5,40 +5,9 @@ import { usePathname } from "next/navigation";
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
-import {
-  Home,
-  FileText,
-  BookOpen,
-  CheckSquare,
-  GraduationCap,
-  Calendar,
-  PenTool,
-  Book,
-  Settings,
-  LogOut,
-} from "lucide-react";
+import { Settings, LogOut, ChevronDown } from "lucide-react";
 import Image from "next/image";
-
-export const sidebarItems = [
-  { id: "dashboard", path: "dashboard", label: "Dashboard", icon: Home },
-  { id: "notes", path: "notes", label: "Notes", icon: FileText },
-  { id: "lectures", path: "lectures", label: "Lectures", icon: Book },
-  {
-    id: "assignments",
-    path: "assignments",
-    label: "Assignments",
-    icon: BookOpen,
-  },
-  { id: "tasks", path: "tasks", label: "Tasks", icon: CheckSquare },
-  { id: "calendar", path: "calendar", label: "Calendar", icon: Calendar },
-  { id: "exams", path: "exams", label: "Exams", icon: GraduationCap },
-  {
-    id: "drawing",
-    path: "drawing-board",
-    label: "Drawing Board",
-    icon: PenTool,
-  },
-];
+import { sidebarItems } from "@/lib/constants";
 
 export default function Sidebar() {
   const router = useRouter();
@@ -77,6 +46,34 @@ export default function Sidebar() {
     fetchUser();
   }, [supabase.auth]);
 
+  // Close flyout when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        flyoutRef.current &&
+        !flyoutRef.current.contains(event.target as Node)
+      ) {
+        setFlyoutOpen(false);
+      }
+    }
+
+    function handleEscKey(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        setFlyoutOpen(false);
+      }
+    }
+
+    if (flyoutOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+      document.addEventListener("keydown", handleEscKey);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("keydown", handleEscKey);
+    };
+  }, [flyoutOpen]);
+
   async function handleLogout() {
     const { error } = await supabase.auth.signOut();
     if (error) {
@@ -112,25 +109,25 @@ export default function Sidebar() {
       </nav>
 
       {/* Quick Stats */}
-      <div className="p-4 border-t border-gray-200 mt-4">
+      <div className="p-4 border-t border-gray-200">
         <h3 className="text-sm font-semibold text-gray-900 mb-3">
           Quick Statistics
         </h3>
         <div className="space-y-2">
-          <div className="flex items-center justify-between text-sm">
-            <span className="text-gray-600">Due Today</span>
+          <div className="flex items-center justify-between">
+            <span className="text-gray-600 text-sm">Due Today</span>
             <span className="bg-red-100 text-red-800 px-2 py-1 rounded-full text-xs font-medium">
               3
             </span>
           </div>
-          <div className="flex items-center justify-between text-sm">
-            <span className="text-gray-600">This Week</span>
+          <div className="flex items-center justify-between">
+            <span className="text-gray-600 text-sm">This Week</span>
             <span className="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-xs font-medium">
               7
             </span>
           </div>
-          <div className="flex items-center justify-between text-sm">
-            <span className="text-gray-600">Completed</span>
+          <div className="flex items-center justify-between">
+            <span className="text-gray-600 text-sm">Completed</span>
             <span className="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-medium">
               12
             </span>
@@ -155,22 +152,17 @@ export default function Sidebar() {
             <p className="text-gray-900 font-semibold text-sm">{user?.name}</p>
             <p className="text-gray-600 text-xs">{user?.email}</p>
           </div>
-          <svg
-            className={`w-4 h-4 text-gray-500 transition-transform ${
-              flyoutOpen ? "rotate-180" : ""
+          <div
+            className={`rounded-lg p-1 transition-colors ${
+              flyoutOpen ? "bg-gray-200" : "hover:bg-gray-200"
             }`}
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M19 9l-7 7-7-7"
+            <ChevronDown
+              className={`w-5 h-5 text-gray-600 transition-transform ${
+                flyoutOpen ? "rotate-180" : ""
+              }`}
             />
-          </svg>
+          </div>
         </button>
 
         {/* Flyout menu opens to the right */}

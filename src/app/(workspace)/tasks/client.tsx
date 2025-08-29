@@ -3,6 +3,16 @@
 import { Button } from "@/components/UI";
 import { createClient } from "@/lib/supabase/client";
 import { Category, Filter, FormState, Task, TaskPriority } from "@/types";
+import {
+  Check,
+  Clock,
+  Flag,
+  Funnel,
+  Square,
+  SquareCheck,
+  Star,
+  Trash,
+} from "lucide-react";
 import React, { useMemo, useRef, useState } from "react";
 
 export default function TasksClient({ tasksDB }: { tasksDB: Task[] }) {
@@ -124,21 +134,7 @@ export default function TasksClient({ tasksDB }: { tasksDB: Task[] }) {
           <div className="flex items-center gap-2">
             <div className="flex items-center space-x-2">
               {/* Filter icon */}
-              <svg
-                className="w-5 h-5 text-gray-600"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-                aria-hidden="true"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2a1 1 0 01-.293.707L15 13.414V19a1 1 0 01-1.447.894l-4-2A1 1 0 019 17v-3.586L3.293 6.707A1 1 0 013 6V4z"
-                ></path>
-              </svg>
+              <Funnel className="w-5 h-5 text-gray-600" />
               <select
                 value={filter}
                 onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
@@ -176,32 +172,7 @@ export default function TasksClient({ tasksDB }: { tasksDB: Task[] }) {
                   </p>
                 </div>
                 {/* CheckSquare icon */}
-                <svg
-                  className="w-8 h-8 text-indigo-600"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                  aria-hidden="true"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M9 12l2 2 4-4"
-                  ></path>
-                  <rect
-                    width="20"
-                    height="20"
-                    x="2"
-                    y="2"
-                    rx="2"
-                    ry="2"
-                    strokeWidth="2"
-                    stroke="currentColor"
-                    fill="none"
-                  ></rect>
-                </svg>
+                <SquareCheck className="w-8 h-8 text-indigo-600" />
               </div>
             </div>
             <div className="bg-white rounded-lg p-4 border border-gray-200">
@@ -213,21 +184,7 @@ export default function TasksClient({ tasksDB }: { tasksDB: Task[] }) {
                   </p>
                 </div>
                 {/* Check icon */}
-                <svg
-                  className="w-8 h-8 text-green-600"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                  aria-hidden="true"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M5 13l4 4L19 7"
-                  ></path>
-                </svg>
+                <Check className="w-8 h-8 text-green-600" />
               </div>
             </div>
             <div className="bg-white rounded-lg p-4 border border-gray-200">
@@ -239,29 +196,7 @@ export default function TasksClient({ tasksDB }: { tasksDB: Task[] }) {
                   </p>
                 </div>
                 {/* Clock icon */}
-                <svg
-                  className="w-8 h-8 text-yellow-600"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                  aria-hidden="true"
-                >
-                  <circle
-                    cx="12"
-                    cy="12"
-                    r="10"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    fill="none"
-                  ></circle>
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M12 6v6l4 2"
-                  ></path>
-                </svg>
+                <Clock className="w-8 h-8 text-yellow-600" />
               </div>
             </div>
             <div className="bg-white rounded-lg p-4 border border-gray-200">
@@ -275,26 +210,7 @@ export default function TasksClient({ tasksDB }: { tasksDB: Task[] }) {
                   </p>
                 </div>
                 {/* Flag icon */}
-                <svg
-                  className="w-8 h-8 text-red-600"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                  aria-hidden="true"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M5 3v18"
-                  ></path>
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M5 3c7-4 7 4 14 0v14c-7-4-7 4-14 0"
-                  ></path>
-                </svg>
+                <Flag className="w-8 h-8 text-red-600" />
               </div>
             </div>
           </div>
@@ -464,54 +380,9 @@ export default function TasksClient({ tasksDB }: { tasksDB: Task[] }) {
                     >
                       {/* Toggle square/checked square */}
                       {task.completed ? (
-                        <svg
-                          className="w-5 h-5"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          viewBox="0 0 24 24"
-                          xmlns="http://www.w3.org/2000/svg"
-                          aria-hidden="true"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M9 12l2 2 4-4"
-                          ></path>
-                          <rect
-                            width="18"
-                            height="18"
-                            x="3"
-                            y="3"
-                            rx="2"
-                            ry="2"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            fill="none"
-                          ></rect>
-                        </svg>
+                        <SquareCheck className="w-5 h-5" />
                       ) : (
-                        <svg
-                          className="w-5 h-5"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          viewBox="0 0 24 24"
-                          xmlns="http://www.w3.org/2000/svg"
-                          aria-hidden="true"
-                        >
-                          <rect
-                            width="18"
-                            height="18"
-                            x="3"
-                            y="3"
-                            rx="2"
-                            ry="2"
-                            stroke="currentColor"
-                            strokeWidth="2"
-                            fill="none"
-                          ></rect>
-                        </svg>
+                        <Square className="w-5 h-5" />
                       )}
                     </button>
 
@@ -579,21 +450,7 @@ export default function TasksClient({ tasksDB }: { tasksDB: Task[] }) {
                         }`}
                         aria-label={task.starred ? "Unstar task" : "Star task"}
                       >
-                        <svg
-                          className="w-5 h-5"
-                          fill={task.starred ? "currentColor" : "none"}
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          viewBox="0 0 24 24"
-                          xmlns="http://www.w3.org/2000/svg"
-                          aria-hidden="true"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M12 17.27l-5.18 3.05 1-5.82L3 9.75l5.91-.86L12 3.5l3.09 5.39 5.91.86-4.82 4.75 1 5.82z"
-                          ></path>
-                        </svg>
+                        <Star className="w-5 h-5" />
                       </button>
 
                       <button
@@ -602,21 +459,7 @@ export default function TasksClient({ tasksDB }: { tasksDB: Task[] }) {
                         aria-label="Delete task"
                       >
                         {/* Trash icon */}
-                        <svg
-                          className="w-5 h-5"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          viewBox="0 0 24 24"
-                          xmlns="http://www.w3.org/2000/svg"
-                          aria-hidden="true"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5-4h4m-4 0a1 1 0 00-1 1v1h6V4a1 1 0 00-1-1m-4 0h4"
-                          ></path>
-                        </svg>
+                        <Trash className="w-5 h-5" />
                       </button>
                     </div>
                   </div>

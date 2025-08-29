@@ -1,3 +1,13 @@
+import {
+  AlertTriangle,
+  BookOpen,
+  Calendar,
+  Download,
+  File,
+  Plus,
+  Upload,
+} from "lucide-react";
+
 export default function AssignmentsClient() {
   return (
     <div className="h-full flex">
@@ -8,21 +18,7 @@ export default function AssignmentsClient() {
             <h2 className="text-xl font-bold text-gray-900">Assignments</h2>
             <button className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors flex items-center space-x-2">
               {/* Icon placeholder for Plus */}
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-                aria-hidden="true"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M12 4v16m8-8H4"
-                ></path>
-              </svg>
+              <Plus className="w-5 h-5" />
               <span>Add Assignment</span>
             </button>
           </div>
@@ -43,26 +39,7 @@ export default function AssignmentsClient() {
                 Assignment Title
               </h3>
               {/* Conditional alert icon placeholder */}
-              <svg
-                className="w-4 h-4 text-red-500 ml-2"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-                aria-hidden="true"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"
-                ></path>
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M12 9v4m0 4h.01"
-                ></path>
-              </svg>
+              <AlertTriangle className="w-4 h-4 text-red-500 ml-2" />
             </div>
 
             <p className="text-sm text-gray-600 mb-2">Subject Name</p>
@@ -79,20 +56,7 @@ export default function AssignmentsClient() {
             <div className="flex items-center justify-between text-xs text-gray-500">
               <div className="flex items-center space-x-1">
                 {/* Calendar icon */}
-                <svg
-                  className="w-3 h-3"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                  aria-hidden="true"
-                >
-                  <rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect>
-                  <line x1="16" y1="2" x2="16" y2="6"></line>
-                  <line x1="8" y1="2" x2="8" y2="6"></line>
-                  <line x1="3" y1="10" x2="21" y2="10"></line>
-                </svg>
+                <Calendar className="w-3 h-3" />
                 <span>Due Date</span>
               </div>
               <span className="font-medium text-gray-600">
@@ -125,27 +89,7 @@ export default function AssignmentsClient() {
                   </span>
                   <div className="flex items-center space-x-1 text-sm text-gray-600">
                     {/* Calendar icon */}
-                    <svg
-                      className="w-4 h-4"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                      aria-hidden="true"
-                    >
-                      <rect
-                        width="18"
-                        height="18"
-                        x="3"
-                        y="4"
-                        rx="2"
-                        ry="2"
-                      ></rect>
-                      <line x1="16" y1="2" x2="16" y2="6"></line>
-                      <line x1="8" y1="2" x2="8" y2="6"></line>
-                      <line x1="3" y1="10" x2="21" y2="10"></line>
-                    </svg>
+                    <Calendar className="w-4 h-4" />
                     <span>Due: Due Date</span>
                   </div>
                 </div>
@@ -157,38 +101,14 @@ export default function AssignmentsClient() {
                   title="Upload"
                 >
                   {/* Upload icon */}
-                  <svg
-                    className="w-4 h-4"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                    aria-hidden="true"
-                  >
-                    <path d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2"></path>
-                    <polyline points="8 12 12 8 16 12"></polyline>
-                    <line x1="12" y1="8" x2="12" y2="20"></line>
-                  </svg>
+                  <Upload className="w-4 h-4" />
                 </button>
                 <button
                   className="px-3 py-2 text-gray-600 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors"
                   title="Download"
                 >
                   {/* Download icon */}
-                  <svg
-                    className="w-4 h-4"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                    aria-hidden="true"
-                  >
-                    <path d="M12 5v14"></path>
-                    <polyline points="8 15 12 19 16 15"></polyline>
-                    <line x1="4" y1="19" x2="20" y2="19"></line>
-                  </svg>
+                  <Download className="w-4 h-4" />
                 </button>
               </div>
             </div>
@@ -227,37 +147,14 @@ export default function AssignmentsClient() {
                 <div className="space-y-2">
                   <div className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
                     {/* File icon */}
-                    <svg
-                      className="w-5 h-5 text-gray-600"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                      aria-hidden="true"
-                    >
-                      <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"></path>
-                      <polyline points="14 2 14 8 20 8"></polyline>
-                    </svg>
+                    <File className="w-5 h-5 text-gray-600" />
                     <span className="flex-1 text-gray-900">filename.pdf</span>
                     <button
                       className="text-indigo-600 hover:text-indigo-800"
                       title="Download attachment"
                     >
                       {/* Download icon */}
-                      <svg
-                        className="w-4 h-4"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
-                        aria-hidden="true"
-                      >
-                        <path d="M12 5v14"></path>
-                        <polyline points="8 15 12 19 16 15"></polyline>
-                        <line x1="4" y1="19" x2="20" y2="19"></line>
-                      </svg>
+                      <Download className="w-4 h-4" />
                     </button>
                   </div>
                 </div>
@@ -302,18 +199,7 @@ export default function AssignmentsClient() {
         <div className="h-full flex items-center justify-center text-gray-500">
           <div className="text-center">
             {/* Book Open Icon */}
-            <svg
-              className="w-16 h-16 mx-auto mb-4 text-gray-300"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-              aria-hidden="true"
-            >
-              <path d="M12 19l7-7 1 5a2 2 0 01-2 2H6a2 2 0 01-2-2l1-5 7 7z"></path>
-              <path d="M12 19V5l-7 7"></path>
-            </svg>
+            <BookOpen className="w-16 h-16 mx-auto mb-4 text-gray-300" />
             <h3 className="text-lg font-medium mb-2">Select an assignment</h3>
             <p>
               Choose an assignment from the list to view details and track

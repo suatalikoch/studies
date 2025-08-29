@@ -1,3 +1,4 @@
+import { Copyright } from "lucide-react";
 import Link from "next/link";
 
 export default function Footer() {
@@ -5,8 +6,10 @@ export default function Footer() {
     <footer className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-6">
       <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center">
         <p>
-          Copyright &copy; {new Date().getFullYear()} Student Hub. All rights
-          reserved.
+          <span className="flex gap-1 items-center">
+            Copyright <Copyright size={16} />
+            {new Date().getFullYear()} Student Hub. All rights reserved.
+          </span>{" "}
         </p>
         <div className="flex gap-4 mt-4 md:mt-0">
           <Link href="/privacy" className="hover:underline">
