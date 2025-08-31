@@ -1,9 +1,10 @@
-import React, { useMemo, useState } from "react";
-import { Plus, X } from "lucide-react";
-import { CalendarEvent } from "@/types";
+import React, { useEffect, useMemo, useState } from "react";
+import { Plus, Triangle, X } from "lucide-react";
+import { CalendarEvent, Exam } from "@/types";
 
 type Props = {
   events?: CalendarEvent[];
+  exams?: Exam[];
 };
 
 function toISO(d: Date) {
@@ -21,7 +22,20 @@ function endOfMonth(date: Date) {
   return new Date(date.getFullYear(), date.getMonth() + 1, 0);
 }
 
-export default function Calendar({ events = [] }: Props) {
+function examsToCalendarEvents(exams: Exam[]): CalendarEvent[] {
+  return exams.map((exam) => ({
+    id: `exam-${exam.subject}-${exam.date}`,
+    title: exam.subject,
+    date: new Date(exam.date).toISOString().split("T")[0], // just YYYY-MM-DD
+    time: new Date(exam.date).toLocaleTimeString(undefined, {
+      hour: "2-digit",
+      minute: "2-digit",
+    }),
+    color: "bg-red-100 text-red-700", // mark exams in red
+  }));
+}
+
+export default function Calendar({ events = [], exams = [] }: Props) {
   const [date, setDate] = useState<string>(toISO(new Date()));
 
   const todayISO = toISO(new Date());
@@ -114,6 +128,10 @@ export default function Calendar({ events = [] }: Props) {
     setModalOpen(false);
   };
 
+  useEffect(() => {
+    setEventList([...events, ...examsToCalendarEvents(exams)]);
+  }, []);
+
   return (
     <div className="flex-1 bg-white rounded-xl shadow-lg p-6">
       {/* Header */}
@@ -135,23 +153,23 @@ export default function Calendar({ events = [] }: Props) {
           <div className="flex items-center gap-1">
             <button
               onClick={() => goMonth(-1)}
-              className="px-2 py-1 rounded-md hover:bg-gray-200 transition"
+              className="p-2 rounded-md bg-indigo-50 hover:bg-indigo-100 text-indigo-700 transition"
               aria-label="Previous month"
             >
-              ◀
+              <Triangle fill="currentColor" className="w-4 h-4 rotate-270" />
             </button>
             <button
               onClick={() => setViewDate(new Date())}
-              className="px-3 py-1 text-sm rounded-md bg-indigo-50 text-indigo-700 hover:bg-indigo-100 transition"
+              className="px-3 py-[4px] rounded-md bg-indigo-50 text-indigo-700 hover:bg-indigo-100 transition"
             >
               Today
             </button>
             <button
               onClick={() => goMonth(1)}
-              className="px-2 py-1 rounded-md hover:bg-gray-200 transition"
+              className="p-2 rounded-md bg-indigo-50 hover:bg-indigo-100 text-indigo-700 transition"
               aria-label="Next month"
             >
-              ▶
+              <Triangle fill="currentColor" className="w-4 h-4 rotate-90" />
             </button>
           </div>
         </div>
