@@ -4,7 +4,6 @@ import {
   Calendar,
   CheckSquare,
   FileText,
-  GraduationCap,
   Home,
   PenTool,
 } from "lucide-react";
@@ -21,7 +20,6 @@ export const sidebarItems = [
   },
   { id: "tasks", path: "tasks", label: "Tasks", icon: CheckSquare },
   { id: "calendar", path: "calendar", label: "Calendar", icon: Calendar },
-  { id: "exams", path: "exams", label: "Exams", icon: GraduationCap },
   {
     id: "drawing",
     path: "drawing-board",
