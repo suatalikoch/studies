@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/components/UI";
+import { Badge, Button } from "@/components/UI";
 import { createClient } from "@/lib/supabase/client";
 import { Category, Filter, FormState, Task, TaskPriority } from "@/types";
 import {
@@ -160,7 +160,7 @@ export default function TasksClient({ tasksDB }: { tasksDB: Task[] }) {
       <div className="flex-1 p-4 flex flex-col gap-4">
         {/* Stat Cards */}
         {!showForm && (
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             <div className="bg-white rounded-lg p-4 border border-gray-200">
               <div className="flex items-center justify-between">
                 <div>
@@ -354,13 +354,6 @@ export default function TasksClient({ tasksDB }: { tasksDB: Task[] }) {
         {!showForm && (
           <div className="flex-1 overflow-y-auto space-y-3">
             {filteredTasks.map((task) => {
-              const priorityColor =
-                task.priority === "high"
-                  ? "text-red-600"
-                  : task.priority === "medium"
-                  ? "text-yellow-600"
-                  : "text-gray-500";
-
               return (
                 <div
                   key={task.id}
@@ -397,70 +390,88 @@ export default function TasksClient({ tasksDB }: { tasksDB: Task[] }) {
                         >
                           {task.title}
                         </h4>
-                        <span
-                          className={`text-sm font-medium ${
-                            task.completed
-                              ? "text-green-600"
-                              : "text-yellow-600"
-                          }`}
-                        >
-                          {task.completed ? "Completed" : "Pending"}
-                        </span>
+                        <div className="flex gap-3 items-center">
+                          <Badge
+                            className={`${
+                              task.completed
+                                ? "bg-green-100 text-green-800"
+                                : "bg-yellow-100 text-yellow-800"
+                            }`}
+                          >
+                            {task.completed ? "Completed" : "Pending"}
+                          </Badge>
+                          {/* Star toggle */}
+                          <button
+                            onClick={() => toggleStar(task.id)}
+                            className={`text-gray-400 hover:text-yellow-500 cursor-pointer ${
+                              task.starred ? "text-yellow-500" : ""
+                            }`}
+                            aria-label={
+                              task.starred ? "Unstar task" : "Star task"
+                            }
+                          >
+                            <Star className="w-5 h-5" />
+                          </button>
+                          <button
+                            onClick={() => deleteTask(task.id)}
+                            className="text-gray-400 hover:text-red-600 cursor-pointer"
+                            aria-label="Delete task"
+                          >
+                            {/* Trash icon */}
+                            <Trash className="w-5 h-5" />
+                          </button>
+                        </div>
                       </div>
-                      {task.description && (
-                        <p className="text-gray-600 mt-1">{task.description}</p>
-                      )}
-                      {!task.description && (
-                        <p className="text-xs text-gray-400 mt-1">
-                          No content available
-                        </p>
-                      )}
-                      <div className="flex items-center flex-wrap gap-3 mt-2">
-                        <span className="text-sm text-gray-500">
-                          {task.category}
-                        </span>
-                        {task.due_date && (
-                          <span className="text-sm text-gray-500">
-                            Due: {task.due_date}
-                          </span>
+                      <div>
+                        {task.description && (
+                          <p className="text-sm text-gray-600 mt-1">
+                            {task.description}
+                          </p>
                         )}
-                        <span
-                          className={`text-sm font-medium ${priorityColor}`}
-                        >
-                          {task.priority === "high"
-                            ? "High"
-                            : task.priority === "medium"
-                            ? "Medium"
-                            : "Low"}
-                        </span>
-                        {task.starred && (
-                          <span className="text-sm text-yellow-600 font-medium">
-                            ★ Starred
-                          </span>
+                        {!task.description && (
+                          <p className="text-xs text-gray-400 mt-1">
+                            No content available
+                          </p>
                         )}
                       </div>
-                    </div>
-
-                    <div className="flex items-center gap-2 ml-3">
-                      {/* Star toggle */}
-                      <button
-                        onClick={() => toggleStar(task.id)}
-                        className={`text-gray-400 hover:text-yellow-500 cursor-pointer ${
-                          task.starred ? "text-yellow-500" : ""
-                        }`}
-                        aria-label={task.starred ? "Unstar task" : "Star task"}
-                      >
-                        <Star className="w-5 h-5" />
-                      </button>
-
-                      <button
-                        onClick={() => deleteTask(task.id)}
-                        className="text-gray-400 hover:text-red-600 cursor-pointer"
-                        aria-label="Delete task"
-                      >
-                        {/* Trash icon */}
-                        <Trash className="w-5 h-5" />
-                      </button>
+                      <div className="flex justify-between items-center flex-wrap mt-2">
+                        <div className="flex gap-3">
+                          <Badge variant="secondary">{task.category}</Badge>
+                          <Badge
+                            className={`${
+                              task.priority === "high"
+                                ? "bg-red-100 text-red-800"
+                                : task.priority === "medium"
+                                ? "bg-orange-100 text-orange-800"
+                                : "bg-lime-100 text-lime-800"
+                            }`}
+                          >
+                            {task.priority === "high"
+                              ? "High"
+                              : task.priority === "medium"
+                              ? "Medium"
+                              : "Low"}
+                          </Badge>
+                          {task.starred && (
+                            <div className="flex flex-row items-center gap-1">
+                              <Badge className="bg-amber-50 text-amber-700">
+                                <Star className="w-4 h-4" />
+                                <p>Starred</p>
+                              </Badge>
+                            </div>
+                          )}
+                        </div>
+                        <div>
+                          {task.due_date && (
+                            <span className="flex gap-1">
+                              <Badge variant="secondary">Due:</Badge>
+                              <Badge variant="secondary">
+                                {new Date(task.due_date).toLocaleDateString()}
+                              </Badge>
+                            </span>
+                          )}
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>

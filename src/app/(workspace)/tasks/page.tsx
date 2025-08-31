@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   title: "Studies | Tasks",
 };
 
-export default async function Tasks() {
+export default async function TasksPage() {
   const user = await getCurrentUser();
 
   if (!user) {
