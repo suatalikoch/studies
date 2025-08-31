@@ -95,7 +95,7 @@ export default function NoteCard({
         <div>
           <div className="flex justify-between items-center mt-2 text-xs text-gray-500">
             <Badge variant="secondary">{note.subject}</Badge>
-            <span>{new Date(note.updated_at).toISOString().split("T")[0]}</span>
+            <span>{new Date(note.updated_at).toLocaleDateString()}</span>
           </div>
           <div className="flex flex-wrap gap-1 mt-1">
             {note.tags?.slice(0, maxTags).map((tag) => (

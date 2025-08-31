@@ -11,7 +11,9 @@ export default function TermsPage() {
         {/* Header */}
         <div className="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-xl p-6 text-white shadow-lg">
           <h1 className="text-3xl font-bold mb-2">Terms of Service</h1>
-          <p className="text-indigo-100">Last updated: August 10, 2025</p>
+          <p className="text-indigo-100">
+            Last updated: {new Date("August 10, 2025").toLocaleDateString()}
+          </p>
         </div>
 
         {/* Content */}

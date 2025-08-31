@@ -57,7 +57,7 @@ export default function AssignmentsClient() {
               <div className="flex items-center space-x-1">
                 {/* Calendar icon */}
                 <Calendar className="w-3 h-3" />
-                <span>Due Date</span>
+                <span>{new Date().toLocaleDateString()}</span>
               </div>
               <span className="font-medium text-gray-600">
                 X days left / overdue
@@ -90,7 +90,7 @@ export default function AssignmentsClient() {
                   <div className="flex items-center space-x-1 text-sm text-gray-600">
                     {/* Calendar icon */}
                     <Calendar className="w-4 h-4" />
-                    <span>Due: Due Date</span>
+                    <span>Due: {new Date().toLocaleDateString()}</span>
                   </div>
                 </div>
               </div>

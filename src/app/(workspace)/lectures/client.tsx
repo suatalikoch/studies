@@ -89,7 +89,7 @@ export default function LecturesClient() {
                   <div className="flex items-center space-x-1">
                     {/* Calendar Icon */}
                     <Calendar className="w-3 h-3" />
-                    <span>2025-08-07</span>
+                    <span>{new Date("2025-08-07").toLocaleDateString()}</span>
                   </div>
                   <div className="flex items-center space-x-1">
                     {/* Clock Icon */}
@@ -143,7 +143,7 @@ export default function LecturesClient() {
                   <div className="flex items-center space-x-1">
                     {/* Calendar Icon */}
                     <Calendar className="w-3 h-3" />
-                    <span>2025-08-07</span>
+                    <span>{new Date("2025-08-07").toLocaleDateString()}</span>
                   </div>
                   <div className="flex items-center space-x-1">
                     {/* Clock Icon */}
@@ -197,7 +197,7 @@ export default function LecturesClient() {
                   <div className="flex items-center space-x-1">
                     {/* Calendar Icon */}
                     <Calendar className="w-3 h-3" />
-                    <span>2025-08-07</span>
+                    <span>{new Date("2025-08-07").toLocaleDateString()}</span>
                   </div>
                   <div className="flex items-center space-x-1">
                     {/* Clock Icon */}
@@ -251,7 +251,7 @@ export default function LecturesClient() {
                   <div className="flex items-center space-x-1">
                     {/* Calendar Icon */}
                     <Calendar className="w-3 h-3" />
-                    <span>2025-08-07</span>
+                    <span>{new Date("2025-08-07").toLocaleDateString()}</span>
                   </div>
                   <div className="flex items-center space-x-1">
                     {/* Clock Icon */}
@@ -296,7 +296,7 @@ export default function LecturesClient() {
                     <span>•</span>
                     <span>Prof. Smith</span>
                     <span>•</span>
-                    <span>2025-08-07</span>
+                    <span>{new Date("2025-08-07").toLocaleDateString()}</span>
                     <span>•</span>
                     <span>1h 30m</span>
                   </div>
