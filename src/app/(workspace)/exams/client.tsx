@@ -1,42 +1,52 @@
 "use client";
 
 import { useState } from "react";
-import { Trash2, Check } from "lucide-react";
+import { Trash2, Check, ArrowLeft } from "lucide-react";
 import { Badge, Button, Card, Input, Label } from "@/components/UI";
 import { CardContent, CardHeader, CardTitle } from "@/components/UI/card";
+import { Exam } from "@/types";
+import { createClient } from "@/lib/supabase/client";
+import Link from "next/link";
 
-interface Exam {
-  id: number;
-  subject: string;
-  date: string;
-  status: "upcoming" | "completed";
-}
-
-export default function ExamsClient() {
-  const [exams, setExams] = useState<Exam[]>([
-    { id: 1, subject: "Mathematics", date: "2025-08-20", status: "upcoming" },
-    { id: 2, subject: "Physics", date: "2025-08-25", status: "upcoming" },
-  ]);
-
+export default function ExamsClient({ examsDB }: { examsDB: Exam[] }) {
+  const [exams, setExams] = useState<Exam[]>(examsDB);
   const [subject, setSubject] = useState("");
   const [date, setDate] = useState("");
+  const [location, setLocation] = useState("");
 
-  const addExam = () => {
+  const addExam = async (user_id: string) => {
     if (!subject || !date) return;
-    const newExam: Exam = {
-      id: Date.now(),
+    const newExam: Omit<Exam, "id"> = {
+      user_id,
       subject,
       date,
+      location,
       status: "upcoming",
+      updated_at: new Date().toISOString(),
+      created_at: new Date().toISOString(),
     };
-    setExams([newExam, ...exams]);
+
+    const { data, error } = await createClient()
+      .from("exams")
+      .insert([newExam])
+      .select();
+
+    if (error) {
+      // showToast("error", "Failed to add task");
+      alert("Failed to add task: " + error.message);
+      return;
+    }
+
+    const insertedExam = data[0];
+    setExams((e) => [insertedExam, ...e]);
     setSubject("");
     setDate("");
+    setLocation("");
   };
 
-  const toggleStatus = (id: number) => {
+  const toggleStatus = (id: string) => {
     setExams((prev) =>
-      prev.map((exam) =>
+      prev?.map((exam) =>
         exam.id === id
           ? {
               ...exam,
@@ -47,13 +57,21 @@ export default function ExamsClient() {
     );
   };
 
-  const deleteExam = (id: number) => {
-    setExams((prev) => prev.filter((exam) => exam.id !== id));
+  const deleteExam = (id: string) => {
+    setExams((prev) => prev?.filter((exam) => exam.id !== id));
   };
 
   return (
     <div className="max-w-3xl mx-auto p-6 space-y-6">
-      <h1 className="text-3xl font-bold">📅 Exams</h1>
+      <div className="flex gap-3 items-center">
+        <Link href="/calendar">
+          <Button variant="outline">
+            <ArrowLeft />
+            Back
+          </Button>
+        </Link>
+        <h1 className="text-3xl font-bold">Exams</h1>
+      </div>
 
       {/* Add Exam Form */}
       <Card>
@@ -81,7 +99,21 @@ export default function ExamsClient() {
             />
           </div>
 
-          <Button onClick={addExam}>Add Exam</Button>
+          <div>
+            <Label htmlFor="location">Location</Label>
+            <Input
+              id="location"
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
+              placeholder="Room 001"
+            />
+          </div>
+
+          <Button
+            onClick={() => addExam("e52e5151-a495-4bda-86bd-43ccf1394c32")}
+          >
+            Add Exam
+          </Button>
         </CardContent>
       </Card>
 
@@ -92,7 +124,10 @@ export default function ExamsClient() {
             <CardContent className="flex items-center gap-4 py-4 w-full justify-between">
               <div>
                 <h2 className="text-lg font-semibold">{exam.subject}</h2>
-                <p className="text-sm text-muted-foreground">{exam.date}</p>
+                <p className="text-sm text-muted-foreground">
+                  {new Date(exam.date).toLocaleDateString()}
+                </p>
+                <p className="text-sm text-muted-foreground">{exam.location}</p>
                 <Badge
                   variant={
                     exam.status === "completed" ? "secondary" : "outline"
