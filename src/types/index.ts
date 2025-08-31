@@ -1,6 +1,7 @@
 export * from "@/types/calendar";
 export * from "@/types/deadline";
 export * from "@/types/drawing";
+export * from "@/types/exam";
 export * from "@/types/note";
 export * from "@/types/plan";
 export * from "@/types/progress";
