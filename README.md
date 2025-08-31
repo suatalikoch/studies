@@ -1,6 +1,6 @@
 ---
 
-![Student Hub Banner](./public/images/banner.png)
+![Student Hub Banner](public/images/banner.png)
 
 # 🎓 Student Hub
 
@@ -31,9 +31,11 @@ Built with **Next.js**, **Supabase**, and **Tailwind CSS**, it’s designed for 
 
 ## 🖼 Screenshots
 
-| Dashboard                                              | Notes                                          | Progress                                             |
-| ------------------------------------------------------ | ---------------------------------------------- | ---------------------------------------------------- |
-| ![Dashboard Screenshot](./public/images/dashboard.png) | ![Notes Screenshot](./public/images/notes.png) | ![Progress Screenshot](./public/images/calendar.png) |
+| Dashboard                                                    | Notes                                        | Progress                                           |
+| ------------------------------------------------------------ | -------------------------------------------- | -------------------------------------------------- |
+| ![Dashboard Screenshot](public/images/dashboard.png)         | ![Notes Screenshot](public/images/notes.png) | ![Lectures Screenshot](public/images/lectures.png) |
+| ![Assignments Screenshot](public/images/assignments.png)     | ![Tasks Screenshot](public/images/tasks.png) | ![Calendar Screenshot](public/images/calendar.png) |
+| ![Drawing Board Screenshot](public/images/drawing-board.png) |
 
 ---
 
