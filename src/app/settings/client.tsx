@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { useUser } from "@/hooks/useUser";
 import { createClient } from "@/lib/supabase/client";
 import { Tab } from "@/types";
+import { Skeleton } from "@/components/UI";
 
 export default function SettingsClient() {
   const user = useUser();
@@ -15,6 +16,7 @@ export default function SettingsClient() {
 
   const [activeTab, setActiveTab] = useState<Tab>("profile");
   const [loading, setLoading] = useState(false);
+  const [isFetching, setIsFetching] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
 
@@ -40,13 +42,19 @@ export default function SettingsClient() {
   const [darkMode, setDarkMode] = useState(false);
 
   useEffect(() => {
-    if (user) {
-      setName(user.user_metadata?.full_name || "");
-      setEmail(user.email || "");
-      setTwoFactorAuth(user.user_metadata?.two_factor_auth || false);
-      setNotifications(user.user_metadata?.notifications || notifications);
-      setDarkMode(user.user_metadata?.dark_mode || false);
-      setAvatar(user.user_metadata?.avatar_url || null);
+    if (user === undefined) {
+      setIsFetching(true);
+    } else {
+      if (user) {
+        setName(user.user_metadata?.full_name || "");
+        setEmail(user.email || "");
+        setTwoFactorAuth(user.user_metadata?.two_factor_auth || false);
+        setNotifications(user.user_metadata?.notifications || notifications);
+        setDarkMode(user.user_metadata?.dark_mode || false);
+        setAvatar(user.user_metadata?.avatar_url || null);
+      }
+
+      setIsFetching(false);
     }
   }, [user, notifications]);
 
@@ -218,16 +226,16 @@ export default function SettingsClient() {
   return (
     <div className="min-h-screen bg-gray-50 p-6">
       {/* Header */}
-      <div className="max-w-5xl mx-auto bg-gradient-to-r from-indigo-600 to-purple-600 rounded-xl p-6 text-white shadow-lg mb-6">
+      <div className="max-w-5xl mx-auto bg-gradient-to-r from-indigo-600 to-purple-600 rounded-lg p-6 text-white shadow-lg mb-6">
         <h1 className="text-3xl font-bold">Settings</h1>
         <p className="text-indigo-100 mt-1">
           Manage your preferences and account.
         </p>
       </div>
 
-      <div className="max-w-5xl mx-auto bg-white rounded-xl shadow-lg flex flex-col md:flex-row">
+      <div className="max-w-5xl mx-auto bg-white rounded-lg shadow-lg flex flex-col md:flex-row">
         {/* Sidebar Tabs */}
-        <nav className="flex md:flex-col border-b md:border-b-0 md:border-r border-gray-200 bg-gray-50 rounded-t-xl md:rounded-t-none md:rounded-l-xl">
+        <nav className="flex md:flex-col border-b md:border-b-0 md:border-r border-gray-200 bg-gray-50 rounded-t-lg md:rounded-t-none md:rounded-l-lg">
           {tabs.map(({ id, label, icon }) => (
             <button
               key={id}
@@ -268,18 +276,24 @@ export default function SettingsClient() {
             {activeTab === "profile" && (
               <>
                 <h2 className="text-xl font-semibold flex items-center gap-2 mb-6">
-                  <User className="w-6 h-6 text-indigo-600" /> Profile
-                  Information
+                  <User className="w-6 h-6 text-indigo-600" />
+                  Profile Information
                 </h2>
                 <div className="flex items-center gap-6 mb-6">
                   <div className="w-20 h-20 rounded-full overflow-hidden bg-gray-200 flex items-center justify-center">
-                    <Image
-                      src={avatar || "/images/avatar.png"}
-                      alt="Avatar"
-                      width={80}
-                      height={80}
-                      className="object-cover"
-                    />
+                    {isFetching ? (
+                      <div>
+                        <Skeleton />
+                      </div>
+                    ) : (
+                      <Image
+                        src={avatar || "/images/avatar.png"}
+                        alt="Avatar"
+                        width={80}
+                        height={80}
+                        className="object-cover"
+                      />
+                    )}
                   </div>
                   <label
                     className={`bg-indigo-600 text-white px-4 py-2 rounded-lg cursor-pointer hover:opacity-90 transition ${
@@ -369,7 +383,7 @@ export default function SettingsClient() {
                       type="checkbox"
                       checked={twoFactorAuth}
                       onChange={(e) => setTwoFactorAuth(e.target.checked)}
-                      className="w-5 h-5 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
+                      className="w-5 h-5 text-indigo-600 border-gray-300 rounded-lg focus:ring-indigo-500"
                       disabled={loading}
                     />
                     <span className="text-gray-700 flex items-center gap-1">
@@ -401,7 +415,7 @@ export default function SettingsClient() {
                             [key]: e.target.checked,
                           }))
                         }
-                        className="w-5 h-5 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
+                        className="w-5 h-5 text-indigo-600 border-gray-300 rounded-lg focus:ring-indigo-500"
                         disabled={loading}
                       />
                       <span className="text-gray-700 capitalize">
@@ -423,7 +437,7 @@ export default function SettingsClient() {
                     type="checkbox"
                     checked={darkMode}
                     onChange={(e) => setDarkMode(e.target.checked)}
-                    className="w-5 h-5 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
+                    className="w-5 h-5 text-indigo-600 border-gray-300 rounded-lg focus:ring-indigo-500"
                     disabled={loading}
                   />
                   <span className="text-gray-700">Enable Dark Mode</span>

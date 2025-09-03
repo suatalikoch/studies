@@ -8,6 +8,7 @@ import { createClient } from "@/lib/supabase/client";
 import { Settings, LogOut, ChevronDown } from "lucide-react";
 import Image from "next/image";
 import { sidebarItems } from "@/lib/constants";
+import { Skeleton } from "../UI";
 
 export default function Sidebar() {
   const router = useRouter();
@@ -15,6 +16,7 @@ export default function Sidebar() {
   const supabase = createClient();
   const [flyoutOpen, setFlyoutOpen] = useState(false);
   const flyoutRef = useRef<HTMLDivElement>(null);
+  const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<{
     name: string;
     email: string;
@@ -41,6 +43,7 @@ export default function Sidebar() {
             )}`,
         });
       }
+      setLoading(false);
     }
 
     fetchUser();
@@ -137,37 +140,50 @@ export default function Sidebar() {
 
       {/* User profile + dropdown */}
       <div className="border-t border-gray-200 p-4 relative" ref={flyoutRef}>
-        <button
-          onClick={() => setFlyoutOpen(!flyoutOpen)}
-          className="flex items-center w-full space-x-3 focus:outline-none cursor-pointer"
-        >
-          <Image
-            src={user?.avatar || "/images/avatar.png"}
-            alt="User Avatar"
-            width={40}
-            height={40}
-            className="rounded-full object-cover"
-          />
-          <div className="flex-1 text-left">
-            <p className="text-gray-900 font-semibold text-sm">{user?.name}</p>
-            <p className="text-gray-600 text-xs">{user?.email}</p>
+        {loading ? (
+          <div className="flex items-center w-full space-x-3 focus:outline-none cursor-pointer">
+            <Skeleton className="w-10 h-10 rounded-full" />
+            <div className="flex flex-col gap-2 flex-1">
+              <Skeleton className="w-[65%] h-3" />
+              <Skeleton className="w-full h-2" />
+            </div>
+            <Skeleton className="rounded-lg w-7 h-7" />
           </div>
-          <div
-            className={`rounded-lg p-1 transition-colors ${
-              flyoutOpen ? "bg-gray-200" : "hover:bg-gray-200"
-            }`}
+        ) : (
+          <button
+            onClick={() => setFlyoutOpen(!flyoutOpen)}
+            className="flex items-center w-full space-x-3 focus:outline-none cursor-pointer"
           >
-            <ChevronDown
-              className={`w-5 h-5 text-gray-600 transition-transform ${
-                flyoutOpen ? "rotate-180" : ""
-              }`}
+            <Image
+              src={user?.avatar || "/images/avatar.png"}
+              alt="User Avatar"
+              width={40}
+              height={40}
+              className="rounded-full object-cover"
             />
-          </div>
-        </button>
+            <div className="flex-1 text-left">
+              <p className="text-gray-900 font-semibold text-sm">
+                {user?.name}
+              </p>
+              <p className="text-gray-600 text-xs">{user?.email}</p>
+            </div>
+            <div
+              className={`rounded-lg p-1 transition-colors ${
+                flyoutOpen ? "bg-gray-200" : "hover:bg-gray-200"
+              }`}
+            >
+              <ChevronDown
+                className={`w-5 h-5 text-gray-600 transition-transform ${
+                  flyoutOpen ? "rotate-180" : ""
+                }`}
+              />
+            </div>
+          </button>
+        )}
 
         {/* Flyout menu opens to the right */}
         {flyoutOpen && (
-          <div className="absolute -top-5 left-full ml-2 w-40 bg-white border border-gray-200 rounded-md shadow-lg z-10">
+          <div className="absolute -top-5 left-full ml-2 w-40 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
             <Link
               href="/settings"
               className="flex items-center px-4 py-2 hover:bg-gray-100 text-gray-700"

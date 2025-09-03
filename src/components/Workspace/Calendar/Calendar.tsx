@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Plus, Triangle, X } from "lucide-react";
 import { CalendarEvent, Exam } from "@/types";
+import { Button } from "@/components/UI";
 
 type Props = {
   events?: CalendarEvent[];
@@ -133,49 +134,48 @@ export default function Calendar({ events = [], exams = [] }: Props) {
   }, []);
 
   return (
-    <div className="flex-1 bg-white rounded-xl shadow-lg p-6">
+    <div className="flex-1 bg-white border border-gray-200 rounded-lg p-6">
       {/* Header */}
       <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-bold text-gray-800">Calendar</h2>
-        <button
-          onClick={() => openModal()}
-          className="flex items-center gap-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-4 py-2 rounded-lg hover:opacity-90 transition"
-        >
+        <h2 className="text-xl font-bold text-gray-900">Calendar</h2>
+        <Button onClick={() => openModal()} className="">
           <Plus className="w-4 h-4" /> Add Event
-        </button>
+        </Button>
       </div>
 
       {/* Calendar Grid */}
-      <div className="rounded-xl border bg-white shadow-sm overflow-hidden">
+      <div className="rounded-lg border border-gray-200 bg-white">
         {/* Month controls */}
-        <div className="flex items-center justify-between px-4 py-3 border-b bg-gray-50">
+        <div className="flex items-center justify-between px-4 py-3 border-b bg-gray-50 rounded-t-lg">
           <h2 className="text-lg font-semibold text-gray-800">{label}</h2>
           <div className="flex items-center gap-1">
-            <button
+            <Button
               onClick={() => goMonth(-1)}
-              className="p-2 rounded-md bg-indigo-50 hover:bg-indigo-100 text-indigo-700 transition"
+              variant="ghost"
               aria-label="Previous month"
             >
               <Triangle fill="currentColor" className="w-4 h-4 rotate-270" />
-            </button>
-            <button
+            </Button>
+            <Button
               onClick={() => setViewDate(new Date())}
-              className="px-3 py-[4px] rounded-md bg-indigo-50 text-indigo-700 hover:bg-indigo-100 transition"
+              variant="outline"
+              className="shadow-none"
+              aria-label="Current Date"
             >
               Today
-            </button>
-            <button
+            </Button>
+            <Button
               onClick={() => goMonth(1)}
-              className="p-2 rounded-md bg-indigo-50 hover:bg-indigo-100 text-indigo-700 transition"
+              variant="ghost"
               aria-label="Next month"
             >
-              <Triangle fill="currentColor" className="w-4 h-4 rotate-90" />
-            </button>
+              <Triangle fill="currentColor" className="w-3 h-3 rotate-90" />
+            </Button>
           </div>
         </div>
 
         {/* Weekday headers */}
-        <div className="grid grid-cols-7 gap-2 text-sm text-gray-500 bg-gray-100 p-3">
+        <div className="grid grid-cols-7 gap-2 text-sm text-gray-500 bg-gray-100 p-3 border-b border-gray-200">
           {["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map((d) => (
             <div key={d} className="text-center uppercase font-medium">
               {d}
@@ -203,7 +203,7 @@ export default function Calendar({ events = [], exams = [] }: Props) {
                       ? "text-gray-400 bg-gray-50"
                       : "bg-white text-gray-800"
                   }
-                  ${isSelected ? "ring-2 ring-indigo-400 bg-indigo-50" : ""}
+                  ${isSelected ? "border-gray-500 bg-indigo-50" : ""}
                   ${isToday ? "border-indigo-500" : "border-gray-200"}
                 `}
                 >
@@ -222,7 +222,7 @@ export default function Calendar({ events = [], exams = [] }: Props) {
                       <span
                         key={e.id}
                         title={`${e.time ? e.time + " • " : ""}${e.title}`}
-                        className={`text-xs px-2 py-0.5 rounded-full truncate ${
+                        className={`text-xs px-2 py-0.5 rounded-lg truncate ${
                           e.color ?? "bg-indigo-100 text-indigo-700"
                         }`}
                         style={{ maxWidth: "100%" }}
@@ -250,9 +250,9 @@ export default function Calendar({ events = [], exams = [] }: Props) {
       {/* Modal */}
       {modalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-          <div className="bg-white rounded-xl p-6 w-96 relative">
+          <div className="bg-white rounded-lg p-6 w-96 relative">
             <button
-              className="absolute top-3 right-3 text-gray-500 hover:text-gray-800"
+              className="absolute top-6 right-6 text-gray-500 hover:text-gray-800 cursor-pointer"
               onClick={() => setModalOpen(false)}
             >
               <X />
@@ -309,26 +309,26 @@ function EventForm({ event, onSave, onDelete, selectedDate }: EventFormProps) {
       <input
         type="text"
         placeholder="Event title"
-        className="border p-2 rounded"
+        className="border p-2 rounded-lg"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
         required
       />
       <input
         type="date"
-        className="border p-2 rounded"
+        className="border p-2 rounded-lg"
         value={date}
         onChange={(e) => setDate(e.target.value)}
         required
       />
       <input
         type="time"
-        className="border p-2 rounded"
+        className="border p-2 rounded-lg"
         value={time}
         onChange={(e) => setTime(e.target.value)}
       />
       <select
-        className="border p-2 rounded"
+        className="border p-2 rounded-lg"
         value={color}
         onChange={(e) => setColor(e.target.value)}
       >
@@ -339,20 +339,13 @@ function EventForm({ event, onSave, onDelete, selectedDate }: EventFormProps) {
       </select>
       <div className="flex justify-between items-center">
         {onDelete && (
-          <button
-            type="button"
-            className="text-red-600 hover:underline"
-            onClick={onDelete}
-          >
+          <Button type="button" onClick={onDelete} variant="destructive">
             Delete
-          </button>
+          </Button>
         )}
-        <button
-          type="submit"
-          className="bg-indigo-600 text-white px-4 py-2 rounded hover:opacity-90 transition"
-        >
+        <Button type="submit" variant="default">
           Save
-        </button>
+        </Button>
       </div>
     </form>
   );
