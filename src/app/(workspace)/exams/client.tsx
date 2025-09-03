@@ -1,8 +1,26 @@
 "use client";
 
 import { useState } from "react";
-import { Trash2, Check, ArrowLeft } from "lucide-react";
-import { Badge, Button, Card, Input, Label } from "@/components/UI";
+import {
+  Trash2,
+  Check,
+  ArrowLeft,
+  X,
+  MapPin,
+  Clock,
+  CalendarIcon,
+} from "lucide-react";
+import {
+  Badge,
+  Button,
+  Calendar,
+  Card,
+  Input,
+  Label,
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/UI";
 import { CardContent, CardHeader, CardTitle } from "@/components/UI/card";
 import { Exam } from "@/types";
 import { createClient } from "@/lib/supabase/client";
@@ -13,6 +31,9 @@ export default function ExamsClient({ examsDB }: { examsDB: Exam[] }) {
   const [subject, setSubject] = useState("");
   const [date, setDate] = useState("");
   const [location, setLocation] = useState("");
+
+  const [open, setOpen] = useState(false);
+  const [dateC, setDateC] = useState<Date | undefined>(undefined);
 
   const addExam = async (user_id: string) => {
     if (!subject || !date) return;
@@ -62,7 +83,7 @@ export default function ExamsClient({ examsDB }: { examsDB: Exam[] }) {
   };
 
   return (
-    <div className="max-w-3xl mx-auto p-6 space-y-6">
+    <div className="2xl:max-w-6xl mx-auto p-4 space-y-4">
       <div className="flex gap-3 items-center">
         <Link href="/calendar">
           <Button variant="outline">
@@ -70,36 +91,60 @@ export default function ExamsClient({ examsDB }: { examsDB: Exam[] }) {
             Back
           </Button>
         </Link>
-        <h1 className="text-3xl font-bold">Exams</h1>
+        <h1 className="text-2xl font-bold">Exams</h1>
       </div>
 
-      {/* Add Exam Form */}
-      <Card>
+      <Card className="shadow-none">
         <CardHeader>
           <CardTitle>Add New Exam</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div>
-            <Label htmlFor="subject">Subject</Label>
-            <Input
-              id="subject"
-              value={subject}
-              onChange={(e) => setSubject(e.target.value)}
-              placeholder="Enter subject"
-            />
+          <div className="flex gap-4">
+            <div className="grid w-full items-center gap-3">
+              <Label htmlFor="subject">Subject</Label>
+              <Input
+                id="subject"
+                value={subject}
+                onChange={(e) => setSubject(e.target.value)}
+                placeholder="Enter subject"
+              />
+            </div>
+
+            <div className="grid w-full items-center gap-3">
+              <div className="flex flex-col gap-3">
+                <Label htmlFor="date" className="px-1">
+                  Date
+                </Label>
+                <Popover open={open} onOpenChange={setOpen}>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      id="date"
+                      className="justify-between font-normal"
+                    >
+                      {dateC ? dateC.toLocaleDateString() : "Select date"}
+                      <CalendarIcon className="ml-auto h-4 w-4" />
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent
+                    className="w-auto overflow-hidden p-0"
+                    align="start"
+                  >
+                    <Calendar
+                      mode="single"
+                      selected={dateC}
+                      onSelect={(date) => {
+                        setDateC(date);
+                        setOpen(false);
+                      }}
+                    />
+                  </PopoverContent>
+                </Popover>
+              </div>
+            </div>
           </div>
 
-          <div>
-            <Label htmlFor="date">Date</Label>
-            <Input
-              id="date"
-              type="date"
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-            />
-          </div>
-
-          <div>
+          <div className="grid w-full items-center gap-3">
             <Label htmlFor="location">Location</Label>
             <Input
               id="location"
@@ -120,18 +165,34 @@ export default function ExamsClient({ examsDB }: { examsDB: Exam[] }) {
       {/* Exams List */}
       <div className="space-y-4">
         {exams.map((exam) => (
-          <Card key={exam.id} className="flex justify-between items-center">
-            <CardContent className="flex items-center gap-4 py-4 w-full justify-between">
+          <Card
+            key={exam.id}
+            className="flex justify-between items-center hover:border-indigo-400 shadow-none hover:shadow-md transition-colors"
+          >
+            <CardContent className="flex items-center gap-4 w-full justify-between">
               <div>
                 <h2 className="text-lg font-semibold">{exam.subject}</h2>
-                <p className="text-sm text-muted-foreground">
-                  {new Date(exam.date).toLocaleDateString()}
-                </p>
-                <p className="text-sm text-muted-foreground">{exam.location}</p>
+                <div className="my-1">
+                  <div className="flex items-center gap-1">
+                    <Clock className="w-4 h-4 text-yellow-600" />
+                    <p className="text-sm text-muted-foreground">
+                      {new Date(exam.date).toLocaleDateString()}
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-1">
+                    <MapPin className="w-4 h-4 text-red-600" />
+                    <p className="text-sm text-muted-foreground">
+                      {exam.location}
+                    </p>
+                  </div>
+                </div>
                 <Badge
-                  variant={
-                    exam.status === "completed" ? "secondary" : "outline"
+                  className={
+                    exam.status === "completed"
+                      ? "bg-green-100 text-green-800"
+                      : "bg-yellow-100 text-yellow-800"
                   }
+                  variant="default"
                 >
                   {exam.status}
                 </Badge>
@@ -139,10 +200,14 @@ export default function ExamsClient({ examsDB }: { examsDB: Exam[] }) {
               <div className="flex gap-2">
                 <Button
                   size="icon"
-                  variant="ghost"
+                  variant="secondary"
                   onClick={() => toggleStatus(exam.id)}
                 >
-                  <Check className="w-4 h-4" />
+                  {exam.status === "completed" ? (
+                    <X className="w-4 h-4" />
+                  ) : (
+                    <Check className="w-4 h-4" />
+                  )}
                 </Button>
                 <Button
                   size="icon"
