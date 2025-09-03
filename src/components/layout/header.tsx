@@ -3,7 +3,15 @@
 import Link from "next/link";
 import { useState } from "react";
 import { GraduationCap, Search, Settings, Bell } from "lucide-react";
-import { IconButton } from "@/components/UI";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+  IconButton,
+} from "@/components/UI";
 
 export default function Header() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -13,6 +21,8 @@ export default function Header() {
       alert(`You searched for: ${searchQuery}`);
     }
   };
+
+  const unreadNotificationCount = 3;
 
   return (
     <header className="bg-white border-b border-gray-200 px-6 py-4 flex-shrink-0">
@@ -42,12 +52,39 @@ export default function Header() {
 
           {/* Action Buttons */}
           <div className="flex items-center space-x-2">
-            <Link href="/notifications">
-              <IconButton label="Notification">
-                <Bell className="w-5 h-5" />
-              </IconButton>
-            </Link>
+            {/* Dropwdown Menu */}
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <div className="relative">
+                  <IconButton label="Notifications">
+                    <Bell className="w-5 h-5" />
+                  </IconButton>
+                  {unreadNotificationCount > 0 && (
+                    <span className="absolute -top-0.75 -right-0.75 w-4 h-4 inline-flex items-center justify-center text-xs font-bold leading-none text-white bg-red-600 rounded-full">
+                      {unreadNotificationCount}
+                    </span>
+                  )}
+                </div>
+              </DropdownMenuTrigger>
 
+              <DropdownMenuContent className="w-96">
+                <DropdownMenuLabel>Notifications</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>
+                  📘 New course available: Physics
+                </DropdownMenuItem>
+                <DropdownMenuItem>👥 New study group request</DropdownMenuItem>
+                <DropdownMenuItem>
+                  📅 Event reminder: Math Workshop
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem asChild>
+                  <Link href="/notifications">View all</Link>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+
+            {/* Settings */}
             <Link href="/settings">
               <IconButton label="Settings">
                 <Settings className="w-5 h-5" />

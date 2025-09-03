@@ -2,7 +2,8 @@ import { HTMLAttributes, ReactNode, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import rehypeHighlight from "rehype-highlight";
 import remarkGfm from "remark-gfm";
-import { Check, Copy } from "lucide-react";
+import { Check, Copy, X } from "lucide-react";
+// import { Element } from "hast";
 
 interface CodeProps extends HTMLAttributes<HTMLElement> {
   className?: string;
@@ -52,6 +53,48 @@ function Code({ className, children, ...props }: CodeProps) {
   );
 }
 
+function MarkdownImage({ src, alt }: { src?: string; alt?: string }) {
+  const [open, setOpen] = useState(false);
+
+  if (!src) return null;
+
+  return (
+    <>
+      {/* Малка версия на снимката */}
+      <img
+        src={src}
+        alt={alt || "Markdown Image"}
+        className="inline-block my-2 cursor-zoom-in max-w-full rounded-md shadow-md hover:opacity-90 transition"
+        onClick={() => setOpen(true)}
+      />
+
+      {/* Lightbox overlay */}
+      {open && (
+        <div
+          className="fixed inset-0 bg-black/80 flex items-center justify-center z-50"
+          onClick={() => setOpen(false)}
+        >
+          {/* Бутон за затваряне */}
+          <button
+            className="absolute top-5 right-5 text-white hover:text-gray-300"
+            onClick={() => setOpen(false)}
+          >
+            <X size={32} />
+          </button>
+
+          {/* Голямата снимка */}
+          <img
+            src={src}
+            alt={alt || "Markdown Image"}
+            className="max-h-[90%] max-w-[90%] rounded-lg shadow-2xl animate-fadeIn"
+            onClick={(e) => e.stopPropagation()} // да не затваря ако цъкнеш върху снимката
+          />
+        </div>
+      )}
+    </>
+  );
+}
+
 export default function MarkdownRenderer({ content }: { content: string }) {
   return (
     <ReactMarkdown
@@ -96,6 +139,19 @@ export default function MarkdownRenderer({ content }: { content: string }) {
             rel="noopener noreferrer"
           />
         ),
+        /*
+        p: ({ node, children, ...props }) => {
+          if (
+            node?.children &&
+            node.children.length === 1 &&
+            (node.children[0] as Element).tagName === "img"
+          ) {
+            return <>{children}</>;
+          }
+
+          return <p {...props}>{children}</p>;
+        },
+        */
         code: Code,
         ul: ({ ...props }) => (
           <ul className="list-disc list-inside ml-4" {...props} />
