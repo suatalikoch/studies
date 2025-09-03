@@ -15,7 +15,7 @@ export default async function BlogPostPage({
 
   return (
     <div className="min-h-screen bg-gray-50 px-6 py-12">
-      <div className="max-w-3xl mx-auto bg-white rounded-2xl shadow-md p-8 space-y-6">
+      <div className="max-w-3xl mx-auto bg-white rounded-lg shadow-md p-8 space-y-6">
         <Link href="/blog" className="text-indigo-600 hover:underline">
           ← Back to Blog
         </Link>
@@ -30,7 +30,7 @@ export default async function BlogPostPage({
             {post.tags.map((tag) => (
               <span
                 key={tag}
-                className="px-2 py-1 bg-indigo-50 text-indigo-700 text-xs rounded-full"
+                className="px-2 py-1 bg-indigo-50 text-indigo-700 text-xs rounded-lg"
               >
                 #{tag}
               </span>

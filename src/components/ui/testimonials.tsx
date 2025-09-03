@@ -59,13 +59,13 @@ export default function Testimonials() {
 
       <section
         ref={ref}
-        className="bg-gray-50 py-20 mx-auto px-6 text-center relative rounded-3xl shadow-lg"
+        className="bg-gray-50 py-20 mx-auto px-6 text-center relative rounded-lg shadow-lg"
         aria-label="Testimonials"
       >
         {isVisible && (
           <blockquote
             key={currentIndex}
-            className="text-2xl italic text-gray-800 font-light leading-relaxed tracking-wide px-8 py-10 bg-white rounded-2xl shadow-md animate-[fadeInOut_6s_ease-in-out]"
+            className="text-2xl italic text-gray-800 font-light leading-relaxed tracking-wide px-8 py-10 bg-white rounded-lg shadow-md animate-[fadeInOut_6s_ease-in-out]"
           >
             “{testimonials[currentIndex].quote}”
             <p className="mt-8 font-semibold text-indigo-600 tracking-wide">

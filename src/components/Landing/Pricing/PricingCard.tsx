@@ -34,7 +34,7 @@ export default function PricingCard({
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 20 }}
       transition={{ type: "spring", stiffness: 100, damping: 20 }}
-      className={`bg-white rounded-2xl shadow-lg border border-gray-200 flex flex-col relative ${
+      className={`bg-white rounded-lg shadow-lg border border-gray-200 flex flex-col relative ${
         plan.highlighted ? "ring-2 ring-indigo-500 scale-105" : ""
       }`}
     >

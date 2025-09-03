@@ -230,7 +230,7 @@ export default function DrawingBoardClient() {
                     <button
                       key={c}
                       onClick={() => setColor(c)}
-                      className={`w-6 h-6 rounded border-1 ${
+                      className={`w-6 h-6 rounded-full border-1 ${
                         color === c ? "border-indigo-600" : "border-gray-300"
                       }`}
                       style={{ backgroundColor: c }}
@@ -245,7 +245,7 @@ export default function DrawingBoardClient() {
                 type="color"
                 value={color}
                 onChange={(e) => setColor(e.target.value)}
-                className="w-8 h-8 rounded border border-gray-300"
+                className="w-8 h-8 rounded-full border border-gray-300"
               />
             </div>
           </div>

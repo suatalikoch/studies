@@ -11,9 +11,9 @@ export default function Features() {
           key={idx}
           role="listitem"
           tabIndex={0}
-          className="bg-white rounded-xl shadow-lg p-6 text-center cursor-pointer
+          className="bg-white rounded-lg shadow-md p-6 text-center cursor-pointer
               focus:outline-none focus:ring-4 focus:ring-indigo-300
-              hover:shadow-xl hover:scale-105 transition-transform duration-300"
+              hover:shadow-lg hover:scale-105 transition-transform duration-300"
         >
           <Icon
             aria-hidden="true"

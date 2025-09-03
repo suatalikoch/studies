@@ -43,7 +43,7 @@ export default function NoteCard({
   return (
     <div
       onClick={() => onSelect(note)}
-      className={`rounded-lg cursor-pointer transition hover:shadow-lg bg-white border border border-gray-200 ${
+      className={`rounded-lg cursor-pointer transition hover:shadow-md bg-white border border border-gray-200 ${
         viewMode === "list" ? "flex" : "flex flex-col"
       }`}
       onMouseEnter={(e) => (e.currentTarget.style.borderColor = color)}

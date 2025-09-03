@@ -4,6 +4,7 @@ import NoteCard from "./NoteCard";
 import { useNotes } from "./NotesContext";
 import ViewModeToggle from "./ViewModeToggle";
 import Searchbar from "./Searchbar";
+import { Plus } from "lucide-react";
 
 export const NotesList = ({ user_id }: { user_id: string }) => {
   const {
@@ -39,7 +40,10 @@ export const NotesList = ({ user_id }: { user_id: string }) => {
             onChange={setSearchTerm}
             placeholder="Search notes..."
           />
-          <Button onClick={() => addNote(user_id)}>+ Add</Button>
+          <Button onClick={() => addNote(user_id)}>
+            <Plus className="w-4 h-4" />
+            Add
+          </Button>
           <ViewModeToggle viewMode={viewMode} setViewMode={setViewMode} />
         </div>
       </div>

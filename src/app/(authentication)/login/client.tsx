@@ -65,7 +65,7 @@ export default function LoginClient() {
     <div className="min-h-screen flex items-center justify-center bg-gray-50 p-6">
       <div className="w-full max-w-md space-y-6">
         {/* Welcome Banner (matches Dashboard style) */}
-        <div className="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-xl p-6 text-white shadow-lg">
+        <div className="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-lg p-6 text-white shadow-lg">
           <h2 className="text-2xl font-bold mb-2">Welcome Back!</h2>
           <p className="text-indigo-100">
             Sign in to continue to your study workspace.
@@ -73,7 +73,7 @@ export default function LoginClient() {
         </div>
 
         {/* Login Form */}
-        <div className="bg-white rounded-xl shadow-lg p-6 space-y-6">
+        <div className="bg-white rounded-lg shadow-lg p-6 space-y-6">
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">

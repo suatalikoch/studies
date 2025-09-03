@@ -12,7 +12,7 @@ export default function Toast({ toasts, removeToast }: ToastProps) {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 30 }}
             transition={{ duration: 0.3 }}
-            className={`px-6 py-3 rounded-2xl shadow-lg border text-sm font-medium flex items-center gap-2
+            className={`px-6 py-3 rounded-lg shadow-lg border text-sm font-medium flex items-center gap-2
         ${
           toast.type === "success"
             ? "bg-green-500 border-green-400 text-white"

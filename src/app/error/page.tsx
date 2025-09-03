@@ -15,14 +15,14 @@ export default function ErrorPage() {
         <div className="flex justify-center gap-4">
           <button
             onClick={() => router.push("/")}
-            className="inline-block bg-red-600 text-white font-semibold px-6 py-3 rounded-md hover:bg-red-700 transition"
+            className="inline-block bg-red-600 text-white font-semibold px-6 py-3 rounded-lg hover:bg-red-700 transition"
             aria-label="Go back home"
           >
             Go Home
           </button>
           <button
             onClick={() => router.back()}
-            className="inline-block bg-gray-300 text-gray-800 font-semibold px-6 py-3 rounded-md hover:bg-gray-400 transition"
+            className="inline-block bg-gray-300 text-gray-800 font-semibold px-6 py-3 rounded-lg hover:bg-gray-400 transition"
             aria-label="Go back to previous page"
           >
             Go Back

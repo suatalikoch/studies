@@ -8,6 +8,7 @@ import {
   Clock,
   Flag,
   Funnel,
+  Plus,
   Square,
   SquareCheck,
   Star,
@@ -150,7 +151,14 @@ export default function TasksClient({ tasksDB }: { tasksDB: Task[] }) {
               </select>
             </div>
             <Button onClick={() => setShowForm((prev) => !prev)}>
-              <span>{showForm ? "Cancel" : "+ Add"}</span>
+              {showForm ? (
+                "Cancel"
+              ) : (
+                <>
+                  <Plus />
+                  Add
+                </>
+              )}
             </Button>
           </div>
         </div>
@@ -352,7 +360,7 @@ export default function TasksClient({ tasksDB }: { tasksDB: Task[] }) {
 
         {/* Tasks List */}
         {!showForm && (
-          <div className="flex-1 overflow-y-auto space-y-3">
+          <div className="flex-1 overflow-y-auto space-y-4">
             {filteredTasks.map((task) => {
               return (
                 <div
@@ -381,15 +389,15 @@ export default function TasksClient({ tasksDB }: { tasksDB: Task[] }) {
 
                     <div className="flex-1">
                       <div className="flex justify-between">
-                        <h4
-                          className={`text-lg font-semibold ${
+                        <h3
+                          className={`font-semibold ${
                             task.completed
                               ? "text-gray-400 line-through"
                               : "text-gray-900"
                           }`}
                         >
                           {task.title}
-                        </h4>
+                        </h3>
                         <div className="flex gap-3 items-center">
                           <Badge
                             className={`${

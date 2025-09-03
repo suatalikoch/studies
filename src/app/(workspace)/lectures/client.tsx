@@ -1,3 +1,4 @@
+import { Button, Input } from "@/components/UI";
 import {
   BookType,
   Calendar,
@@ -18,22 +19,16 @@ export default function LecturesClient() {
           <h2 className="text-xl font-bold text-gray-900">Lectures</h2>
           <div className="flex gap-2">
             <div className="relative">
-              {/* Search Icon */}
               <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-              <input
+              <Input
                 type="text"
                 placeholder="Search lectures..."
-                className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                className="w-full max-w-sm pl-10"
               />
             </div>
-            <button
-              className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors flex items-center space-x-2"
-              type="button"
-            >
-              {/* Plus Icon */}
-              <Plus className="w-5 h-5" />
-              <span>Add Lecture</span>
-            </button>
+            <Button>
+              <Plus className="w-4 h-4" /> Add
+            </Button>
           </div>
         </div>
 
@@ -59,14 +54,12 @@ export default function LecturesClient() {
       {true && (
         <div className="flex-1 p-4 flex flex-col gap-4">
           <div className="grid grid-cols-1 gap-4">
-            {/* Example lecture item */}
             <div className="bg-white rounded-lg border border-gray-200 hover:border-indigo-400 p-4 transition-all hover:shadow-md cursor-pointer">
               <div className="flex items-start justify-between mb-2">
                 <h3 className="font-semibold text-gray-900 flex-1">
                   Introduction to Biology
                 </h3>
                 <div className="flex items-center space-x-1 ml-2">
-                  {/* Icon for lecture type */}
                   <BookType className="w-4 h-4 text-indigo-600" />
                   <input
                     type="checkbox"
@@ -82,17 +75,15 @@ export default function LecturesClient() {
               </p>
 
               <div className="flex items-center justify-between mb-2">
-                <span className="px-2 py-1 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">
+                <span className="px-2 py-1 rounded-lg text-xs font-medium bg-indigo-100 text-indigo-800">
                   Recorded
                 </span>
                 <div className="flex items-center space-x-2 text-xs text-gray-500">
                   <div className="flex items-center space-x-1">
-                    {/* Calendar Icon */}
                     <Calendar className="w-3 h-3" />
                     <span>{new Date("2025-08-07").toLocaleDateString()}</span>
                   </div>
                   <div className="flex items-center space-x-1">
-                    {/* Clock Icon */}
                     <Clock className="w-3 h-3" />
                     <span>1h 30m</span>
                   </div>
@@ -100,16 +91,16 @@ export default function LecturesClient() {
               </div>
 
               <div className="flex flex-wrap gap-1">
-                <span className="bg-indigo-100 text-indigo-800 px-2 py-1 rounded-full text-xs">
+                <span className="bg-indigo-100 text-indigo-800 px-2 py-1 rounded-lg text-xs">
                   #biology
                 </span>
-                <span className="bg-indigo-100 text-indigo-800 px-2 py-1 rounded-full text-xs">
+                <span className="bg-indigo-100 text-indigo-800 px-2 py-1 rounded-lg text-xs">
                   #lecture
                 </span>
-                <span className="bg-indigo-100 text-indigo-800 px-2 py-1 rounded-full text-xs">
+                <span className="bg-indigo-100 text-indigo-800 px-2 py-1 rounded-lg text-xs">
                   #recorded
                 </span>
-                <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded-full text-xs">
+                <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded-lg text-xs">
                   +2
                 </span>
               </div>
@@ -120,7 +111,6 @@ export default function LecturesClient() {
                   Introduction to Biology
                 </h3>
                 <div className="flex items-center space-x-1 ml-2">
-                  {/* Icon for lecture type */}
                   <BookType className="w-4 h-4 text-indigo-600" />
                   <input
                     type="checkbox"
@@ -136,17 +126,15 @@ export default function LecturesClient() {
               </p>
 
               <div className="flex items-center justify-between mb-2">
-                <span className="px-2 py-1 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">
+                <span className="px-2 py-1 rounded-lg text-xs font-medium bg-indigo-100 text-indigo-800">
                   Recorded
                 </span>
                 <div className="flex items-center space-x-2 text-xs text-gray-500">
                   <div className="flex items-center space-x-1">
-                    {/* Calendar Icon */}
                     <Calendar className="w-3 h-3" />
                     <span>{new Date("2025-08-07").toLocaleDateString()}</span>
                   </div>
                   <div className="flex items-center space-x-1">
-                    {/* Clock Icon */}
                     <Clock className="w-3 h-3" />
                     <span>1h 30m</span>
                   </div>
@@ -154,16 +142,16 @@ export default function LecturesClient() {
               </div>
 
               <div className="flex flex-wrap gap-1">
-                <span className="bg-indigo-100 text-indigo-800 px-2 py-1 rounded-full text-xs">
+                <span className="bg-indigo-100 text-indigo-800 px-2 py-1 rounded-lg text-xs">
                   #biology
                 </span>
-                <span className="bg-indigo-100 text-indigo-800 px-2 py-1 rounded-full text-xs">
+                <span className="bg-indigo-100 text-indigo-800 px-2 py-1 rounded-lg text-xs">
                   #lecture
                 </span>
-                <span className="bg-indigo-100 text-indigo-800 px-2 py-1 rounded-full text-xs">
+                <span className="bg-indigo-100 text-indigo-800 px-2 py-1 rounded-lg text-xs">
                   #recorded
                 </span>
-                <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded-full text-xs">
+                <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded-lg text-xs">
                   +2
                 </span>
               </div>
@@ -174,7 +162,6 @@ export default function LecturesClient() {
                   Introduction to Biology
                 </h3>
                 <div className="flex items-center space-x-1 ml-2">
-                  {/* Icon for lecture type */}
                   <BookType className="w-4 h-4 text-indigo-600" />
                   <input
                     type="checkbox"
@@ -190,17 +177,15 @@ export default function LecturesClient() {
               </p>
 
               <div className="flex items-center justify-between mb-2">
-                <span className="px-2 py-1 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">
+                <span className="px-2 py-1 rounded-lg text-xs font-medium bg-indigo-100 text-indigo-800">
                   Recorded
                 </span>
                 <div className="flex items-center space-x-2 text-xs text-gray-500">
                   <div className="flex items-center space-x-1">
-                    {/* Calendar Icon */}
                     <Calendar className="w-3 h-3" />
                     <span>{new Date("2025-08-07").toLocaleDateString()}</span>
                   </div>
                   <div className="flex items-center space-x-1">
-                    {/* Clock Icon */}
                     <Clock className="w-3 h-3" />
                     <span>1h 30m</span>
                   </div>
@@ -208,16 +193,16 @@ export default function LecturesClient() {
               </div>
 
               <div className="flex flex-wrap gap-1">
-                <span className="bg-indigo-100 text-indigo-800 px-2 py-1 rounded-full text-xs">
+                <span className="bg-indigo-100 text-indigo-800 px-2 py-1 rounded-lg text-xs">
                   #biology
                 </span>
-                <span className="bg-indigo-100 text-indigo-800 px-2 py-1 rounded-full text-xs">
+                <span className="bg-indigo-100 text-indigo-800 px-2 py-1 rounded-lg text-xs">
                   #lecture
                 </span>
-                <span className="bg-indigo-100 text-indigo-800 px-2 py-1 rounded-full text-xs">
+                <span className="bg-indigo-100 text-indigo-800 px-2 py-1 rounded-lg text-xs">
                   #recorded
                 </span>
-                <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded-full text-xs">
+                <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded-lg text-xs">
                   +2
                 </span>
               </div>
@@ -228,7 +213,6 @@ export default function LecturesClient() {
                   Introduction to Biology
                 </h3>
                 <div className="flex items-center space-x-1 ml-2">
-                  {/* Icon for lecture type */}
                   <BookType className="w-4 h-4 text-indigo-600" />
                   <input
                     type="checkbox"
@@ -244,17 +228,15 @@ export default function LecturesClient() {
               </p>
 
               <div className="flex items-center justify-between mb-2">
-                <span className="px-2 py-1 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">
+                <span className="px-2 py-1 rounded-lg text-xs font-medium bg-indigo-100 text-indigo-800">
                   Recorded
                 </span>
                 <div className="flex items-center space-x-2 text-xs text-gray-500">
                   <div className="flex items-center space-x-1">
-                    {/* Calendar Icon */}
                     <Calendar className="w-3 h-3" />
                     <span>{new Date("2025-08-07").toLocaleDateString()}</span>
                   </div>
                   <div className="flex items-center space-x-1">
-                    {/* Clock Icon */}
                     <Clock className="w-3 h-3" />
                     <span>1h 30m</span>
                   </div>
@@ -262,16 +244,16 @@ export default function LecturesClient() {
               </div>
 
               <div className="flex flex-wrap gap-1">
-                <span className="bg-indigo-100 text-indigo-800 px-2 py-1 rounded-full text-xs">
+                <span className="bg-indigo-100 text-indigo-800 px-2 py-1 rounded-lg text-xs">
                   #biology
                 </span>
-                <span className="bg-indigo-100 text-indigo-800 px-2 py-1 rounded-full text-xs">
+                <span className="bg-indigo-100 text-indigo-800 px-2 py-1 rounded-lg text-xs">
                   #lecture
                 </span>
-                <span className="bg-indigo-100 text-indigo-800 px-2 py-1 rounded-full text-xs">
+                <span className="bg-indigo-100 text-indigo-800 px-2 py-1 rounded-lg text-xs">
                   #recorded
                 </span>
-                <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded-full text-xs">
+                <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded-lg text-xs">
                   +2
                 </span>
               </div>
@@ -303,7 +285,7 @@ export default function LecturesClient() {
                 </div>
 
                 <div className="flex items-center space-x-2">
-                  <span className="px-3 py-1 rounded-full text-sm font-medium bg-indigo-100 text-indigo-800">
+                  <span className="px-3 py-1 rounded-lg text-sm font-medium bg-indigo-100 text-indigo-800">
                     Recorded
                   </span>
                   <label className="flex items-center space-x-2 cursor-pointer">

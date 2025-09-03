@@ -1,7 +1,7 @@
 export default function AboutClient() {
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center px-6 py-12">
-      <div className="max-w-3xl w-full bg-white rounded-2xl shadow-md p-8 space-y-6">
+      <div className="max-w-3xl w-full bg-white rounded-lg shadow-md p-8 space-y-6">
         <h1 className="text-3xl font-bold text-gray-900 text-center">
           About This Project
         </h1>

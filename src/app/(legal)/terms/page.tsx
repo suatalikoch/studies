@@ -9,7 +9,7 @@ export default function TermsPage() {
     <div className="min-h-screen bg-gray-50 p-6 flex items-center justify-center">
       <div className="w-full max-w-4xl space-y-8">
         {/* Header */}
-        <div className="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-xl p-6 text-white shadow-lg">
+        <div className="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-lg p-6 text-white shadow-lg">
           <h1 className="text-3xl font-bold mb-2">Terms of Service</h1>
           <p className="text-indigo-100">
             Last updated: {new Date("August 10, 2025").toLocaleDateString()}
@@ -17,7 +17,7 @@ export default function TermsPage() {
         </div>
 
         {/* Content */}
-        <div className="bg-white rounded-xl shadow-lg p-6 space-y-6">
+        <div className="bg-white rounded-lg shadow-lg p-6 space-y-6">
           <section>
             <h2 className="text-xl font-semibold text-gray-800 mb-2">
               1. Acceptance of Terms

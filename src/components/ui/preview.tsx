@@ -9,7 +9,7 @@ export default function Hero() {
           Our dashboard is designed for simplicity and efficiency — everything
           you need is just a click away.
         </p>
-        <div className="rounded-xl shadow-lg overflow-hidden">
+        <div className="rounded-lg shadow-lg overflow-hidden">
           <Image
             src="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwallpapers.com%2Fimages%2Fhd%2Fgraduation-pictures-pz75cc67t4ica92t.jpg&f=1&nofb=1&ipt=31eae468326614722591fbd387aeab713f03fd920b8fc09bf919a870441c11a6"
             alt="Graduation"
