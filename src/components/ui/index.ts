@@ -24,6 +24,7 @@ export {
   NavigationMenuList,
   NavigationMenuTrigger,
   NavigationMenuViewport,
+  navigationMenuTriggerStyle,
 } from "@/components/UI/navigation-menu";
 export {
   Popover,
