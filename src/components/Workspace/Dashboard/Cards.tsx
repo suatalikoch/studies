@@ -1,20 +1,26 @@
 import { StatsCard } from "@/components/UI";
 import { BookOpen, CheckSquare, Clock, FileText } from "lucide-react";
 
-export default function Cards() {
+export default function Cards({
+  noteCount,
+  noteCountWeek,
+}: {
+  noteCount: number;
+  noteCountWeek: number;
+}) {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
       <StatsCard
         title="Total Notes"
-        count={24}
+        count={noteCount}
         icon={<FileText className="w-8 h-8 text-blue-600" />}
-        changeText="+3 this week"
+        changeText={`+${noteCountWeek} this week`}
         changeColor="text-green-600"
       />
 
       <StatsCard
         title="Assignments"
-        count={12}
+        count={25}
         icon={<BookOpen className="w-8 h-8 text-orange-600" />}
         changeText="3 due soon"
         changeColor="text-red-600"
