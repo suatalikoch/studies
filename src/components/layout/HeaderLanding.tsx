@@ -26,7 +26,7 @@ const components: { title: string; href: string; description: string }[] = [
   },
   {
     title: "Hover Card",
-    href: "/docs/primitives/hover-card",
+    href: "/docs/primitives/hover-car",
     description:
       "For sighted users to preview content available behind a link.",
   },
