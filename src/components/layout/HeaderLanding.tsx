@@ -61,9 +61,7 @@ export default function HeaderLanding() {
   return (
     <header className="bg-white border-b border-gray-200 px-6 py-4 flex-shrink-0">
       <div className="flex items-center justify-between">
-        {/* Left Side: Logo + Navigation */}
         <div className="flex items-center space-x-6">
-          {/* Logo */}
           <Link href="/" className="flex items-center space-x-2">
             <GraduationCap className="w-8 h-8 text-indigo-600" />
             <h1 className="text-2xl font-bold text-gray-900">Student Hub</h1>
@@ -91,15 +89,39 @@ export default function HeaderLanding() {
                         </Link>
                       </NavigationMenuLink>
                     </li>
-                    <Link href="/docs" title="Introduction">
-                      Re-usable components built using Radix UI and Tailwind
-                      CSS.
+                    <Link
+                      href="/docs"
+                      className="p-2 from-muted to-muted hover:bg-linear-to-b rounded-sm transition-colors"
+                    >
+                      <h6 className="text-sm text-black font-medium">
+                        Introduction
+                      </h6>
+                      <p className="text-sm text-muted-foreground line-clamp-2">
+                        Re-usable components built using Radix UI and Tailwind
+                        CSS.
+                      </p>
                     </Link>
-                    <Link href="/docs/installation" title="Installation">
-                      How to install dependencies and structure your app.
+                    <Link
+                      href="/docs/installation"
+                      className="p-2 from-muted to-muted hover:bg-linear-to-b rounded-sm transition-colors"
+                    >
+                      <h6 className="text-sm text-black font-medium">
+                        Installation
+                      </h6>
+                      <p className="text-sm text-muted-foreground line-clamp-2">
+                        How to install dependencies and structure your app.
+                      </p>
                     </Link>
-                    <Link href="/docs/primitives/typography" title="Typography">
-                      Styles for headings, paragraphs, lists...etc
+                    <Link
+                      href="/docs/primitives/typography"
+                      className="p-2 from-muted to-muted hover:bg-linear-to-b rounded-sm transition-colors"
+                    >
+                      <h6 className="text-sm text-black font-medium">
+                        Typography
+                      </h6>
+                      <p className="text-sm text-muted-foreground line-clamp-2">
+                        Styles for headings, paragraphs, lists...etc
+                      </p>
                     </Link>
                   </ul>
                 </NavigationMenuContent>
@@ -111,10 +133,15 @@ export default function HeaderLanding() {
                     {components.map((component) => (
                       <Link
                         key={component.title}
-                        title={component.title}
                         href={component.href}
+                        className="p-2 from-muted to-muted hover:bg-linear-to-b rounded-sm transition-colors"
                       >
-                        {component.description}
+                        <h6 className="text-sm text-black">
+                          {component.title}
+                        </h6>
+                        <p className="text-sm text-muted-foreground line-clamp-2">
+                          {component.description}
+                        </p>
                       </Link>
                     ))}
                   </ul>
@@ -181,9 +208,7 @@ export default function HeaderLanding() {
           </NavigationMenu>
         </div>
 
-        {/* Right Side: Search + Buttons */}
         <div className="flex items-center space-x-4">
-          {/* Search Input */}
           <div className="relative">
             <Search className="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
             <input
@@ -194,9 +219,7 @@ export default function HeaderLanding() {
             />
           </div>
 
-          {/* Action Buttons */}
           <div className="flex items-center space-x-2">
-            {/* Dropwdown Menu */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <div className="relative">
@@ -228,7 +251,6 @@ export default function HeaderLanding() {
               </DropdownMenuContent>
             </DropdownMenu>
 
-            {/* Settings */}
             <Link href="/settings">
               <IconButton label="Settings">
                 <Settings className="w-5 h-5" />
