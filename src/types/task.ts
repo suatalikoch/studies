@@ -12,7 +12,7 @@ export interface Task {
   created_at: string;
 }
 
-export type FormState = {
+export type TaskFormState = {
   title: string;
   description: string;
   priority: TaskPriority;
