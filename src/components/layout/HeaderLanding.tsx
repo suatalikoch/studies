@@ -1,12 +1,9 @@
-import { Bell, GraduationCap, Search, Settings } from "lucide-react";
+"use client";
+
 import Link from "next/link";
+import { GraduationCap, Search, Settings } from "lucide-react";
+import { useUser } from "@/hooks/useUser";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
   IconButton,
   NavigationMenu,
   NavigationMenuContent,
@@ -15,6 +12,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
   navigationMenuTriggerStyle,
+  NotificationMenu,
 } from "@/components/UI";
 
 const components: { title: string; href: string; description: string }[] = [
@@ -56,7 +54,7 @@ const components: { title: string; href: string; description: string }[] = [
 ];
 
 export default function HeaderLanding() {
-  const unreadNotificationCount = 3;
+  const user = useUser();
 
   return (
     <header className="bg-white border-b border-gray-200 px-6 py-4 flex-shrink-0">
@@ -220,36 +218,7 @@ export default function HeaderLanding() {
           </div>
 
           <div className="flex items-center space-x-2">
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <div className="relative">
-                  <IconButton label="Notifications">
-                    <Bell className="w-5 h-5" />
-                  </IconButton>
-                  {unreadNotificationCount > 0 && (
-                    <span className="absolute -top-0.75 -right-0.75 w-4 h-4 inline-flex items-center justify-center text-xs font-bold leading-none text-white bg-red-600 rounded-full">
-                      {unreadNotificationCount}
-                    </span>
-                  )}
-                </div>
-              </DropdownMenuTrigger>
-
-              <DropdownMenuContent className="w-96">
-                <DropdownMenuLabel>Notifications</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>
-                  📘 New course available: Physics
-                </DropdownMenuItem>
-                <DropdownMenuItem>👥 New study group request</DropdownMenuItem>
-                <DropdownMenuItem>
-                  📅 Event reminder: Math Workshop
-                </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem asChild>
-                  <Link href="/notifications">View all</Link>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+            {!user ? "" : <NotificationMenu />}
 
             <Link href="/settings">
               <IconButton label="Settings">
