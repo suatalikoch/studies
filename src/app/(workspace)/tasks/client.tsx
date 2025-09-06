@@ -1,8 +1,10 @@
 "use client";
 
-import { Badge, Button } from "@/components/UI";
+import React, { useMemo, useRef, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
-import { Category, Filter, FormState, Task, TaskPriority } from "@/types";
+import { Badge, Button } from "@/components/UI";
+import { useUser } from "@/hooks/useUser";
+import { Category, Filter, Task, TaskFormState, TaskPriority } from "@/types";
 import {
   Check,
   Clock,
@@ -14,12 +16,11 @@ import {
   Star,
   Trash,
 } from "lucide-react";
-import React, { useMemo, useRef, useState } from "react";
 
 export default function TasksClient({ tasksDB }: { tasksDB: Task[] }) {
   const [tasks, setTasks] = useState<Task[]>(tasksDB);
   const [filter, setFilter] = useState<Filter>("all");
-  const [form, setForm] = useState<FormState>({
+  const [form, setForm] = useState<TaskFormState>({
     title: "",
     description: "",
     priority: "low",
@@ -30,9 +31,14 @@ export default function TasksClient({ tasksDB }: { tasksDB: Task[] }) {
   const [showForm, setShowForm] = useState(false);
   const titleRef = useRef<HTMLInputElement>(null);
 
-  const setField = <K extends keyof FormState>(key: K, value: FormState[K]) => {
+  const setField = <K extends keyof TaskFormState>(
+    key: K,
+    value: TaskFormState[K]
+  ) => {
     setForm((f) => ({ ...f, [key]: value }));
   };
+
+  const user = useUser();
 
   const addTask = async (user_id: string) => {
     const title = form.title.trim();
@@ -59,7 +65,6 @@ export default function TasksClient({ tasksDB }: { tasksDB: Task[] }) {
       .select();
 
     if (error) {
-      // showToast("error", "Failed to add task");
       alert("Failed to add task: " + error.message);
       return;
     }
@@ -88,17 +93,52 @@ export default function TasksClient({ tasksDB }: { tasksDB: Task[] }) {
     setShowForm(false);
   };
 
-  const toggleTask = (id: string) => {
+  const toggleTask = async (id: string) => {
+    const task = tasks.find((t) => t.id === id);
+
+    if (!task) return;
+
+    const { error } = await createClient()
+      .from("tasks")
+      .update({ completed: !task.completed })
+      .eq("id", id);
+
+    if (error) {
+      alert("Failed to complete task: " + error.message);
+      return;
+    }
+
     setTasks((t) =>
       t.map((x) => (x.id === id ? { ...x, completed: !x.completed } : x))
     );
   };
 
-  const deleteTask = (id: string) => {
+  const deleteTask = async (id: string) => {
+    const { error } = await createClient().from("tasks").delete().eq("id", id);
+
+    if (error) {
+      alert("Failed to delete task: " + error.message);
+      return;
+    }
+
     setTasks((t) => t.filter((x) => x.id !== id));
   };
 
-  const toggleStar = (id: string) => {
+  const toggleStar = async (id: string) => {
+    const task = tasks.find((t) => t.id === id);
+
+    if (!task) return;
+
+    const { error } = await createClient()
+      .from("tasks")
+      .update({ starred: !task.starred })
+      .eq("id", id);
+
+    if (error) {
+      alert("Failed to star task: " + error.message);
+      return;
+    }
+
     setTasks((t) =>
       t.map((x) => (x.id === id ? { ...x, starred: !x.starred } : x))
     );
@@ -234,7 +274,10 @@ export default function TasksClient({ tasksDB }: { tasksDB: Task[] }) {
               className="space-y-4"
               onSubmit={(e) => {
                 e.preventDefault();
-                addTask("e52e5151-a495-4bda-86bd-43ccf1394c32");
+
+                if (user) {
+                  addTask(user.id);
+                }
               }}
             >
               <div>
@@ -340,19 +383,12 @@ export default function TasksClient({ tasksDB }: { tasksDB: Task[] }) {
               </div>
 
               <div className="flex items-center space-x-3">
-                <button
-                  type="submit"
-                  className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition-colors"
-                >
+                <Button variant="default" type="submit">
                   Add Task
-                </button>
-                <button
-                  type="button"
-                  onClick={cancelForm}
-                  className="bg-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-400 transition-colors"
-                >
+                </Button>
+                <Button variant="secondary" onClick={cancelForm} type="button">
                   Cancel
-                </button>
+                </Button>
               </div>
             </form>
           </div>

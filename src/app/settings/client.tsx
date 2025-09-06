@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { useUser } from "@/hooks/useUser";
 import { createClient } from "@/lib/supabase/client";
 import { Tab } from "@/types";
-import { Skeleton } from "@/components/UI";
+import { Button, Skeleton } from "@/components/UI";
 
 export default function SettingsClient() {
   const user = useUser();
@@ -453,26 +453,20 @@ export default function SettingsClient() {
                 <p className="max-w-lg mb-6 text-gray-600">
                   Be careful! Actions here are irreversible.
                 </p>
-                <button
+                <Button
+                  variant="destructive"
                   type="button"
                   onClick={handleDeleteAccount}
-                  className="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg cursor-pointer font-semibold transition disabled:opacity-50"
                   disabled={loading}
                 >
                   Delete My Account
-                </button>
+                </Button>
               </>
             )}
-
-            {/* Save Button */}
             <div className="pt-6 border-t border-gray-200 flex justify-end">
-              <button
-                type="submit"
-                className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-lg cursor-pointer font-semibold transition disabled:opacity-50"
-                disabled={loading}
-              >
+              <Button variant="default" type="submit" disabled={loading}>
                 {loading ? "Saving..." : "Save Changes"}
-              </button>
+              </Button>
             </div>
           </form>
         </div>

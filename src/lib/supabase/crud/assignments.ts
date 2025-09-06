@@ -1,16 +1,16 @@
 import { createClient } from "../server";
 
-export async function getNotifications(userId: string) {
+export async function getAssignments(userId: string) {
   const supabase = await createClient();
 
   const { data, error } = await supabase
-    .from("notifications")
+    .from("assignments")
     .select("*")
     .eq("user_id", userId)
-    .order("created_at", { ascending: true });
+    .order("updated_at", { ascending: false });
 
   if (error) {
-    throw new Error("Failed to fetch notifications");
+    throw new Error("Failed to fetch assignments");
   }
 
   return data;

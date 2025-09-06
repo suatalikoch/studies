@@ -2,6 +2,7 @@ import { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { Header, Sidebar } from "@/components/Layout";
 import { getCurrentUser } from "@/lib/supabase/crud";
+import { Toaster } from "@/components/UI";
 
 export const metadata: Metadata = {
   title: "Studies | Dashboard",
@@ -29,7 +30,12 @@ export default async function WorkspaceLayout({
         <Sidebar />
 
         {/* Content Area */}
-        <main className="flex-1 overflow-y-auto">{children}</main>
+        <main className="flex-1 overflow-y-auto">
+          {children}
+
+          {/* Toast Messages */}
+          <Toaster />
+        </main>
       </div>
     </div>
   );

@@ -3,7 +3,7 @@
 import { createContext, useContext, useState, ReactNode } from "react";
 import { Note } from "@/types";
 import { createClient } from "@/lib/supabase/client";
-import { useToast } from "@/hooks/useToast";
+import { toast } from "sonner";
 
 type NotesContextType = {
   notes: Note[];
@@ -42,8 +42,6 @@ export function NotesProvider({
   const [history, setHistory] = useState<Record<string, Note[]>>({});
   const [future, setFuture] = useState<Record<string, Note[]>>({});
 
-  const { showToast } = useToast();
-
   const addNote = async (user_id: string) => {
     const newNote: Omit<Note, "id"> = {
       user_id,
@@ -65,7 +63,17 @@ export function NotesProvider({
       .select();
 
     if (error) {
-      showToast("error", "Failed to add note");
+      toast.error("Failed to add note!", {
+        duration: 5000,
+        position: "bottom-right",
+        richColors: true,
+        closeButton: true,
+        action: {
+          label: "Close",
+          onClick: () => console.log("Closed toast."),
+        },
+      });
+
       return;
     }
 
@@ -73,7 +81,16 @@ export function NotesProvider({
     setNotes((prev) => [insertedNote, ...prev]);
     _setSelectedNote(insertedNote);
     setIsEditing(true);
-    showToast("success", "Note added successfully!");
+    toast.success("Note added successfully!", {
+      duration: 5000,
+      position: "bottom-right",
+      richColors: true,
+      closeButton: true,
+      action: {
+        label: "Close",
+        onClick: () => console.log("Closed toast."),
+      },
+    });
   };
 
   const saveNote = async (note: Note) => {
@@ -96,7 +113,16 @@ export function NotesProvider({
       .from("notes")
       .update(updatedNote)
       .eq("id", updatedNote.id);
-    showToast("success", "Note saved successfully!");
+    toast.success("Note saved successfully!", {
+      duration: 5000,
+      position: "bottom-right",
+      richColors: true,
+      closeButton: true,
+      action: {
+        label: "Close",
+        onClick: () => console.log("Closed toast."),
+      },
+    });
   };
 
   const undo = (id: string) => {
@@ -118,7 +144,16 @@ export function NotesProvider({
 
     setNotes((prev) => prev.map((n) => (n.id === id ? prevVersion : n)));
     if (selectedNote?.id === id) _setSelectedNote(prevVersion);
-    showToast("info", "Undo applied");
+    toast.success("Undo applied!", {
+      duration: 5000,
+      position: "bottom-right",
+      richColors: true,
+      closeButton: true,
+      action: {
+        label: "Close",
+        onClick: () => console.log("Closed toast."),
+      },
+    });
   };
 
   const redo = (id: string) => {
@@ -139,7 +174,16 @@ export function NotesProvider({
 
     setNotes((prev) => prev.map((n) => (n.id === id ? nextVersion : n)));
     if (selectedNote?.id === id) _setSelectedNote(nextVersion);
-    showToast("info", "Redo applied");
+    toast.success("Redo applied!", {
+      duration: 5000,
+      position: "bottom-right",
+      richColors: true,
+      closeButton: true,
+      action: {
+        label: "Close",
+        onClick: () => console.log("Closed toast."),
+      },
+    });
   };
 
   const deleteNote = async (id: string) => {
@@ -147,7 +191,16 @@ export function NotesProvider({
     if (selectedNote?.id === id) _setSelectedNote(null);
 
     await createClient().from("notes").delete().eq("id", id);
-    showToast("success", "Note deleted successfully!");
+    toast.success("Note deleted successfully!", {
+      duration: 5000,
+      position: "bottom-right",
+      richColors: true,
+      closeButton: true,
+      action: {
+        label: "Close",
+        onClick: () => console.log("Closed toast."),
+      },
+    });
   };
 
   const toggleFavorite = (id: string) => {
