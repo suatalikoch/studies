@@ -1,6 +1,8 @@
+export { getAssignments } from "@/lib/supabase/crud/assignments";
 export { getCurrentUser } from "@/lib/supabase/crud/auth";
 export { getDeadlines } from "@/lib/supabase/crud/deadline";
 export { getExams } from "@/lib/supabase/crud/exam";
+export { getLectures } from "@/lib/supabase/crud/lecture";
 export { getNotes } from "@/lib/supabase/crud/note";
 export { getNotifications } from "@/lib/supabase/crud/notification";
 export { getPlans } from "@/lib/supabase/crud/plan";
