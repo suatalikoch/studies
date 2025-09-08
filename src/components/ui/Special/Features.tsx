@@ -11,7 +11,7 @@ export default function Features() {
           key={idx}
           role="listitem"
           tabIndex={0}
-          className="bg-white rounded-lg shadow-md p-6 text-center cursor-pointer
+          className="bg-white dark:bg-gray-950 rounded-lg shadow-md p-6 text-center cursor-pointer
               focus:outline-none focus:ring-4 focus:ring-indigo-300
               hover:shadow-lg hover:scale-105 transition-transform duration-300"
         >
@@ -20,7 +20,7 @@ export default function Features() {
             className={`w-10 h-10 mx-auto mb-4 ${color}`}
           />
           <h3 className="text-lg font-semibold mb-2">{title}</h3>
-          <p className="text-gray-600">{desc}</p>
+          <p className="text-gray-600 dark:text-gray-300">{desc}</p>
         </div>
       ))}
     </section>
