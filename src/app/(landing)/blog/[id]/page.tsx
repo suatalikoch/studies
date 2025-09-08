@@ -14,15 +14,20 @@ export default async function BlogPostPage({
   if (!post) return notFound();
 
   return (
-    <div className="min-h-screen bg-gray-50 px-6 py-12">
-      <div className="max-w-3xl mx-auto bg-white rounded-lg shadow-md p-8 space-y-6">
-        <Link href="/blog" className="text-indigo-600 hover:underline">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-800 px-6 py-12">
+      <div className="max-w-3xl mx-auto bg-white dark:bg-gray-950 rounded-lg shadow-md p-8 space-y-6">
+        <Link
+          href="/blog"
+          className="text-indigo-600 dark:text-indigo-500 hover:underline"
+        >
           ← Back to Blog
         </Link>
 
-        <h1 className="text-4xl font-bold text-gray-900">{post.title}</h1>
+        <h1 className="text-4xl font-bold text-gray-900 dark:text-gray-100">
+          {post.title}
+        </h1>
 
-        <div className="flex justify-between items-center text-gray-500 text-sm">
+        <div className="flex justify-between items-center text-gray-500 dark:text-gray-400 text-sm">
           <time dateTime={post.date}>
             {new Date(post.date).toLocaleDateString()}
           </time>
@@ -38,9 +43,11 @@ export default async function BlogPostPage({
           </div>
         </div>
 
-        <p className="text-gray-700 text-lg leading-relaxed">{post.excerpt}</p>
+        <p className="text-gray-700 dark:text-gray-400 text-lg leading-relaxed">
+          {post.excerpt}
+        </p>
 
-        <p className="text-gray-500 text-sm">
+        <p className="text-gray-500 dark:text-gray-400 text-sm">
           🚀 More content coming soon… This is a demo of the blog detail page.
         </p>
       </div>

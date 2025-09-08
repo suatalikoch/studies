@@ -5,16 +5,19 @@ export default function BlogCard({ post }: BlogCardProps) {
   return (
     <div
       key={post.id}
-      className="p-6 bg-white rounded-lg shadow-sm hover:shadow-md transition border"
+      className="p-6 bg-white dark:bg-gray-950 rounded-lg shadow-sm hover:shadow-md transition border"
     >
       <Link href={`/blog/${post.id}`}>
-        <h2 className="text-2xl font-semibold text-indigo-600 hover:underline">
+        <h2 className="text-2xl font-semibold text-indigo-600 dark:text-indigo-500 hover:underline">
           {post.title}
         </h2>
       </Link>
-      <p className="text-gray-600 mt-2">{post.excerpt}</p>
+      <p className="text-gray-600 dark:text-gray-300 mt-2">{post.excerpt}</p>
       <div className="flex justify-between items-center mt-4">
-        <time dateTime={post.date} className="text-sm text-gray-500">
+        <time
+          dateTime={post.date}
+          className="text-sm text-gray-500 dark:text-gray-400"
+        >
           {new Date(post.date).toLocaleDateString()}
         </time>
         <div className="flex gap-2 flex-wrap">

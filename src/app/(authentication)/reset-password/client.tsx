@@ -80,7 +80,7 @@ export default function ResetPasswordClient() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 p-6">
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-800 p-6">
       <div className="w-full max-w-md space-y-6">
         {/* Welcome Banner */}
         <div className="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-lg p-6 text-white shadow-lg">
@@ -91,10 +91,10 @@ export default function ResetPasswordClient() {
         </div>
 
         {/* Reset Password Form */}
-        <div className="bg-white rounded-lg shadow-lg p-6 space-y-6">
+        <div className="bg-white dark:bg-gray-950 rounded-lg shadow-lg p-6 space-y-6">
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-1">
                 New Password
               </label>
               <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden">
@@ -114,7 +114,7 @@ export default function ResetPasswordClient() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-1">
                 Confirm Password
               </label>
               <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden">

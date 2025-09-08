@@ -8,7 +8,7 @@ export default function BillingToggle({
   setBillingCycle: (cycle: BillingCycle) => void;
 }) {
   return (
-    <div className="bg-white border border-gray-300 rounded-full flex p-1">
+    <div className="bg-white dark:bg-gray-950 border border-gray-300 rounded-full flex p-1">
       {["monthly", "yearly"].map((cycle) => (
         <button
           key={cycle}
@@ -16,8 +16,8 @@ export default function BillingToggle({
           aria-pressed={billingCycle === cycle}
           className={`px-6 py-2 rounded-full font-medium text-sm transition-all ${
             billingCycle === cycle
-              ? "bg-indigo-600 text-white"
-              : "text-gray-600 hover:bg-gray-100"
+              ? "bg-indigo-600 dark:bg-indigo-500 text-white"
+              : "text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
           }`}
         >
           {cycle === "yearly" ? (

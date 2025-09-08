@@ -21,7 +21,11 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/UI";
-import { CardContent, CardHeader, CardTitle } from "@/components/UI/card";
+import {
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from "@/components/UI/Library/card";
 import { Exam } from "@/types";
 import { createClient } from "@/lib/supabase/client";
 import Link from "next/link";

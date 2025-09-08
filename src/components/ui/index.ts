@@ -1,7 +1,7 @@
-export { Badge } from "@/components/UI/badge";
-export { Button } from "@/components/UI/button";
-export { Calendar } from "@/components/UI/calendar";
-export { Card } from "@/components/UI/card";
+export { Badge } from "@/components/UI/Library/badge";
+export { Button } from "@/components/UI/Library/button";
+export { Calendar } from "@/components/UI/Library/calendar";
+export { Card } from "@/components/UI/Library/card";
 export {
   DropdownMenu,
   DropdownMenuContent,
@@ -9,12 +9,11 @@ export {
   DropdownMenuLabel,
   DropdownMenuItem,
   DropdownMenuSeparator,
-} from "@/components/UI/dropdown-menu";
-export { default as Features } from "@/components/UI/Features";
-export { default as Hero } from "@/components/UI/Hero";
-export { IconButton } from "@/components/UI/icon-button";
-export { Input } from "@/components/UI/input";
-export { Label } from "@/components/UI/label";
+} from "@/components/UI/Library/dropdown-menu";
+export { default as Features } from "@/components/UI/Special/Features";
+export { default as Hero } from "@/components/UI/Special/Hero";
+export { Input } from "@/components/UI/Library/input";
+export { Label } from "@/components/UI/Library/label";
 export {
   NavigationMenu,
   NavigationMenuContent,
@@ -25,16 +24,17 @@ export {
   NavigationMenuTrigger,
   NavigationMenuViewport,
   navigationMenuTriggerStyle,
-} from "@/components/UI/navigation-menu";
+} from "@/components/UI/Library/navigation-menu";
 export {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/UI/popover";
-export { default as Preview } from "@/components/UI/Preview";
-export { Skeleton } from "@/components/UI/skeleton";
-export { Toaster } from "@/components/UI/sonner";
-export { default as StatsCard } from "@/components/UI/StatsCard";
-export { default as Testimonials } from "@/components/UI/Testimonials";
-export { Textarea } from "@/components/UI/textarea";
+} from "@/components/UI/Library/popover";
+export { default as Preview } from "@/components/UI/Special/Preview";
+export { Skeleton } from "@/components/UI/Library/skeleton";
+export { Toaster } from "@/components/UI/Library/sonner";
+export { default as StatsCard } from "@/components/UI/Special/StatsCard";
+export { default as Testimonials } from "@/components/UI/Special/Testimonials";
+export { Textarea } from "@/components/UI/Library/textarea";
+export { ThemeToggle } from "@/components/UI/Theme/ThemeToggle";
 export { default as NotificationMenu } from "@/components/UI/Notification/NotificationMenu";

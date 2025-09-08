@@ -19,8 +19,8 @@ export default function NotesEditor() {
   if (!selectedNote) return null;
 
   return (
-    <div className="flex flex-col h-full bg-white">
-      <div className="p-4 border-b flex justify-between items-center sticky top-0 bg-white">
+    <div className="flex flex-col h-full bg-white dark:bg-gray-950">
+      <div className="p-4 border-b flex justify-between items-center sticky top-0 bg-white dark:bg-gray-950 z-10">
         <Button
           variant="outline"
           onClick={() => {
@@ -86,7 +86,9 @@ export default function NotesEditor() {
             className="text-2xl"
           />
         ) : (
-          <p className="text-sm text-gray-500">{selectedNote?.subject}</p>
+          <p className="text-sm text-gray-500 dark:text-gray-400">
+            {selectedNote?.subject}
+          </p>
         )}
 
         {/* Content */}

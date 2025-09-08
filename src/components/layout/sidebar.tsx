@@ -89,7 +89,7 @@ export default function Sidebar() {
   }
 
   return (
-    <aside className="w-64 bg-white border-r border-gray-200 flex flex-col flex-shrink-0">
+    <aside className="w-64 bg-white dark:bg-gray-950 border-r border-gray-200 flex flex-col flex-shrink-0">
       {/* Sidebar Navigation */}
       <nav className="p-4 space-y-2 overflow-y-auto flex-1">
         {sidebarItems.map((item) => {
@@ -100,8 +100,8 @@ export default function Sidebar() {
               key={item.id}
               className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-left transition-colors text-gray-700 hover:bg-gray-100 cursor-pointer ${
                 pathname === `/${item.path}`
-                  ? "bg-indigo-100 text-indigo-700 border border-indigo-200"
-                  : "text-gray-700 hover:bg-gray-100"
+                  ? "text-indigo-700 bg-indigo-100 dark:bg-indigo-950 border border-indigo-200"
+                  : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-900"
               }`}
             >
               <Icon className="w-5 h-5" />
@@ -113,24 +113,30 @@ export default function Sidebar() {
 
       {/* Quick Stats */}
       <div className="p-4 border-t border-gray-200">
-        <h3 className="text-sm font-semibold text-gray-900 mb-3">
+        <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-3">
           Quick Statistics
         </h3>
         <div className="space-y-2">
           <div className="flex items-center justify-between">
-            <span className="text-gray-600 text-sm">Due Today</span>
+            <span className="text-gray-600 dark:text-gray-300 text-sm">
+              Due Today
+            </span>
             <span className="bg-red-100 text-red-800 px-2 py-1 rounded-full text-xs font-medium">
               3
             </span>
           </div>
           <div className="flex items-center justify-between">
-            <span className="text-gray-600 text-sm">This Week</span>
+            <span className="text-gray-600 dark:text-gray-300 text-sm">
+              This Week
+            </span>
             <span className="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-xs font-medium">
               7
             </span>
           </div>
           <div className="flex items-center justify-between">
-            <span className="text-gray-600 text-sm">Completed</span>
+            <span className="text-gray-600 dark:text-gray-300 text-sm">
+              Completed
+            </span>
             <span className="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-medium">
               12
             </span>
@@ -162,18 +168,22 @@ export default function Sidebar() {
               className="rounded-full object-cover"
             />
             <div className="flex-1 text-left">
-              <p className="text-gray-900 font-semibold text-sm">
+              <p className="text-gray-900 dark:text-gray-100 font-semibold text-sm">
                 {user?.name}
               </p>
-              <p className="text-gray-600 text-xs">{user?.email}</p>
+              <p className="text-gray-600 dark:text-gray-300 text-xs">
+                {user?.email}
+              </p>
             </div>
             <div
               className={`rounded-lg p-1 transition-colors ${
-                flyoutOpen ? "bg-gray-200" : "hover:bg-gray-200"
+                flyoutOpen
+                  ? "bg-gray-200 dark:bg-gray-700"
+                  : "hover:bg-gray-200 dark:hover:bg-gray-700"
               }`}
             >
               <ChevronDown
-                className={`w-5 h-5 text-gray-600 transition-transform ${
+                className={`w-5 h-5 text-gray-600 dark:text-gray-300 transition-transform ${
                   flyoutOpen ? "rotate-180" : ""
                 }`}
               />
@@ -183,10 +193,10 @@ export default function Sidebar() {
 
         {/* Flyout menu opens to the right */}
         {flyoutOpen && (
-          <div className="absolute -top-5 left-full ml-2 w-40 bg-white border border-gray-200 rounded-lg shadow-lg z-10">
+          <div className="absolute -top-5 left-full ml-2 w-40 bg-white dark:bg-gray-950 border border-gray-200 rounded-lg shadow-lg z-10">
             <Link
               href="/settings"
-              className="flex items-center px-4 py-2 hover:bg-gray-100 text-gray-700"
+              className="flex items-center px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-900 text-gray-700 dark:text-gray-200 rounded-t-lg"
               onClick={() => setFlyoutOpen(false)}
             >
               <Settings className="w-4 h-4 mr-2" />
@@ -194,7 +204,7 @@ export default function Sidebar() {
             </Link>
             <button
               onClick={handleLogout}
-              className="flex items-center w-full px-4 py-2 hover:bg-gray-100 text-gray-700 cursor-pointer"
+              className="flex items-center w-full rounded-b-lg px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-900 text-gray-700 dark:text-gray-200 cursor-pointer"
             >
               <LogOut className="w-4 h-4 mr-2" />
               Logout

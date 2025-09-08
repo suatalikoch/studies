@@ -5,13 +5,13 @@ import Link from "next/link";
 import { Bell } from "lucide-react";
 import { Notification } from "@/types";
 import {
+  Button,
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-  IconButton,
 } from "@/components/UI";
 import { createClient } from "@/lib/supabase/client";
 import { toast } from "sonner";
@@ -98,9 +98,9 @@ export default function NotificationMenu() {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <div className="relative">
-          <IconButton label="Notifications">
-            <Bell className="w-5 h-5" />
-          </IconButton>
+          <Button title="Notifications" variant="ghost" size="icon">
+            <Bell className="w-5 h-5 dark:text-gray-400" />
+          </Button>
           {unreadCount > 0 && (
             <span className="absolute -top-0.75 -right-0.75 w-4 h-4 inline-flex items-center justify-center text-xs font-bold leading-none text-white bg-red-600 rounded-full">
               {unreadCount}
