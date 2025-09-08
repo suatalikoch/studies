@@ -12,16 +12,16 @@ export default function FeatureComparisonTable({
   const allFeatures = Array.from(new Set(plans.flatMap((p) => p.features)));
 
   return (
-    <div className="mt-12 overflow-x-auto">
-      <table className="w-full border-collapse bg-white rounded-lg shadow-md overflow-hidden text-left">
+    <div className="mt-12 overflow-x-auto rounded-lg">
+      <table className="w-full bg-white dark:bg-gray-950 rounded-lg shadow-md overflow-hidden text-left">
         <thead>
           <tr>
-            <th className="border p-4">Features</th>
+            <th className="border border-gray-200 p-4">Features</th>
             {plans.map((plan) => (
               <th
                 key={plan.name}
-                className={`border p-4 text-center ${
-                  plan.highlighted ? "bg-indigo-50" : ""
+                className={`border border-gray-200 p-4 text-center ${
+                  plan.highlighted ? "bg-indigo-50 dark:bg-indigo-300" : ""
                 }`}
               >
                 <div className="text-xl font-semibold">{plan.name}</div>
@@ -31,7 +31,9 @@ export default function FeatureComparisonTable({
                     /{billingCycle === "monthly" ? "mo" : "yr"}
                   </span>
                 </div>
-                <p className="text-gray-600 text-sm mt-1">{plan.description}</p>
+                <p className="text-gray-600 dark:text-gray-300 text-sm mt-1">
+                  {plan.description}
+                </p>
                 {plan.highlighted && (
                   <div className="mt-2 bg-indigo-600 text-white text-xs font-bold px-2 py-1 rounded-full inline-block">
                     Best
@@ -44,11 +46,13 @@ export default function FeatureComparisonTable({
         <tbody>
           {allFeatures.map((feature) => (
             <tr key={feature}>
-              <td className="border p-4 text-gray-700">{feature}</td>
+              <td className="border border-gray-200 p-4 text-gray-700 dark:text-gray-400">
+                {feature}
+              </td>
               {plans.map((plan) => (
                 <td
                   key={plan.name + feature}
-                  className="border p-4 text-center"
+                  className="border border-gray-200 p-4 text-center"
                 >
                   {plan.features.includes(feature) ? "✔" : "—"}
                 </td>
@@ -56,15 +60,18 @@ export default function FeatureComparisonTable({
             </tr>
           ))}
           <tr>
-            <td className="border p-4"></td>
+            <td className="border border-gray-200 p-4"></td>
             {plans.map((plan) => (
-              <td key={plan.name + "btn"} className="border p-4 text-center">
+              <td
+                key={plan.name + "btn"}
+                className="border border-gray-200 p-4 text-center"
+              >
                 <Link
                   href={plan.button_link}
                   className={`px-4 py-2 rounded-lg font-medium inline-block ${
                     plan.highlighted
                       ? "bg-indigo-600 text-white hover:bg-indigo-700"
-                      : "bg-gray-100 text-gray-900 hover:bg-gray-200"
+                      : "bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-800"
                   }`}
                 >
                   {plan.button_text}

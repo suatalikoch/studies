@@ -32,8 +32,10 @@ export const NotesList = ({ user_id }: { user_id: string }) => {
 
   return (
     <div className="flex flex-col h-full">
-      <div className="p-4 flex items-center justify-between border-b bg-white">
-        <h2 className="text-xl font-bold text-gray-900">Notes</h2>
+      <div className="p-4 flex items-center justify-between border-b border-gray-200 bg-white dark:bg-gray-950">
+        <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">
+          Notes
+        </h2>
         <div className="flex items-center gap-2">
           <Searchbar
             value={searchTerm}
@@ -49,7 +51,7 @@ export const NotesList = ({ user_id }: { user_id: string }) => {
       </div>
 
       <div
-        className={`flex-1 overflow-y-auto p-4 ${
+        className={`flex-1 overflow-y-auto p-4 bg-gray-50 dark:bg-gray-800 ${
           viewMode === "grid"
             ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4 auto-rows-min"
             : "flex flex-col gap-4"

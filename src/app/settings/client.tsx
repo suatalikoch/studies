@@ -224,18 +224,18 @@ export default function SettingsClient() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-800 p-6">
       {/* Header */}
-      <div className="max-w-5xl mx-auto bg-gradient-to-r from-indigo-600 to-purple-600 rounded-lg p-6 text-white shadow-lg mb-6">
+      <div className="max-w-5xl mx-auto bg-gradient-to-r from-indigo-600 dark:from-indigo-700 to-purple-600 dark:to-purple-700 rounded-lg p-6 text-white shadow-lg mb-6">
         <h1 className="text-3xl font-bold">Settings</h1>
         <p className="text-indigo-100 mt-1">
           Manage your preferences and account.
         </p>
       </div>
 
-      <div className="max-w-5xl mx-auto bg-white rounded-lg shadow-lg flex flex-col md:flex-row">
+      <div className="max-w-5xl mx-auto bg-white dark:bg-gray-950 rounded-lg shadow-md flex flex-col md:flex-row">
         {/* Sidebar Tabs */}
-        <nav className="flex md:flex-col border-b md:border-b-0 md:border-r border-gray-200 bg-gray-50 rounded-t-lg md:rounded-t-none md:rounded-l-lg">
+        <nav className="flex md:flex-col border-b md:border-b-0 md:border-r border-gray-200 bg-gray-50 dark:bg-gray-900 rounded-t-lg md:rounded-t-none md:rounded-l-lg">
           {tabs.map(({ id, label, icon }) => (
             <button
               key={id}
@@ -244,7 +244,7 @@ export default function SettingsClient() {
               className={`flex items-center gap-2 px-5 py-4 md:py-5 md:px-6 cursor-pointer border-transparent border-b-4 md:border-b-0 md:border-l-4
                 ${
                   activeTab === id
-                    ? "border-indigo-600 bg-white font-semibold text-indigo-700"
+                    ? "border-indigo-600 bg-white dark:bg-gray-950 font-semibold text-indigo-700"
                     : "hover:bg-gray-100 text-gray-600"
                 }
                 transition-all`}

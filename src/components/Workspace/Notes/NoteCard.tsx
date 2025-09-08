@@ -17,6 +17,7 @@ export default function NoteCard({
 
   const color = note.color || subjectColors[note.subject] || "#ffffff";
   const maxTags = 3;
+  const bannerSizePx = 16;
 
   function getContrastYIQ(hexcolor: string) {
     // Remove hash if present
@@ -43,24 +44,29 @@ export default function NoteCard({
   return (
     <div
       onClick={() => onSelect(note)}
-      className={`rounded-lg cursor-pointer transition hover:shadow-md bg-white border border border-gray-200 ${
+      className={`rounded-lg cursor-pointer transition hover:shadow-md bg-white dark:bg-gray-950 border border-gray-200 ${
         viewMode === "list" ? "flex" : "flex flex-col"
       }`}
       onMouseEnter={(e) => (e.currentTarget.style.borderColor = color)}
       onMouseLeave={(e) => (e.currentTarget.style.borderColor = "#e5e7eb")}
+      style={{
+        backgroundImage:
+          viewMode === "list"
+            ? `linear-gradient(to right, ${color} ${bannerSizePx}px, transparent ${bannerSizePx}px)`
+            : `linear-gradient(to bottom, ${color} ${bannerSizePx}px, transparent ${bannerSizePx}px)`,
+        backgroundRepeat: "no-repeat",
+        backgroundClip: "border-box",
+      }}
     >
       {/* Color Bar */}
       <div
-        className={`flex-shrink-0 ${
-          viewMode === "list" ? "w-4 rounded-l-lg" : "h-4 rounded-t-lg"
-        }`}
-        style={{ backgroundColor: color }}
+        className={`flex-shrink-0 ${viewMode === "list" ? "w-4" : "h-4"}`}
       ></div>
 
       <div className="h-full p-3 flex flex-col flex-1 min-w-0 justify-between">
         <div>
           <div className="flex justify-between items-start">
-            <h3 className="font-semibold text-gray-900 truncate">
+            <h3 className="font-semibold text-gray-900 dark:text-gray-100 truncate">
               {note.title}
             </h3>
             <button
@@ -85,7 +91,9 @@ export default function NoteCard({
               )}
             </button>
           </div>
-          <p className="text-sm text-gray-600 truncate mt-1">{note.content}</p>
+          <p className="text-sm text-gray-600 dark:text-gray-300 truncate mt-1">
+            {note.content}
+          </p>
 
           {/* Show placeholder only if no content */}
           {(!note.content || note.content.length === 0) && (
@@ -93,7 +101,7 @@ export default function NoteCard({
           )}
         </div>
         <div>
-          <div className="flex justify-between items-center mt-2 text-xs text-gray-500">
+          <div className="flex justify-between items-center mt-2 text-xs text-gray-500 dark:text-gray-400">
             <Badge variant="secondary">{note.subject}</Badge>
             <span>{new Date(note.updated_at).toLocaleDateString()}</span>
           </div>

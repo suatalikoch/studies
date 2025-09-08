@@ -169,13 +169,15 @@ export default function TasksClient({ tasksDB }: { tasksDB: Task[] }) {
   return (
     <div className="flex flex-col h-full">
       {/* Header */}
-      <div className="p-4 flex items-center justify-between border-b bg-white">
-        <h2 className="text-xl font-bold text-gray-900">Tasks</h2>
+      <div className="p-4 flex items-center justify-between border-b border-gray-200 bg-white dark:bg-gray-950">
+        <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">
+          Tasks
+        </h2>
         <div>
           <div className="flex items-center gap-2">
             <div className="flex items-center space-x-2">
               {/* Filter icon */}
-              <Funnel className="w-5 h-5 text-gray-600" />
+              <Funnel className="w-5 h-5 text-gray-600 dark:text-gray-300" />
               <select
                 value={filter}
                 onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
@@ -209,13 +211,13 @@ export default function TasksClient({ tasksDB }: { tasksDB: Task[] }) {
         {/* Stat Cards */}
         {!showForm && (
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <div className="bg-white rounded-lg p-4 border border-gray-200">
+            <div className="bg-white dark:bg-gray-950 rounded-lg p-4 border border-gray-200">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-gray-600">
+                  <p className="text-sm font-medium text-gray-600 dark:text-gray-300">
                     Total Tasks
                   </p>
-                  <p className="text-2xl font-bold text-gray-900">
+                  <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
                     {totalTasks}
                   </p>
                 </div>
@@ -223,10 +225,12 @@ export default function TasksClient({ tasksDB }: { tasksDB: Task[] }) {
                 <SquareCheck className="w-8 h-8 text-indigo-600" />
               </div>
             </div>
-            <div className="bg-white rounded-lg p-4 border border-gray-200">
+            <div className="bg-white dark:bg-gray-950 rounded-lg p-4 border border-gray-200">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-gray-600">Completed</p>
+                  <p className="text-sm font-medium text-gray-600 dark:text-gray-300">
+                    Completed
+                  </p>
                   <p className="text-2xl font-bold text-green-600">
                     {completedCount}
                   </p>
@@ -235,10 +239,12 @@ export default function TasksClient({ tasksDB }: { tasksDB: Task[] }) {
                 <Check className="w-8 h-8 text-green-600" />
               </div>
             </div>
-            <div className="bg-white rounded-lg p-4 border border-gray-200">
+            <div className="bg-white dark:bg-gray-950 rounded-lg p-4 border border-gray-200">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-gray-600">Pending</p>
+                  <p className="text-sm font-medium text-gray-600 dark:text-gray-300">
+                    Pending
+                  </p>
                   <p className="text-2xl font-bold text-yellow-600">
                     {pendingCount}
                   </p>
@@ -247,10 +253,10 @@ export default function TasksClient({ tasksDB }: { tasksDB: Task[] }) {
                 <Clock className="w-8 h-8 text-yellow-600" />
               </div>
             </div>
-            <div className="bg-white rounded-lg p-4 border border-gray-200">
+            <div className="bg-white dark:bg-gray-950 rounded-lg p-4 border border-gray-200">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-gray-600">
+                  <p className="text-sm font-medium text-gray-600 dark:text-gray-300">
                     High Priority
                   </p>
                   <p className="text-2xl font-bold text-red-600">
@@ -266,8 +272,8 @@ export default function TasksClient({ tasksDB }: { tasksDB: Task[] }) {
 
         {/* Add Task Form */}
         {showForm && (
-          <div className="bg-white rounded-lg border border-gray-200 p-6 mb-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">
+          <div className="bg-white dark:bg-gray-950 rounded-lg border border-gray-200 p-6 mb-6">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">
               Add New Task
             </h3>
             <form
@@ -282,7 +288,7 @@ export default function TasksClient({ tasksDB }: { tasksDB: Task[] }) {
             >
               <div>
                 <label
-                  className="block text-sm font-medium text-gray-700 mb-1"
+                  className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-1"
                   htmlFor="title"
                 >
                   Title
@@ -302,7 +308,7 @@ export default function TasksClient({ tasksDB }: { tasksDB: Task[] }) {
 
               <div>
                 <label
-                  className="block text-sm font-medium text-gray-700 mb-1"
+                  className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-1"
                   htmlFor="description"
                 >
                   Description
@@ -322,7 +328,7 @@ export default function TasksClient({ tasksDB }: { tasksDB: Task[] }) {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
                   <label
-                    className="block text-sm font-medium text-gray-700 mb-1"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-1"
                     htmlFor="priority"
                   >
                     Priority
@@ -343,7 +349,7 @@ export default function TasksClient({ tasksDB }: { tasksDB: Task[] }) {
 
                 <div>
                   <label
-                    className="block text-sm font-medium text-gray-700 mb-1"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-1"
                     htmlFor="category"
                   >
                     Category
@@ -365,7 +371,7 @@ export default function TasksClient({ tasksDB }: { tasksDB: Task[] }) {
 
                 <div>
                   <label
-                    className="block text-sm font-medium text-gray-700 mb-1"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-1"
                     htmlFor="dueDate"
                   >
                     Due Date
@@ -401,7 +407,7 @@ export default function TasksClient({ tasksDB }: { tasksDB: Task[] }) {
               return (
                 <div
                   key={task.id}
-                  className="bg-white rounded-lg border border-gray-200 hover:border-indigo-400 p-4 transition-all hover:shadow-md cursor-pointer"
+                  className="bg-white dark:bg-gray-950 rounded-lg border border-gray-200 hover:border-indigo-400 p-4 transition-all hover:shadow-md cursor-pointer"
                 >
                   <div className="flex items-start space-x-4">
                     <button
@@ -428,8 +434,8 @@ export default function TasksClient({ tasksDB }: { tasksDB: Task[] }) {
                         <h3
                           className={`font-semibold ${
                             task.completed
-                              ? "text-gray-400 line-through"
-                              : "text-gray-900"
+                              ? "text-gray-400 dark:text-gray-500 line-through"
+                              : "text-gray-900 dark:text-gray-100"
                           }`}
                         >
                           {task.title}

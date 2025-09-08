@@ -62,7 +62,7 @@ export default function LoginClient() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 p-6">
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-800 p-6">
       <div className="w-full max-w-md space-y-6">
         {/* Welcome Banner (matches Dashboard style) */}
         <div className="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-lg p-6 text-white shadow-lg">
@@ -73,10 +73,10 @@ export default function LoginClient() {
         </div>
 
         {/* Login Form */}
-        <div className="bg-white rounded-lg shadow-lg p-6 space-y-6">
+        <div className="bg-white dark:bg-gray-950 rounded-lg shadow-lg p-6 space-y-6">
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-1">
                 Email
               </label>
               <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden">
@@ -95,7 +95,7 @@ export default function LoginClient() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-1">
                 Password
               </label>
               <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden">
@@ -130,7 +130,7 @@ export default function LoginClient() {
           <button
             onClick={handleGoogleSignIn}
             disabled={loading}
-            className="w-full flex items-center justify-center gap-2 border border-gray-300 rounded-lg py-2 text-gray-700 hover:bg-gray-100 transition disabled:opacity-50"
+            className="w-full flex items-center justify-center gap-2 border border-gray-300 rounded-lg py-2 text-gray-700 dark:text-gray-400 hover:bg-gray-100 transition disabled:opacity-50"
           >
             <svg
               className="w-5 h-5"
@@ -158,12 +158,12 @@ export default function LoginClient() {
           </button>
 
           {/* Additional Links */}
-          <div className="text-center text-sm text-gray-500">
+          <div className="text-center text-sm text-gray-500 dark:text-gray-400">
             <p>
               Don’t have an account?{" "}
               <Link
                 href="/register"
-                className="text-indigo-600 hover:underline"
+                className="text-indigo-600 dark:text-indigo-500 hover:underline"
               >
                 Sign up
               </Link>
@@ -171,7 +171,7 @@ export default function LoginClient() {
             <p>
               <Link
                 href="/forgot-password"
-                className="text-indigo-600 hover:underline"
+                className="text-indigo-600 dark:text-indigo-500 hover:underline"
               >
                 Forgot password?
               </Link>

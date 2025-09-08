@@ -16,7 +16,7 @@ function Code({ className, children, ...props }: CodeProps) {
 
   if (!isBlock) {
     return (
-      <code className={`${className} bg-gray-100`} {...props}>
+      <code className={`${className} bg-gray-100 dark:bg-gray-800`} {...props}>
         {children}
       </code>
     );
@@ -36,11 +36,11 @@ function Code({ className, children, ...props }: CodeProps) {
       </pre>
       <button
         onClick={handleCopy}
-        className="absolute top-[10px] right-[10px] hover:bg-gray-800 transition text-gray-400 rounded p-1 cursor-pointer"
+        className="absolute top-[10px] right-[10px] hover:bg-gray-200 dark:hover:bg-gray-800 transition text-gray-500 dark:text-gray-400 rounded p-1 cursor-pointer"
       >
         {copied ? (
           <div className="flex flex-row gap-2 items-center">
-            <span className="bg-gray-700 text-white text-xs rounded px-2 py-1">
+            <span className="bg-gray-300 dark:bg-gray-700 text-black dark:text-white text-xs rounded px-2 py-1">
               Copied!
             </span>
             <Check className="w-5 h-5 text-green-500" />
@@ -103,13 +103,13 @@ export default function MarkdownRenderer({ content }: { content: string }) {
       components={{
         h1: ({ ...props }) => (
           <h1
-            className="text-3xl font-bold border-b border-gray-300 pb-2"
+            className="text-3xl font-bold border-b border-gray-300 dark:border-gray-600 pb-2"
             {...props}
           />
         ),
         h2: ({ ...props }) => (
           <h2
-            className="text-2xl font-semibold border-b border-gray-200 pb-1"
+            className="text-2xl font-semibold border-b border-gray-200 dark:border-gray-700 pb-1"
             {...props}
           />
         ),
@@ -127,7 +127,7 @@ export default function MarkdownRenderer({ content }: { content: string }) {
         ),
         blockquote: ({ ...props }) => (
           <blockquote
-            className="border-l-4 bg-gray-100 border-gray-400 pl-4 italic py-4 text-gray-700 my-3"
+            className="border-l-4 bg-gray-100 dark:bg-gray-800 border-gray-400 pl-4 italic py-4 text-gray-700 my-3"
             {...props}
           />
         ),
@@ -167,7 +167,10 @@ export default function MarkdownRenderer({ content }: { content: string }) {
           />
         ),
         thead: ({ ...props }) => (
-          <thead className="bg-gray-100 font-semibold" {...props} />
+          <thead
+            className="bg-gray-100 dark:bg-gray-800 font-semibold"
+            {...props}
+          />
         ),
         th: ({ ...props }) => (
           <th
@@ -178,9 +181,14 @@ export default function MarkdownRenderer({ content }: { content: string }) {
         td: ({ ...props }) => (
           <td className="border border-gray-300 px-3 py-2" {...props} />
         ),
-        tr: ({ ...props }) => <tr className="even:bg-gray-100" {...props} />,
+        tr: ({ ...props }) => (
+          <tr className="even:bg-gray-100 dark:even:bg-gray-800" {...props} />
+        ),
         hr: ({ ...props }) => (
-          <hr {...props} className="border-t-4 my-2 border-gray-300" />
+          <hr
+            {...props}
+            className="border-t-4 my-2 border-gray-300 dark:border-gray-600"
+          />
         ),
         img: ({ ...props }) => (
           <img className="inline-block my-2" {...props} alt="Markdown Image" />

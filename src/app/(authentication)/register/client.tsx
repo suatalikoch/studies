@@ -46,7 +46,7 @@ export default function RegisterClient() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 p-6">
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-800 p-6">
       <div className="w-full max-w-md space-y-6">
         {/* Welcome Banner */}
         <div className="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-lg p-6 text-white shadow-lg">
@@ -57,11 +57,11 @@ export default function RegisterClient() {
         </div>
 
         {/* Register Form */}
-        <div className="bg-white rounded-lg shadow-lg p-6 space-y-6">
+        <div className="bg-white dark:bg-gray-950 rounded-lg shadow-lg p-6 space-y-6">
           <form onSubmit={handleSubmit} className="space-y-4">
             {/* Name */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-1">
                 Full Name
               </label>
               <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden">
@@ -81,7 +81,7 @@ export default function RegisterClient() {
 
             {/* Email */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-1">
                 Email
               </label>
               <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden">
@@ -101,7 +101,7 @@ export default function RegisterClient() {
 
             {/* Password */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-1">
                 Password
               </label>
               <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden">
@@ -134,10 +134,13 @@ export default function RegisterClient() {
           </form>
 
           {/* Additional Links */}
-          <div className="text-center text-sm text-gray-500">
+          <div className="text-center text-sm text-gray-500 dark:text-gray-400">
             <p>
               Already have an account?{" "}
-              <Link href="/login" className="text-indigo-600 hover:underline">
+              <Link
+                href="/login"
+                className="text-indigo-600 dark:text-indigo-500 hover:underline"
+              >
                 Sign in
               </Link>
             </p>

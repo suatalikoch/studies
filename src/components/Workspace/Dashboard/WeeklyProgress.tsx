@@ -8,13 +8,13 @@ export default function WeeklyProgress({
 }) {
   return (
     <section
-      className="bg-white rounded-lg border border-gray-200"
+      className="bg-white dark:bg-gray-950 rounded-lg border border-gray-200"
       aria-labelledby="weekly-progress-title"
     >
       <header className="p-6 border-b border-gray-200 flex items-center justify-between">
         <h3
           id="weekly-progress-title"
-          className="text-lg font-semibold text-gray-900"
+          className="text-lg font-semibold text-gray-900 dark:text-gray-100"
         >
           Weekly Progress
         </h3>
@@ -25,17 +25,19 @@ export default function WeeklyProgress({
           {progress.map(({ day, completed, total }) => (
             <div key={day} className="flex flex-col items-center flex-1">
               <div
-                className="w-full bg-gray-200 rounded-t-lg relative"
+                className="w-full bg-gray-200 dark:bg-gray-800 rounded-t-lg relative"
                 style={{ height: "80px" }}
                 aria-label={`${day} progress`}
               >
                 <div
-                  className="bg-indigo-600 rounded-t-lg absolute bottom-0 w-full transition-all duration-300"
+                  className="bg-indigo-600 dark:bg-indigo-700 rounded-t-lg absolute bottom-0 w-full transition-all duration-300"
                   style={{ height: `${(completed / total) * 100}%` }}
                 />
               </div>
-              <p className="text-xs font-medium text-gray-600 mt-2">{day}</p>
-              <p className="text-xs text-gray-500">
+              <p className="text-xs font-medium text-gray-600 dark:text-gray-300 mt-2">
+                {day}
+              </p>
+              <p className="text-xs text-gray-500 dark:text-gray-400">
                 {completed}/{total}
               </p>
             </div>

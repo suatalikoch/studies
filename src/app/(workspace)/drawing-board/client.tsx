@@ -170,9 +170,9 @@ export default function DrawingBoardClient() {
   const zoomOut = () => setZoom((z) => Math.max(z - 0.1, 0.5));
 
   return (
-    <div className="h-full flex flex-col bg-gray-100 dark:bg-gray-900 transition-colors duration-300">
+    <div className="h-full flex flex-col bg-gray-50 dark:bg-gray-800 transition-colors duration-300">
       {/* Toolbar */}
-      <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 p-4">
+      <div className="bg-white dark:bg-gray-950 border-b border-gray-200 p-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
             {/* Drawing Tools */}
@@ -276,25 +276,25 @@ export default function DrawingBoardClient() {
 
             <div className="border-l border-gray-300 pl-2 ml-2 flex space-x-2">
               {/* Upload */}
-              <button className="p-2 text-gray-600 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors">
+              <button className="p-2 text-gray-600 dark:text-gray-300 hover:text-indigo-600 hover:bg-indigo-50 dark:hover:bg-indigo-900 rounded-lg transition-colors">
                 <Upload className="w-5 h-5" />
               </button>
               {/* Download */}
-              <button className="p-2 text-gray-600 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors">
+              <button className="p-2 text-gray-600 dark:text-gray-300 hover:text-indigo-600 hover:bg-indigo-50 dark:hover:bg-indigo-900 rounded-lg transition-colors">
                 <Download className="w-5 h-5" />
               </button>
               {/* Save */}
-              <button className="p-2 text-gray-600 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors">
+              <button className="p-2 text-gray-600 dark:text-gray-300 hover:text-indigo-600 hover:bg-indigo-50 dark:hover:bg-indigo-900 rounded-lg transition-colors">
                 <Save className="w-5 h-5" />
               </button>
               {/* Rotate */}
-              <button className="p-2 text-gray-600 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors">
+              <button className="p-2 text-gray-600 dark:text-gray-300 hover:text-indigo-600 hover:bg-indigo-50 dark:hover:bg-indigo-900 rounded-lg transition-colors">
                 <RotateCw className="w-5 h-5" />
               </button>
               {/* Trash */}
               <button
                 onClick={clearCanvas}
-                className="p-2 text-gray-600 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                className="p-2 text-gray-600 dark:text-gray-300 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900 rounded-lg transition-colors"
                 title="Clear Canvas"
                 type="button"
               >
@@ -307,7 +307,7 @@ export default function DrawingBoardClient() {
 
       {/* Canvas Area */}
       <div className="flex-1 p-4">
-        <div className="h-full bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+        <div className="h-full bg-white dark:bg-gray-950 rounded-lg shadow-sm border border-gray-200 overflow-hidden">
           <canvas
             ref={canvasRef}
             className="w-full h-full cursor-crosshair"
@@ -321,8 +321,8 @@ export default function DrawingBoardClient() {
       </div>
 
       {/* Status Bar */}
-      <div className="bg-white border-t border-gray-200 px-4 py-2">
-        <div className="flex items-center justify-between text-sm text-gray-600">
+      <div className="bg-white dark:bg-gray-950 border-t border-gray-200 px-4 py-2">
+        <div className="flex items-center justify-between text-sm text-gray-600 dark:text-gray-300">
           <div className="flex items-center space-x-4">
             <span>
               Tool: <strong>{tool}</strong>

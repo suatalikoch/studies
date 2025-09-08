@@ -5,13 +5,13 @@ import { Star } from "lucide-react";
 export default function RecentNotes({ notes }: { notes: Note[] }) {
   return (
     <section
-      className="bg-white rounded-lg border border-gray-200"
+      className="bg-white dark:bg-gray-950 rounded-lg border border-gray-200"
       aria-labelledby="recent-notes-title"
     >
       <header className="p-6 border-b border-gray-200 flex items-center justify-between">
         <h3
           id="recent-notes-title"
-          className="text-lg font-semibold text-gray-900"
+          className="text-lg font-semibold text-gray-900 dark:text-gray-100"
         >
           Recent Notes
         </h3>
@@ -21,7 +21,7 @@ export default function RecentNotes({ notes }: { notes: Note[] }) {
         {notes.slice(0, 3).map(({ id, title, subject, updated_at }) => (
           <div
             key={id}
-            className="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 cursor-pointer transition-colors"
+            className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer transition-colors"
             role="button"
             tabIndex={0}
             aria-pressed="false"
@@ -33,10 +33,14 @@ export default function RecentNotes({ notes }: { notes: Note[] }) {
             onClick={() => alert(`Clicked on note ${title}`)}
           >
             <div className="flex-1">
-              <h4 className="font-medium text-gray-900">{title}</h4>
-              <p className="text-sm text-gray-600">{subject}</p>
+              <h4 className="font-medium text-gray-900 dark:text-gray-100">
+                {title}
+              </h4>
+              <p className="text-sm text-gray-600 dark:text-gray-300">
+                {subject}
+              </p>
             </div>
-            <p className="text-sm text-gray-500">
+            <p className="text-sm text-gray-500 dark:text-gray-400">
               {Date.parse(updated_at)
                 ? formatDistanceToNow(new Date(updated_at), { addSuffix: true })
                 : updated_at}

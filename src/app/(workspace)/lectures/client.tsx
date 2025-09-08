@@ -113,11 +113,13 @@ export default function LecturesClient({
 
   return (
     <div className="flex flex-col h-full">
-      <div className="flex flex-col gap-4 p-4 border-b bg-white">
+      <div className="flex flex-col gap-4 p-4 border-b border-gray-200 bg-white dark:bg-gray-950">
         <div className="flex items-center justify-between">
           {!showDetails ? (
             <>
-              <h2 className="text-xl font-bold text-gray-900">Lectures</h2>
+              <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">
+                Lectures
+              </h2>
               <div className="flex gap-2">
                 <select className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-sm">
                   <option value="all">All Subjects</option>
@@ -173,14 +175,14 @@ export default function LecturesClient({
               <div
                 key={lecture.id}
                 onClick={() => setShowDetails((prev) => !prev)}
-                className="bg-white rounded-lg border border-gray-200 hover:border-indigo-400 p-4 transition-all hover:shadow-md cursor-pointer"
+                className="bg-white dark:bg-gray-950 rounded-lg border border-gray-200 hover:border-indigo-400 p-4 transition-all hover:shadow-md cursor-pointer"
               >
                 <div className="flex items-start justify-between mb-2">
-                  <h3 className="font-semibold text-gray-900 flex-1">
+                  <h3 className="font-semibold text-gray-900 dark:text-gray-100 flex-1">
                     {lecture.title}
                   </h3>
                   <div className="flex items-center space-x-1 ml-2">
-                    <BookType className="w-5 h-5 text-indigo-600" />
+                    <BookType className="w-5 h-5 text-indigo-600 dark:text-indigo-500" />
                     <input
                       type="checkbox"
                       checked
@@ -189,14 +191,14 @@ export default function LecturesClient({
                     />
                   </div>
                 </div>
-                <p className="text-sm text-gray-600 mb-2">
+                <p className="text-sm text-gray-600 dark:text-gray-300 mb-2">
                   {lecture.subject} • {lecture.professor}
                 </p>
                 <div className="flex items-center justify-between mb-2">
                   <span className="px-2 py-1 rounded-lg text-xs font-medium bg-indigo-100 text-indigo-800">
                     {lecture.type}
                   </span>
-                  <div className="flex items-center space-x-2 text-xs text-gray-500">
+                  <div className="flex items-center space-x-2 text-xs text-gray-500 dark:text-gray-400">
                     <div className="flex items-center space-x-1">
                       <Calendar className="w-3 h-3" />
                       <span>{new Date(lecture.date).toLocaleDateString()}</span>
@@ -226,15 +228,15 @@ export default function LecturesClient({
         </div>
       )}
       {showDetails && (
-        <div className="flex-1 bg-white flex flex-col">
+        <div className="flex-1 bg-white dark:bg-gray-950 flex flex-col">
           <div className="h-full flex flex-col">
             <div className="p-6 border-b border-gray-200">
               <div className="flex items-start justify-between mb-4">
                 <div className="flex-1">
-                  <h1 className="text-2xl font-bold text-gray-900 mb-2">
+                  <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">
                     Introduction to Biology
                   </h1>
-                  <div className="flex items-center space-x-4 text-gray-600">
+                  <div className="flex items-center space-x-4 text-gray-600 dark:text-gray-300">
                     <span>Science</span>
                     <span>•</span>
                     <span>Prof. Smith</span>
@@ -255,7 +257,9 @@ export default function LecturesClient({
                       readOnly
                       className="rounded text-indigo-600 focus:ring-indigo-500"
                     />
-                    <span className="text-sm text-gray-600">Attended</span>
+                    <span className="text-sm text-gray-600 dark:text-gray-300">
+                      Attended
+                    </span>
                   </label>
                 </div>
               </div>
@@ -334,10 +338,10 @@ export default function LecturesClient({
           </div>
         </div>
       )}
-      <div className="flex-1 p-4 flex flex-col gap-4">
-        {showForm && (
-          <div className="bg-white rounded-lg border border-gray-200 p-6 mb-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">
+      {showForm && (
+        <div className="flex-1 p-4 flex flex-col gap-4">
+          <div className="bg-white dark:bg-gray-950 rounded-lg border border-gray-200 p-6 mb-6">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">
               Add New Assignment
             </h3>
             <form
@@ -352,7 +356,7 @@ export default function LecturesClient({
             >
               <div>
                 <label
-                  className="block text-sm font-medium text-gray-700 mb-1"
+                  className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-1"
                   htmlFor="title"
                 >
                   Title
@@ -371,7 +375,7 @@ export default function LecturesClient({
               </div>
               <div>
                 <label
-                  className="block text-sm font-medium text-gray-700 mb-1"
+                  className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-1"
                   htmlFor="subject"
                 >
                   Subject
@@ -390,7 +394,7 @@ export default function LecturesClient({
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
                   <label
-                    className="block text-sm font-medium text-gray-700 mb-1"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-1"
                     htmlFor="professor"
                   >
                     Professor
@@ -411,7 +415,7 @@ export default function LecturesClient({
                 </div>
                 <div>
                   <label
-                    className="block text-sm font-medium text-gray-700 mb-1"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-1"
                     htmlFor="date"
                   >
                     Due Date
@@ -428,7 +432,7 @@ export default function LecturesClient({
                 </div>
                 <div>
                   <label
-                    className="block text-sm font-medium text-gray-700 mb-1"
+                    className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-1"
                     htmlFor="duration"
                   >
                     Duration
@@ -457,8 +461,8 @@ export default function LecturesClient({
               </div>
             </form>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 }

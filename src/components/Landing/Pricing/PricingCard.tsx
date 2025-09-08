@@ -34,7 +34,7 @@ export default function PricingCard({
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 20 }}
       transition={{ type: "spring", stiffness: 100, damping: 20 }}
-      className={`bg-white rounded-lg shadow-lg border border-gray-200 flex flex-col relative ${
+      className={`bg-white dark:bg-gray-950 rounded-lg shadow-lg border border-gray-200 flex flex-col relative ${
         plan.highlighted ? "ring-2 ring-indigo-500 scale-105" : ""
       }`}
     >
@@ -50,7 +50,9 @@ export default function PricingCard({
       )}
 
       <div className="p-6 flex-1">
-        <h3 className="text-xl font-semibold text-gray-900">{plan.name}</h3>
+        <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
+          {plan.name}
+        </h3>
 
         <motion.p
           className="mt-4 text-4xl font-bold text-indigo-600 flex items-baseline justify-center"
@@ -64,14 +66,16 @@ export default function PricingCard({
                 : plan.price_yearly
             }
           />
-          <span className="text-lg font-medium text-gray-500 ml-1">
+          <span className="text-lg font-medium text-gray-500 dark:text-gray-400 ml-1">
             /{billingCycle === "monthly" ? "mo" : "yr"}
           </span>
         </motion.p>
 
-        <p className="mt-2 text-gray-600">{plan.description}</p>
+        <p className="mt-2 text-gray-600 dark:text-gray-300">
+          {plan.description}
+        </p>
 
-        <ul className="mt-6 space-y-3 text-gray-700">
+        <ul className="mt-6 space-y-3 text-gray-700 dark:text-gray-400">
           {plan.features.map((feature) => (
             <li key={feature} className="flex items-center space-x-2">
               <span className="text-green-500" aria-hidden="true">
@@ -89,7 +93,7 @@ export default function PricingCard({
           className={`block w-full text-center py-3 rounded-lg font-medium transition-colors ${
             plan.highlighted
               ? "bg-indigo-600 text-white hover:bg-indigo-700"
-              : "bg-gray-100 text-gray-900 hover:bg-gray-200"
+              : "bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-800"
           }`}
         >
           {plan.button_text}

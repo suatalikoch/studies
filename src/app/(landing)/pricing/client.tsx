@@ -10,13 +10,13 @@ export default function PricingClient({ plans }: { plans: Plan[] }) {
   const [billingCycle, setBillingCycle] = useState<BillingCycle>("monthly");
 
   return (
-    <div className="bg-gray-50 py-16">
+    <div className="bg-gray-50 dark:bg-gray-800 py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <div>
-          <h2 className="text-3xl font-bold text-gray-900">
+          <h2 className="text-3xl font-bold text-gray-900 dark:text-gray-100">
             Choose the plan that&apos;s right for you
           </h2>
-          <p className="mt-4 text-lg text-gray-600">
+          <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">
             Flexible pricing options for students and educators.
           </p>
 

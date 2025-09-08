@@ -4,7 +4,7 @@ import Link from "next/link";
 import { GraduationCap, Search, Settings } from "lucide-react";
 import { useUser } from "@/hooks/useUser";
 import {
-  IconButton,
+  Button,
   NavigationMenu,
   NavigationMenuContent,
   NavigationMenuItem,
@@ -57,12 +57,14 @@ export default function HeaderLanding() {
   const user = useUser();
 
   return (
-    <header className="bg-white border-b border-gray-200 px-6 py-4 flex-shrink-0">
+    <header className="bg-white dark:bg-gray-950 border-b border-gray-200 px-6 py-4 flex-shrink-0">
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-6">
           <Link href="/" className="flex items-center space-x-2">
             <GraduationCap className="w-8 h-8 text-indigo-600" />
-            <h1 className="text-2xl font-bold text-gray-900">Student Hub</h1>
+            <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+              Student Hub
+            </h1>
           </Link>
 
           <NavigationMenu viewport={false} className="z-1">
@@ -91,7 +93,7 @@ export default function HeaderLanding() {
                       href="/docs"
                       className="p-2 from-muted to-muted hover:bg-linear-to-b rounded-sm transition-colors"
                     >
-                      <h6 className="text-sm text-black font-medium">
+                      <h6 className="text-sm text-black dark:text-gray-100 font-medium">
                         Introduction
                       </h6>
                       <p className="text-sm text-muted-foreground line-clamp-2">
@@ -103,7 +105,7 @@ export default function HeaderLanding() {
                       href="/docs/installation"
                       className="p-2 from-muted to-muted hover:bg-linear-to-b rounded-sm transition-colors"
                     >
-                      <h6 className="text-sm text-black font-medium">
+                      <h6 className="text-sm text-black dark:text-gray-100 font-medium">
                         Installation
                       </h6>
                       <p className="text-sm text-muted-foreground line-clamp-2">
@@ -114,7 +116,7 @@ export default function HeaderLanding() {
                       href="/docs/primitives/typography"
                       className="p-2 from-muted to-muted hover:bg-linear-to-b rounded-sm transition-colors"
                     >
-                      <h6 className="text-sm text-black font-medium">
+                      <h6 className="text-sm text-black dark:text-gray-100 font-medium">
                         Typography
                       </h6>
                       <p className="text-sm text-muted-foreground line-clamp-2">
@@ -134,7 +136,7 @@ export default function HeaderLanding() {
                         href={component.href}
                         className="p-2 from-muted to-muted hover:bg-linear-to-b rounded-sm transition-colors"
                       >
-                        <h6 className="text-sm text-black">
+                        <h6 className="text-sm text-black dark:text-gray-100">
                           {component.title}
                         </h6>
                         <p className="text-sm text-muted-foreground line-clamp-2">
@@ -221,9 +223,9 @@ export default function HeaderLanding() {
             {!user ? "" : <NotificationMenu />}
 
             <Link href="/settings">
-              <IconButton label="Settings">
-                <Settings className="w-5 h-5" />
-              </IconButton>
+              <Button title="Settings" variant="ghost" size="icon">
+                <Settings className="w-5 h-5 dark:text-gray-400" />
+              </Button>
             </Link>
           </div>
         </div>

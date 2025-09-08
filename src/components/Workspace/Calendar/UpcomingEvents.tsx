@@ -5,8 +5,10 @@ import Link from "next/link";
 
 export default function UpcomingEvents({ exams }: { exams: Exam[] }) {
   return (
-    <div className="w-full md:w-96 bg-white border border-gray-200 rounded-lg p-6 space-y-6">
-      <h2 className="text-xl font-bold text-gray-900">Upcoming Events</h2>
+    <div className="w-full md:w-96 bg-white dark:bg-gray-950 border border-gray-200 rounded-lg p-6 space-y-6">
+      <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">
+        Upcoming Events
+      </h2>
 
       <div className="space-y-4 overflow-y-auto">
         {exams.map((exam, index) => (
@@ -15,7 +17,7 @@ export default function UpcomingEvents({ exams }: { exams: Exam[] }) {
             className="p-4 border border-gray-200 rounded-lg hover:border-indigo-400 hover:shadow-md transition"
           >
             <h3 className="text-lg font-semibold">{exam.subject}</h3>
-            <p className="text-gray-600 flex items-center gap-2">
+            <p className="text-gray-600 dark:text-gray-300 flex items-center gap-2">
               <Clock className="w-4 h-4 text-yellow-600" />
               {new Date(exam.date).toLocaleDateString()} •{" "}
               {new Date(exam.date).toLocaleTimeString(undefined, {
@@ -25,7 +27,9 @@ export default function UpcomingEvents({ exams }: { exams: Exam[] }) {
             </p>
             <div className="flex gap-2 items-center">
               <MapPin className="w-4 h-4 text-red-600" />
-              <p className="text-gray-500 text-sm">{exam.location}</p>
+              <p className="text-gray-500 dark:text-gray-400 text-sm">
+                {exam.location}
+              </p>
             </div>
           </div>
         ))}
