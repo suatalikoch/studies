@@ -8,7 +8,7 @@ export default function BillingToggle({
   setBillingCycle: (cycle: BillingCycle) => void;
 }) {
   return (
-    <div className="bg-white dark:bg-gray-950 border border-gray-300 rounded-full flex p-1">
+    <div className="bg-white dark:bg-gray-950 border border-gray-300 dark:border-gray-600 rounded-full flex p-1">
       {["monthly", "yearly"].map((cycle) => (
         <button
           key={cycle}

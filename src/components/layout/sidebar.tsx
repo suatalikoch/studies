@@ -89,7 +89,7 @@ export default function Sidebar() {
   }
 
   return (
-    <aside className="w-64 bg-white dark:bg-gray-950 border-r border-gray-200 flex flex-col flex-shrink-0">
+    <aside className="w-64 bg-white dark:bg-gray-950 border-r border-gray-200 dark:border-gray-600 flex flex-col flex-shrink-0">
       {/* Sidebar Navigation */}
       <nav className="p-4 space-y-2 overflow-y-auto flex-1">
         {sidebarItems.map((item) => {
@@ -112,7 +112,7 @@ export default function Sidebar() {
       </nav>
 
       {/* Quick Stats */}
-      <div className="p-4 border-t border-gray-200">
+      <div className="p-4 border-t border-gray-200 dark:border-gray-600">
         <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-3">
           Quick Statistics
         </h3>
@@ -145,7 +145,10 @@ export default function Sidebar() {
       </div>
 
       {/* User profile + dropdown */}
-      <div className="border-t border-gray-200 p-4 relative" ref={flyoutRef}>
+      <div
+        className="border-t border-gray-200 dark:border-gray-600 p-4 relative"
+        ref={flyoutRef}
+      >
         {loading ? (
           <div className="flex items-center w-full space-x-3 focus:outline-none cursor-pointer">
             <Skeleton className="w-10 h-10 rounded-full" />
@@ -193,7 +196,7 @@ export default function Sidebar() {
 
         {/* Flyout menu opens to the right */}
         {flyoutOpen && (
-          <div className="absolute -top-5 left-full ml-2 w-40 bg-white dark:bg-gray-950 border border-gray-200 rounded-lg shadow-lg z-10">
+          <div className="absolute -top-5 left-full ml-2 w-40 bg-white dark:bg-gray-950 border border-gray-200 dark:border-gray-600 rounded-lg shadow-lg z-10">
             <Link
               href="/settings"
               className="flex items-center px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-900 text-gray-700 dark:text-gray-200 rounded-t-lg"

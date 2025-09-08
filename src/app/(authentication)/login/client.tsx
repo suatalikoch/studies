@@ -79,7 +79,7 @@ export default function LoginClient() {
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-1">
                 Email
               </label>
-              <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden">
+              <div className="flex items-center border border-gray-300 dark:border-gray-500 rounded-lg overflow-hidden">
                 <span className="px-3 text-gray-400">
                   <User className="w-5 h-5" />
                 </span>
@@ -98,7 +98,7 @@ export default function LoginClient() {
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-1">
                 Password
               </label>
-              <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden">
+              <div className="flex items-center border border-gray-300 dark:border-gray-500 rounded-lg overflow-hidden">
                 <span className="px-3 text-gray-400">
                   <Lock className="w-5 h-5" />
                 </span>
@@ -130,7 +130,7 @@ export default function LoginClient() {
           <button
             onClick={handleGoogleSignIn}
             disabled={loading}
-            className="w-full flex items-center justify-center gap-2 border border-gray-300 rounded-lg py-2 text-gray-700 dark:text-gray-400 hover:bg-gray-100 transition disabled:opacity-50"
+            className="w-full flex items-center justify-center gap-2 border border-gray-300 dark:border-gray-500 rounded-lg py-2 text-gray-700 dark:text-gray-400 hover:bg-gray-100 transition disabled:opacity-50"
           >
             <svg
               className="w-5 h-5"

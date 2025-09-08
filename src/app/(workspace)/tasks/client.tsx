@@ -169,7 +169,7 @@ export default function TasksClient({ tasksDB }: { tasksDB: Task[] }) {
   return (
     <div className="flex flex-col h-full">
       {/* Header */}
-      <div className="p-4 flex items-center justify-between border-b border-gray-200 bg-white dark:bg-gray-950">
+      <div className="p-4 flex items-center justify-between border-b border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-950">
         <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">
           Tasks
         </h2>
@@ -183,7 +183,7 @@ export default function TasksClient({ tasksDB }: { tasksDB: Task[] }) {
                 onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
                   setFilter(e.target.value as Filter)
                 }
-                className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                className="px-3 py-2 border border-gray-300 dark:border-gray-500 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
               >
                 <option value="all">All Tasks</option>
                 <option value="pending">Pending</option>
@@ -211,7 +211,7 @@ export default function TasksClient({ tasksDB }: { tasksDB: Task[] }) {
         {/* Stat Cards */}
         {!showForm && (
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <div className="bg-white dark:bg-gray-950 rounded-lg p-4 border border-gray-200">
+            <div className="bg-white dark:bg-gray-950 rounded-lg p-4 border border-gray-200 dark:border-gray-600">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm font-medium text-gray-600 dark:text-gray-300">
@@ -225,7 +225,7 @@ export default function TasksClient({ tasksDB }: { tasksDB: Task[] }) {
                 <SquareCheck className="w-8 h-8 text-indigo-600" />
               </div>
             </div>
-            <div className="bg-white dark:bg-gray-950 rounded-lg p-4 border border-gray-200">
+            <div className="bg-white dark:bg-gray-950 rounded-lg p-4 border border-gray-200 dark:border-gray-600">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm font-medium text-gray-600 dark:text-gray-300">
@@ -239,7 +239,7 @@ export default function TasksClient({ tasksDB }: { tasksDB: Task[] }) {
                 <Check className="w-8 h-8 text-green-600" />
               </div>
             </div>
-            <div className="bg-white dark:bg-gray-950 rounded-lg p-4 border border-gray-200">
+            <div className="bg-white dark:bg-gray-950 rounded-lg p-4 border border-gray-200 dark:border-gray-600">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm font-medium text-gray-600 dark:text-gray-300">
@@ -253,7 +253,7 @@ export default function TasksClient({ tasksDB }: { tasksDB: Task[] }) {
                 <Clock className="w-8 h-8 text-yellow-600" />
               </div>
             </div>
-            <div className="bg-white dark:bg-gray-950 rounded-lg p-4 border border-gray-200">
+            <div className="bg-white dark:bg-gray-950 rounded-lg p-4 border border-gray-200 dark:border-gray-600">
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm font-medium text-gray-600 dark:text-gray-300">
@@ -272,7 +272,7 @@ export default function TasksClient({ tasksDB }: { tasksDB: Task[] }) {
 
         {/* Add Task Form */}
         {showForm && (
-          <div className="bg-white dark:bg-gray-950 rounded-lg border border-gray-200 p-6 mb-6">
+          <div className="bg-white dark:bg-gray-950 rounded-lg border border-gray-200 dark:border-gray-600 p-6 mb-6">
             <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">
               Add New Task
             </h3>
@@ -297,7 +297,7 @@ export default function TasksClient({ tasksDB }: { tasksDB: Task[] }) {
                   ref={titleRef}
                   type="text"
                   id="title"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-500 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                   placeholder="Enter task title..."
                   value={form.title}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -316,7 +316,7 @@ export default function TasksClient({ tasksDB }: { tasksDB: Task[] }) {
                 <textarea
                   id="description"
                   rows={3}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-500 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                   placeholder="Enter task description..."
                   value={form.description}
                   onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
@@ -335,7 +335,7 @@ export default function TasksClient({ tasksDB }: { tasksDB: Task[] }) {
                   </label>
                   <select
                     id="priority"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-500 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                     value={form.priority}
                     onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
                       setField("priority", e.target.value as TaskPriority)
@@ -356,7 +356,7 @@ export default function TasksClient({ tasksDB }: { tasksDB: Task[] }) {
                   </label>
                   <select
                     id="category"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-500 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                     value={form.category}
                     onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
                       setField("category", e.target.value as Category)
@@ -379,7 +379,7 @@ export default function TasksClient({ tasksDB }: { tasksDB: Task[] }) {
                   <input
                     type="date"
                     id="dueDate"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-500 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                     value={form.due_date}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                       setField("due_date", e.target.value)
@@ -407,7 +407,7 @@ export default function TasksClient({ tasksDB }: { tasksDB: Task[] }) {
               return (
                 <div
                   key={task.id}
-                  className="bg-white dark:bg-gray-950 rounded-lg border border-gray-200 hover:border-indigo-400 p-4 transition-all hover:shadow-md cursor-pointer"
+                  className="bg-white dark:bg-gray-950 rounded-lg border border-gray-200 dark:border-gray-600 hover:border-indigo-400 p-4 transition-all hover:shadow-md cursor-pointer"
                 >
                   <div className="flex items-start space-x-4">
                     <button

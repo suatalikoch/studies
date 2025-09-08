@@ -32,7 +32,7 @@ export const NotesList = ({ user_id }: { user_id: string }) => {
 
   return (
     <div className="flex flex-col h-full">
-      <div className="p-4 flex items-center justify-between border-b border-gray-200 bg-white dark:bg-gray-950">
+      <div className="p-4 flex items-center justify-between border-b border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-950">
         <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">
           Notes
         </h2>

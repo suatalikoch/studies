@@ -52,7 +52,7 @@ export default function ForgotPasswordClient() {
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-1">
                 Email
               </label>
-              <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden">
+              <div className="flex items-center border border-gray-300 dark:border-gray-500 rounded-lg overflow-hidden">
                 <span className="px-3 text-gray-400">
                   <Mail className="w-5 h-5" />
                 </span>

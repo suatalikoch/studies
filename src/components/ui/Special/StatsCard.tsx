@@ -16,7 +16,7 @@ const StatsCard: FC<StatsCardProps> = ({
   changeColor,
 }) => (
   <div
-    className="bg-white dark:bg-gray-950 rounded-lg p-6 border border-gray-200"
+    className="bg-white dark:bg-gray-950 rounded-lg p-6 border border-gray-200 dark:border-gray-600"
     role="region"
     aria-label={title}
   >

@@ -97,7 +97,7 @@ export default function AssignmentsClient({
   return (
     <div className="flex flex-col h-full">
       {/* Assignments List */}
-      <div className="bg-white dark:bg-gray-950 p-4 border-b border-gray-200">
+      <div className="bg-white dark:bg-gray-950 p-4 border-b border-gray-200 dark:border-gray-600">
         <div className="flex items-center justify-between">
           {!showDetails ? (
             <>
@@ -105,7 +105,7 @@ export default function AssignmentsClient({
                 Assignments
               </h2>
               <div className="flex flex-row gap-2">
-                <select className="text-sm w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
+                <select className="text-sm w-full px-3 py-2 border border-gray-300 dark:border-gray-500 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent">
                   <option value="all">All Assignments</option>
                   <option value="not-started">Not Started</option>
                   <option value="in-progress">In Progress</option>
@@ -146,7 +146,7 @@ export default function AssignmentsClient({
               <div
                 key={assignment.id}
                 onClick={() => setShowDetails((prev) => !prev)}
-                className="bg-white dark:bg-gray-950 rounded-lg border border-gray-200 hover:border-indigo-400 hover:shadow-md p-4 cursor-pointer transition-colors"
+                className="bg-white dark:bg-gray-950 rounded-lg border border-gray-200 dark:border-gray-600 hover:border-indigo-400 hover:shadow-md p-4 cursor-pointer transition-colors"
               >
                 <div className="flex items-start justify-between mb-2">
                   <h3 className="font-semibold text-gray-900 dark:text-gray-100 flex-1">
@@ -185,7 +185,7 @@ export default function AssignmentsClient({
         <div className="flex-1 bg-white dark:bg-gray-950">
           {/* If assignment selected */}
           <div className="h-full flex flex-col">
-            <div className="p-6 border-b border-gray-200">
+            <div className="p-6 border-b border-gray-200 dark:border-gray-600">
               <div className="flex items-start justify-between mb-4">
                 <div className="flex-1">
                   <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">
@@ -271,7 +271,7 @@ export default function AssignmentsClient({
                     Notes
                   </h3>
                   <textarea
-                    className="w-full h-32 p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    className="w-full h-32 p-4 border border-gray-300 dark:border-gray-500 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                     placeholder="Add your notes here..."
                   ></textarea>
                 </div>
@@ -301,7 +301,7 @@ export default function AssignmentsClient({
       )}
       {showForm && (
         <div className="flex-1 p-4 flex flex-col gap-4">
-          <div className="bg-white dark:bg-gray-950 rounded-lg border border-gray-200 p-6 mb-6">
+          <div className="bg-white dark:bg-gray-950 rounded-lg border border-gray-200 dark:border-gray-600 p-6 mb-6">
             <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">
               Add New Assignment
             </h3>
@@ -326,7 +326,7 @@ export default function AssignmentsClient({
                   ref={titleRef}
                   type="text"
                   id="title"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-500 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                   placeholder="Enter assignment title..."
                   value={form.title}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -344,7 +344,7 @@ export default function AssignmentsClient({
                 <textarea
                   id="subject"
                   rows={3}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-500 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                   placeholder="Enter subject subject..."
                   value={form.subject}
                   onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
@@ -362,7 +362,7 @@ export default function AssignmentsClient({
                   </label>
                   <select
                     id="status"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-500 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                     value={form.status}
                     onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
                       setField("status", e.target.value)
@@ -383,7 +383,7 @@ export default function AssignmentsClient({
                   </label>
                   <select
                     id="priority"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-500 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                     value={form.priority}
                     onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
                       setField("priority", e.target.value)
@@ -404,7 +404,7 @@ export default function AssignmentsClient({
                   <input
                     type="date"
                     id="dueDate"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-500 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                     value={form.due_date}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                       setField("due_date", e.target.value)

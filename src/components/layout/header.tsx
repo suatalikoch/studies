@@ -15,7 +15,7 @@ export default function Header() {
   };
 
   return (
-    <header className="bg-white dark:bg-gray-950 border-b border-gray-200 px-6 py-4 flex-shrink-0">
+    <header className="bg-white dark:bg-gray-950 border-b border-gray-200 dark:border-gray-600 px-6 py-4 flex-shrink-0">
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-4">
           <Link href="/" className="flex items-center space-x-2">
@@ -35,7 +35,7 @@ export default function Header() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               onKeyDown={handleKeyDown}
-              className="pl-10 pr-4 py-2 w-80 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+              className="pl-10 pr-4 py-2 w-80 border border-gray-300 dark:border-gray-500 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
             />
           </div>
           <div className="flex items-center space-x-2">
