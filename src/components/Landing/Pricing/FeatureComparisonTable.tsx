@@ -16,11 +16,13 @@ export default function FeatureComparisonTable({
       <table className="w-full bg-white dark:bg-gray-950 rounded-lg shadow-md overflow-hidden text-left">
         <thead>
           <tr>
-            <th className="border border-gray-200 p-4">Features</th>
+            <th className="border border-gray-200 dark:border-gray-600 p-4">
+              Features
+            </th>
             {plans.map((plan) => (
               <th
                 key={plan.name}
-                className={`border border-gray-200 p-4 text-center ${
+                className={`border border-gray-200 dark:border-gray-600 p-4 text-center ${
                   plan.highlighted ? "bg-indigo-50 dark:bg-indigo-300" : ""
                 }`}
               >
@@ -46,13 +48,13 @@ export default function FeatureComparisonTable({
         <tbody>
           {allFeatures.map((feature) => (
             <tr key={feature}>
-              <td className="border border-gray-200 p-4 text-gray-700 dark:text-gray-400">
+              <td className="border border-gray-200 dark:border-gray-600 p-4 text-gray-700 dark:text-gray-400">
                 {feature}
               </td>
               {plans.map((plan) => (
                 <td
                   key={plan.name + feature}
-                  className="border border-gray-200 p-4 text-center"
+                  className="border border-gray-200 dark:border-gray-600 p-4 text-center"
                 >
                   {plan.features.includes(feature) ? "✔" : "—"}
                 </td>
@@ -60,11 +62,11 @@ export default function FeatureComparisonTable({
             </tr>
           ))}
           <tr>
-            <td className="border border-gray-200 p-4"></td>
+            <td className="border border-gray-200 dark:border-gray-600 p-4"></td>
             {plans.map((plan) => (
               <td
                 key={plan.name + "btn"}
-                className="border border-gray-200 p-4 text-center"
+                className="border border-gray-200 dark:border-gray-600 p-4 text-center"
               >
                 <Link
                   href={plan.button_link}

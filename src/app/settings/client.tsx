@@ -235,7 +235,7 @@ export default function SettingsClient() {
 
       <div className="max-w-5xl mx-auto bg-white dark:bg-gray-950 rounded-lg shadow-md flex flex-col md:flex-row">
         {/* Sidebar Tabs */}
-        <nav className="flex md:flex-col border-b md:border-b-0 md:border-r border-gray-200 bg-gray-50 dark:bg-gray-900 rounded-t-lg md:rounded-t-none md:rounded-l-lg">
+        <nav className="flex md:flex-col border-b md:border-b-0 md:border-r border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-900 rounded-t-lg md:rounded-t-none md:rounded-l-lg">
           {tabs.map(({ id, label, icon }) => (
             <button
               key={id}
@@ -317,7 +317,7 @@ export default function SettingsClient() {
                     </label>
                     <input
                       type="text"
-                      className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none"
+                      className="w-full border border-gray-300 dark:border-gray-500 rounded-lg px-3 py-2 focus:outline-none"
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                       disabled={loading}
@@ -328,7 +328,7 @@ export default function SettingsClient() {
                     <label className="block text-sm font-medium text-gray-700 mb-1">
                       Email Address
                     </label>
-                    <div className="flex items-center border border-gray-300 rounded-lg overflow-hidden">
+                    <div className="flex items-center border border-gray-300 dark:border-gray-500 rounded-lg overflow-hidden">
                       <span className="px-3 text-gray-400">
                         <Mail className="w-5 h-5" />
                       </span>
@@ -358,7 +358,7 @@ export default function SettingsClient() {
                     </label>
                     <input
                       type="password"
-                      className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none"
+                      className="w-full border border-gray-300 dark:border-gray-500 rounded-lg px-3 py-2 focus:outline-none"
                       value={currentPassword}
                       onChange={(e) => setCurrentPassword(e.target.value)}
                       placeholder="••••••••"
@@ -371,7 +371,7 @@ export default function SettingsClient() {
                     </label>
                     <input
                       type="password"
-                      className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none"
+                      className="w-full border border-gray-300 dark:border-gray-500 rounded-lg px-3 py-2 focus:outline-none"
                       value={newPassword}
                       onChange={(e) => setNewPassword(e.target.value)}
                       placeholder="••••••••"
@@ -383,7 +383,7 @@ export default function SettingsClient() {
                       type="checkbox"
                       checked={twoFactorAuth}
                       onChange={(e) => setTwoFactorAuth(e.target.checked)}
-                      className="w-5 h-5 text-indigo-600 border-gray-300 rounded-lg focus:ring-indigo-500"
+                      className="w-5 h-5 text-indigo-600 border-gray-300 dark:border-gray-500 rounded-lg focus:ring-indigo-500"
                       disabled={loading}
                     />
                     <span className="text-gray-700 flex items-center gap-1">
@@ -415,7 +415,7 @@ export default function SettingsClient() {
                             [key]: e.target.checked,
                           }))
                         }
-                        className="w-5 h-5 text-indigo-600 border-gray-300 rounded-lg focus:ring-indigo-500"
+                        className="w-5 h-5 text-indigo-600 border-gray-300 dark:border-gray-500 rounded-lg focus:ring-indigo-500"
                         disabled={loading}
                       />
                       <span className="text-gray-700 capitalize">
@@ -437,7 +437,7 @@ export default function SettingsClient() {
                     type="checkbox"
                     checked={darkMode}
                     onChange={(e) => setDarkMode(e.target.checked)}
-                    className="w-5 h-5 text-indigo-600 border-gray-300 rounded-lg focus:ring-indigo-500"
+                    className="w-5 h-5 text-indigo-600 border-gray-300 dark:border-gray-500 rounded-lg focus:ring-indigo-500"
                     disabled={loading}
                   />
                   <span className="text-gray-700">Enable Dark Mode</span>
@@ -463,7 +463,7 @@ export default function SettingsClient() {
                 </Button>
               </>
             )}
-            <div className="pt-6 border-t border-gray-200 flex justify-end">
+            <div className="pt-6 border-t border-gray-200 dark:border-gray-600 flex justify-end">
               <Button variant="default" type="submit" disabled={loading}>
                 {loading ? "Saving..." : "Save Changes"}
               </Button>

@@ -57,7 +57,7 @@ export default function HeaderLanding() {
   const user = useUser();
 
   return (
-    <header className="bg-white dark:bg-gray-950 border-b border-gray-200 px-6 py-4 flex-shrink-0">
+    <header className="bg-white dark:bg-gray-950 border-b border-gray-200 dark:border-gray-600 px-6 py-4 flex-shrink-0">
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-6">
           <Link href="/" className="flex items-center space-x-2">

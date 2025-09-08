@@ -113,7 +113,7 @@ export default function LecturesClient({
 
   return (
     <div className="flex flex-col h-full">
-      <div className="flex flex-col gap-4 p-4 border-b border-gray-200 bg-white dark:bg-gray-950">
+      <div className="flex flex-col gap-4 p-4 border-b border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-950">
         <div className="flex items-center justify-between">
           {!showDetails ? (
             <>
@@ -121,13 +121,13 @@ export default function LecturesClient({
                 Lectures
               </h2>
               <div className="flex gap-2">
-                <select className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-sm">
+                <select className="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-500 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-sm">
                   <option value="all">All Subjects</option>
                   <option value="math">Math</option>
                   <option value="science">Science</option>
                   <option value="history">History</option>
                 </select>
-                <select className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-sm">
+                <select className="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-500 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-sm">
                   <option value="all">All Types</option>
                   <option value="live">Live</option>
                   <option value="recorded">Recorded</option>
@@ -175,7 +175,7 @@ export default function LecturesClient({
               <div
                 key={lecture.id}
                 onClick={() => setShowDetails((prev) => !prev)}
-                className="bg-white dark:bg-gray-950 rounded-lg border border-gray-200 hover:border-indigo-400 p-4 transition-all hover:shadow-md cursor-pointer"
+                className="bg-white dark:bg-gray-950 rounded-lg border border-gray-200 dark:border-gray-600 hover:border-indigo-400 p-4 transition-all hover:shadow-md cursor-pointer"
               >
                 <div className="flex items-start justify-between mb-2">
                   <h3 className="font-semibold text-gray-900 dark:text-gray-100 flex-1">
@@ -230,7 +230,7 @@ export default function LecturesClient({
       {showDetails && (
         <div className="flex-1 bg-white dark:bg-gray-950 flex flex-col">
           <div className="h-full flex flex-col">
-            <div className="p-6 border-b border-gray-200">
+            <div className="p-6 border-b border-gray-200 dark:border-gray-600">
               <div className="flex items-start justify-between mb-4">
                 <div className="flex-1">
                   <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">
@@ -295,7 +295,7 @@ export default function LecturesClient({
                 <h2 className="text-xl font-semibold mb-2">Lecture Notes</h2>
                 <textarea
                   rows={10}
-                  className="w-full border border-gray-300 rounded-lg p-4 resize-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                  className="w-full border border-gray-300 dark:border-gray-500 rounded-lg p-4 resize-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                   placeholder="Write your notes here..."
                 ></textarea>
               </div>
@@ -340,7 +340,7 @@ export default function LecturesClient({
       )}
       {showForm && (
         <div className="flex-1 p-4 flex flex-col gap-4">
-          <div className="bg-white dark:bg-gray-950 rounded-lg border border-gray-200 p-6 mb-6">
+          <div className="bg-white dark:bg-gray-950 rounded-lg border border-gray-200 dark:border-gray-600 p-6 mb-6">
             <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">
               Add New Assignment
             </h3>
@@ -365,7 +365,7 @@ export default function LecturesClient({
                   ref={titleRef}
                   type="text"
                   id="title"
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-500 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                   placeholder="Enter assignment title..."
                   value={form.title}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
@@ -383,7 +383,7 @@ export default function LecturesClient({
                 <textarea
                   id="subject"
                   rows={3}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                  className="w-full px-3 py-2 border border-gray-300 dark:border-gray-500 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                   placeholder="Enter subject subject..."
                   value={form.subject}
                   onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
@@ -401,7 +401,7 @@ export default function LecturesClient({
                   </label>
                   <select
                     id="professor"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-500 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                     value={form.professor}
                     onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
                       setField("professor", e.target.value)
@@ -423,7 +423,7 @@ export default function LecturesClient({
                   <input
                     type="date"
                     id="date"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-500 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                     value={form.date}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                       setField("date", e.target.value)
@@ -439,7 +439,7 @@ export default function LecturesClient({
                   </label>
                   <select
                     id="duration"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-500 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                     value={form.date}
                     onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
                       setField("duration", e.target.value)

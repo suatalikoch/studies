@@ -134,7 +134,7 @@ export default function Calendar({ events = [], exams = [] }: Props) {
   }, []);
 
   return (
-    <div className="flex-1 bg-white dark:bg-gray-950 border border-gray-200 rounded-lg p-6">
+    <div className="flex-1 bg-white dark:bg-gray-950 border border-gray-200 dark:border-gray-600 rounded-lg p-6">
       {/* Header */}
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">
@@ -146,7 +146,7 @@ export default function Calendar({ events = [], exams = [] }: Props) {
       </div>
 
       {/* Calendar Grid */}
-      <div className="rounded-lg border border-gray-200 bg-white dark:bg-gray-950">
+      <div className="rounded-lg border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-950">
         {/* Month controls */}
         <div className="flex items-center justify-between px-4 py-3 border-b bg-gray-50 dark:bg-gray-800 rounded-t-lg">
           <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-50">
@@ -179,7 +179,7 @@ export default function Calendar({ events = [], exams = [] }: Props) {
         </div>
 
         {/* Weekday headers */}
-        <div className="grid grid-cols-7 gap-2 text-sm text-gray-500 bg-gray-100 dark:bg-gray-900 p-3 border-b border-gray-200">
+        <div className="grid grid-cols-7 gap-2 text-sm text-gray-500 bg-gray-100 dark:bg-gray-900 p-3 border-b border-gray-200 dark:border-gray-600">
           {["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map((d) => (
             <div key={d} className="text-center uppercase font-medium">
               {d}
@@ -208,7 +208,11 @@ export default function Calendar({ events = [], exams = [] }: Props) {
                       : "bg-white dark:bg-gray-950 text-gray-800 dark:text-gray-50"
                   }
                   ${isSelected ? "border-gray-500 bg-indigo-50" : ""}
-                  ${isToday ? "border-indigo-500" : "border-gray-200"}
+                  ${
+                    isToday
+                      ? "border-indigo-500"
+                      : "border-gray-200 dark:border-gray-600"
+                  }
                 `}
                 >
                   {/* Date */}

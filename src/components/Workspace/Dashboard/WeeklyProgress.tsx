@@ -8,10 +8,10 @@ export default function WeeklyProgress({
 }) {
   return (
     <section
-      className="bg-white dark:bg-gray-950 rounded-lg border border-gray-200"
+      className="bg-white dark:bg-gray-950 rounded-lg border border-gray-200 dark:border-gray-600"
       aria-labelledby="weekly-progress-title"
     >
-      <header className="p-6 border-b border-gray-200 flex items-center justify-between">
+      <header className="p-6 border-b border-gray-200 dark:border-gray-600 flex items-center justify-between">
         <h3
           id="weekly-progress-title"
           className="text-lg font-semibold text-gray-900 dark:text-gray-100"
