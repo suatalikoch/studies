@@ -1,0 +1,7 @@
+.hljs {
+    @import "highlight.js/styles/github.css";
+}
+
+.dark .hljs {
+    @import "highlight.js/styles/github-dark.css";
+}
