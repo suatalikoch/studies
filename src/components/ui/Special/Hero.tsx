@@ -13,11 +13,11 @@ export default function Hero() {
         <div className="absolute -top-20 -left-20 w-96 h-96 bg-indigo-500 rounded-full opacity-50 animate-pulse"></div>
         <div className="absolute top-25 right-20 w-36 h-36 bg-purple-500 rounded-full opacity-50 animate-pulse delay-2000"></div>
       </div>
-      <div className="relative max-w-7xl mx-auto px-6 py-20 text-center">
-        <h1 className="text-4xl md:text-5xl font-bold mb-4">
+      <div className="relative max-w-7xl mx-auto px-3 sm:px-6 py-10 sm:py-20 text-center">
+        <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold mb-4">
           All-in-One Study Workspace
         </h1>
-        <p className="text-lg text-indigo-100 max-w-2xl mx-auto mb-8">
+        <p className="sm:text-lg text-indigo-100 max-w-2xl mx-auto mb-8">
           Organize your notes, track assignments, and boost your productivity
           with our modern and intuitive student dashboard.
         </p>

@@ -6,7 +6,7 @@ export default function Welcome({ deadlines }: { deadlines: Deadline[] }) {
 
   return (
     <div className="bg-gradient-to-r from-indigo-600 dark:from-indigo-700 to-purple-600 dark:to-purple-700 rounded-lg p-6 text-white">
-      <h2 className="text-2xl font-bold mb-2">
+      <h2 className="text-lg sm:text-2xl font-bold mb-2">
         Welcome back, {user?.user_metadata?.full_name}!
       </h2>
       <p className="text-indigo-100">

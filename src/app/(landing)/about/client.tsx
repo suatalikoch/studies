@@ -1,12 +1,12 @@
 export default function AboutClient() {
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-800 flex flex-col items-center justify-center px-6 py-12">
-      <div className="max-w-3xl w-full bg-white dark:bg-gray-950 rounded-lg shadow-md p-8 space-y-6">
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 text-center">
+    <div className="flex flex-col items-center justify-center px-3 sm:px-6 py-6 sm:py-12">
+      <div className="max-w-3xl w-full bg-white dark:bg-gray-950 rounded-lg shadow-md p-6 sm:p-8 space-y-6">
+        <h1 className="sm:text-3xl font-bold text-gray-900 dark:text-gray-100 text-center">
           About This Project
         </h1>
 
-        <p className="text-gray-700 dark:text-gray-400 text-lg leading-relaxed">
+        <p className="text-gray-700 dark:text-gray-400 sm:text-lg leading-relaxed">
           This project is a{" "}
           <span className="font-semibold">Notes Dashboard</span>
           &nbsp;built with{" "}
@@ -44,7 +44,7 @@ export default function AboutClient() {
           </div>
         </div>
 
-        <p className="text-gray-600 dark:text-gray-300 text-center text-sm">
+        <p className="text-gray-600 dark:text-gray-300 text-center text-xs sm:text-sm">
           🚀 Work in progress – more features like collaboration, study
           planning, and syncing are on the way!
         </p>

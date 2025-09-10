@@ -11,14 +11,9 @@ export default function LegalLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div>
-      {/* Header */}
+    <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-800">
       <HeaderLanding />
-
-      {/* Main */}
-      <main>{children}</main>
-
-      {/* Footer */}
+      <main className="flex-1">{children}</main>
       <Footer />
     </div>
   );

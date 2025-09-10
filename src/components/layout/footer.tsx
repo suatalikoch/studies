@@ -3,15 +3,15 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-6">
-      <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center">
+    <footer className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white p-3 sm:p-6">
+      <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center">
         <p>
           <span className="flex gap-1 items-center">
             Copyright <Copyright size={16} />
             {new Date().getFullYear()} Student Hub. All rights reserved.
           </span>{" "}
         </p>
-        <div className="flex gap-4 mt-4 md:mt-0">
+        <div className="flex gap-4 mt-4 sm:mt-0">
           <Link href="/privacy" className="hover:underline">
             Privacy Policy
           </Link>

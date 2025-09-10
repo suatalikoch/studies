@@ -7,10 +7,7 @@ import { Exam } from "@/types";
 export default function CalendarClient({ exams }: { exams: Exam[] }) {
   return (
     <div className="bg-gray-50 dark:bg-gray-800 p-4 flex flex-col md:flex-row gap-4">
-      {/* Calendar Section */}
       <Calendar exams={exams} />
-
-      {/* Exams & Tasks Section */}
       <UpcomingEvents exams={exams} />
     </div>
   );

@@ -109,7 +109,7 @@ export default function NotificationMenu() {
         </div>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent className="mt-5 mr-1 w-96">
+      <DropdownMenuContent className="mt-5 mr-1 sm:w-96">
         <DropdownMenuLabel>Notifications</DropdownMenuLabel>
         <DropdownMenuSeparator />
         {loading ? (

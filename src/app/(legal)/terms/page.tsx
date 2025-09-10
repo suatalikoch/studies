@@ -6,11 +6,13 @@ export const metadata: Metadata = {
 
 export default function TermsPage() {
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-800 p-6 flex items-center justify-center">
+    <div className="px-3 py-6 sm:p-6 flex items-center justify-center">
       <div className="w-full max-w-4xl space-y-8">
         {/* Header */}
         <div className="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-lg p-6 text-white shadow-lg">
-          <h1 className="text-3xl font-bold mb-2">Terms of Service</h1>
+          <h1 className="text-lg sm:text-3xl font-bold mb-0 sm:mb-2">
+            Terms of Service
+          </h1>
           <p className="text-indigo-100">
             Last updated: {new Date("August 10, 2025").toLocaleDateString()}
           </p>
@@ -19,7 +21,7 @@ export default function TermsPage() {
         {/* Content */}
         <div className="bg-white dark:bg-gray-950 rounded-lg shadow-lg p-6 space-y-6">
           <section>
-            <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-50 mb-2">
+            <h2 className="sm:text-xl font-semibold text-gray-800 dark:text-gray-50 mb-2">
               1. Acceptance of Terms
             </h2>
             <p className="text-gray-600 dark:text-gray-300">
@@ -29,7 +31,7 @@ export default function TermsPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-50 mb-2">
+            <h2 className="sm:text-xl font-semibold text-gray-800 dark:text-gray-50 mb-2">
               2. User Responsibilities
             </h2>
             <ul className="list-disc pl-6 text-gray-600 dark:text-gray-300 space-y-1">
@@ -45,7 +47,7 @@ export default function TermsPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-50 mb-2">
+            <h2 className="sm:text-xl font-semibold text-gray-800 dark:text-gray-50 mb-2">
               3. Prohibited Activities
             </h2>
             <p className="text-gray-600 dark:text-gray-300">
@@ -55,7 +57,7 @@ export default function TermsPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-50 mb-2">
+            <h2 className="sm:text-xl font-semibold text-gray-800 dark:text-gray-50 mb-2">
               4. Limitation of Liability
             </h2>
             <p className="text-gray-600 dark:text-gray-300">
@@ -65,7 +67,7 @@ export default function TermsPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-50 mb-2">
+            <h2 className="sm:text-xl font-semibold text-gray-800 dark:text-gray-50 mb-2">
               5. Changes to Terms
             </h2>
             <p className="text-gray-600 dark:text-gray-300">
@@ -75,7 +77,7 @@ export default function TermsPage() {
           </section>
 
           <section>
-            <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-50 mb-2">
+            <h2 className="sm:text-xl font-semibold text-gray-800 dark:text-gray-50 mb-2">
               6. Contact Us
             </h2>
             <p className="text-gray-600 dark:text-gray-300">

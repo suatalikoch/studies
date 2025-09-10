@@ -46,20 +46,18 @@ export default function RegisterClient() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-800 p-6">
-      <div className="w-full max-w-md space-y-6">
-        {/* Welcome Banner */}
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-800 p-3 sm:p-6">
+      <div className="w-full max-w-md space-y-3 sm:space-y-6">
         <div className="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-lg p-6 text-white shadow-lg">
-          <h2 className="text-2xl font-bold mb-2">Create Your Account</h2>
+          <h2 className="text-lg sm:text-2xl font-bold mb-2">
+            Create Your Account
+          </h2>
           <p className="text-indigo-100">
             Join now and organize your studies like never before.
           </p>
         </div>
-
-        {/* Register Form */}
         <div className="bg-white dark:bg-gray-950 rounded-lg shadow-lg p-6 space-y-6">
           <form onSubmit={handleSubmit} className="space-y-4">
-            {/* Name */}
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-1">
                 Full Name
@@ -78,8 +76,6 @@ export default function RegisterClient() {
                 />
               </div>
             </div>
-
-            {/* Email */}
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-1">
                 Email
@@ -98,8 +94,6 @@ export default function RegisterClient() {
                 />
               </div>
             </div>
-
-            {/* Password */}
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-1">
                 Password
@@ -118,12 +112,9 @@ export default function RegisterClient() {
                 />
               </div>
             </div>
-
             {error && (
               <p className="text-sm text-red-600 font-medium">{error}</p>
             )}
-
-            {/* Submit */}
             <button
               type="submit"
               disabled={loading}
@@ -132,8 +123,6 @@ export default function RegisterClient() {
               {loading ? "Signing Up..." : "Sign Up"}
             </button>
           </form>
-
-          {/* Additional Links */}
           <div className="text-center text-sm text-gray-500 dark:text-gray-400">
             <p>
               Already have an account?{" "}

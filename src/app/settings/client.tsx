@@ -224,18 +224,15 @@ export default function SettingsClient() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-800 p-6">
-      {/* Header */}
-      <div className="max-w-5xl mx-auto bg-gradient-to-r from-indigo-600 dark:from-indigo-700 to-purple-600 dark:to-purple-700 rounded-lg p-6 text-white shadow-lg mb-6">
-        <h1 className="text-3xl font-bold">Settings</h1>
-        <p className="text-indigo-100 mt-1">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-800 p-3 sm:p-6">
+      <div className="max-w-5xl mx-auto bg-gradient-to-r from-indigo-600 dark:from-indigo-700 to-purple-600 dark:to-purple-700 rounded-lg p-6 text-white shadow-lg mb-3 sm:mb-6">
+        <h1 className="text-lg sm:text-3xl font-bold">Settings</h1>
+        <p className="text-indigo-100 mt-0 sm:mt-1">
           Manage your preferences and account.
         </p>
       </div>
-
       <div className="max-w-5xl mx-auto bg-white dark:bg-gray-950 rounded-lg shadow-md flex flex-col md:flex-row">
-        {/* Sidebar Tabs */}
-        <nav className="flex md:flex-col border-b md:border-b-0 md:border-r border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-900 rounded-t-lg md:rounded-t-none md:rounded-l-lg">
+        <nav className="flex md:flex-col border-b md:border-b-0 md:border-r border-gray-200 dark:border-gray-600 bg-gray-50 dark:bg-gray-900 rounded-t-lg md:rounded-t-none md:rounded-l-lg overflow-x-auto sm:overflow-visible">
           {tabs.map(({ id, label, icon }) => (
             <button
               key={id}
@@ -261,15 +258,11 @@ export default function SettingsClient() {
             </button>
           ))}
         </nav>
-
-        {/* Tab Content */}
         <div className="p-6 flex-1">
           <form onSubmit={handleSave} className="space-y-8">
-            {/* Show global error or success */}
             {error && (
               <div className="mb-4 text-red-600 font-semibold">{error}</div>
             )}
-
             {success && (
               <div className="mb-4 text-green-600 font-semibold">{success}</div>
             )}
@@ -345,7 +338,6 @@ export default function SettingsClient() {
                 </div>
               </>
             )}
-
             {activeTab === "security" && (
               <>
                 <h2 className="text-xl font-semibold flex items-center gap-2 mb-6">
@@ -394,7 +386,6 @@ export default function SettingsClient() {
                 </div>
               </>
             )}
-
             {activeTab === "notifications" && (
               <>
                 <h2 className="text-xl font-semibold flex items-center gap-2 mb-6">
@@ -426,7 +417,6 @@ export default function SettingsClient() {
                 </div>
               </>
             )}
-
             {activeTab === "appearance" && (
               <>
                 <h2 className="text-xl font-semibold flex items-center gap-2 mb-6">
@@ -444,7 +434,6 @@ export default function SettingsClient() {
                 </label>
               </>
             )}
-
             {activeTab === "danger" && (
               <>
                 <h2 className="text-xl font-semibold flex items-center gap-2 mb-6 text-red-600">

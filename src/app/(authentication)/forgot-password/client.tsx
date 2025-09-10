@@ -33,21 +33,19 @@ export default function ForgotPasswordClient() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-800 p-6">
-      <div className="w-full max-w-md space-y-6">
-        {/* Welcome Banner */}
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-800 p-3 sm:p-6">
+      <div className="w-full max-w-md space-y-3 sm:space-y-6">
         <div className="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-lg p-6 text-white shadow-lg">
-          <h2 className="text-2xl font-bold mb-2">Forgot Password?</h2>
+          <h2 className="text-lg sm:text-2xl font-bold mb-2">
+            Forgot Password?
+          </h2>
           <p className="text-indigo-100">
             Enter your email address and we’ll send you a link to reset your
             password.
           </p>
         </div>
-
-        {/* Forgot Password Form */}
         <div className="bg-white dark:bg-gray-950 rounded-lg shadow-lg p-6 space-y-6">
           <form onSubmit={handleSubmit} className="space-y-4">
-            {/* Email */}
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-1">
                 Email
@@ -66,8 +64,6 @@ export default function ForgotPasswordClient() {
                 />
               </div>
             </div>
-
-            {/* Submit */}
             <button
               type="submit"
               disabled={loading}
@@ -76,12 +72,8 @@ export default function ForgotPasswordClient() {
               {loading ? "Sending..." : "Send Reset Link"}
             </button>
           </form>
-
-          {/* Feedback Messages */}
           {message && <p className="text-green-600 text-center">{message}</p>}
           {error && <p className="text-red-600 text-center">{error}</p>}
-
-          {/* Additional Links */}
           <div className="text-center text-sm text-gray-500 dark:text-gray-400">
             <p>
               Remembered your password?{" "}
