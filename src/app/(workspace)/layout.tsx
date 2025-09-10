@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { redirect } from "next/navigation";
-import { Header, Sidebar } from "@/components/Layout";
 import { getCurrentUser } from "@/lib/supabase/crud";
+import { Header, Navbar, Sidebar } from "@/components/Layout";
 import { Toaster } from "@/components/UI";
 
 export const metadata: Metadata = {
@@ -21,22 +21,15 @@ export default async function WorkspaceLayout({
 
   return (
     <div className="h-screen flex flex-col bg-gray-50 dark:bg-gray-800">
-      {/* Header */}
       <Header />
-
-      {/* Main Content */}
       <div className="flex-1 flex overflow-hidden">
-        {/* Sidebar */}
         <Sidebar />
-
-        {/* Content Area */}
         <main className="flex-1 overflow-y-auto">
           {children}
-
-          {/* Toast Messages */}
           <Toaster />
         </main>
       </div>
+      <Navbar />
     </div>
   );
 }
