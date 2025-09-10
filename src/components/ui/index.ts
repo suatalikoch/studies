@@ -30,6 +30,16 @@ export {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/UI/Library/popover";
+export { Progress } from "@/components/UI/Library/progress";
+export {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectGroup,
+  SelectLabel,
+  SelectItem,
+} from "@/components/UI/Library/select";
 export { default as Preview } from "@/components/UI/Special/Preview";
 export { Skeleton } from "@/components/UI/Library/skeleton";
 export { Toaster } from "@/components/UI/Library/sonner";

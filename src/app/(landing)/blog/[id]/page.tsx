@@ -14,7 +14,7 @@ export default async function BlogPostPage({
   if (!post) return notFound();
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-800 px-6 py-12">
+    <div className="px-3 sm:px-6 py-6 sm:py-12">
       <div className="max-w-3xl mx-auto bg-white dark:bg-gray-950 rounded-lg shadow-md p-8 space-y-6">
         <Link
           href="/blog"
@@ -23,11 +23,11 @@ export default async function BlogPostPage({
           ← Back to Blog
         </Link>
 
-        <h1 className="text-4xl font-bold text-gray-900 dark:text-gray-100">
+        <h1 className="sm:text-4xl font-bold text-gray-900 dark:text-gray-100">
           {post.title}
         </h1>
 
-        <div className="flex justify-between items-center text-gray-500 dark:text-gray-400 text-sm">
+        <div className="sm:flex justify-between items-center text-gray-500 dark:text-gray-400 text-xs sm:text-sm">
           <time dateTime={post.date}>
             {new Date(post.date).toLocaleDateString()}
           </time>
@@ -43,11 +43,11 @@ export default async function BlogPostPage({
           </div>
         </div>
 
-        <p className="text-gray-700 dark:text-gray-400 text-lg leading-relaxed">
+        <p className="text-gray-700 dark:text-gray-400 sm:text-lg leading-relaxed">
           {post.excerpt}
         </p>
 
-        <p className="text-gray-500 dark:text-gray-400 text-sm">
+        <p className="text-gray-500 dark:text-gray-400 text-xs sm:text-sm">
           🚀 More content coming soon… This is a demo of the blog detail page.
         </p>
       </div>

@@ -3,7 +3,7 @@ import BlogCard from "./BlogCard";
 
 export default function BlogList() {
   return (
-    <div className="space-y-6">
+    <div className="space-y-3 sm:space-y-6">
       {blogPosts.map((post) => (
         <BlogCard key={post.id} post={post} />
       ))}

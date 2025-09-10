@@ -56,10 +56,9 @@ export default function Testimonials() {
           }
         `}
       </style>
-
       <section
         ref={ref}
-        className="bg-gray-50 dark:bg-gray-800 py-20 mx-auto px-6 text-center relative rounded-lg shadow-lg"
+        className="px-3 sm:px-6 py-10 sm:py-20 mx-auto text-center relative"
         aria-label="Testimonials"
       >
         {isVisible && (
@@ -73,9 +72,7 @@ export default function Testimonials() {
             </p>
           </blockquote>
         )}
-
-        {/* Navigation dots */}
-        <div className="flex justify-center mt-10 space-x-4">
+        <div className="flex justify-center mt-5 sm:mt-10 space-x-4">
           {testimonials.map((_, idx) => (
             <button
               key={idx}

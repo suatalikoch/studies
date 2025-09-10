@@ -49,7 +49,6 @@ export default function Sidebar() {
     fetchUser();
   }, [supabase.auth]);
 
-  // Close flyout when clicking outside
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
       if (
@@ -89,8 +88,7 @@ export default function Sidebar() {
   }
 
   return (
-    <aside className="w-64 bg-white dark:bg-gray-950 border-r border-gray-200 dark:border-gray-600 flex flex-col flex-shrink-0">
-      {/* Sidebar Navigation */}
+    <aside className="hidden sm:w-64 bg-white dark:bg-gray-950 border-r border-gray-200 dark:border-gray-600 sm:flex flex-col flex-shrink-0">
       <nav className="p-4 space-y-2 overflow-y-auto flex-1">
         {sidebarItems.map((item) => {
           const Icon = item.icon;
@@ -110,8 +108,6 @@ export default function Sidebar() {
           );
         })}
       </nav>
-
-      {/* Quick Stats */}
       <div className="p-4 border-t border-gray-200 dark:border-gray-600">
         <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-3">
           Quick Statistics
@@ -143,8 +139,6 @@ export default function Sidebar() {
           </div>
         </div>
       </div>
-
-      {/* User profile + dropdown */}
       <div
         className="border-t border-gray-200 dark:border-gray-600 p-4 relative"
         ref={flyoutRef}
@@ -193,8 +187,6 @@ export default function Sidebar() {
             </div>
           </button>
         )}
-
-        {/* Flyout menu opens to the right */}
         {flyoutOpen && (
           <div className="absolute -top-5 left-full ml-2 w-40 bg-white dark:bg-gray-950 border border-gray-200 dark:border-gray-600 rounded-lg shadow-lg z-10">
             <Link

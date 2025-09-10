@@ -80,17 +80,16 @@ export default function ResetPasswordClient() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-800 p-6">
-      <div className="w-full max-w-md space-y-6">
-        {/* Welcome Banner */}
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-800 p-3 sm:p-6">
+      <div className="w-full max-w-md space-y-3 sm:space-y-6">
         <div className="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-lg p-6 text-white shadow-lg">
-          <h2 className="text-2xl font-bold mb-2">Reset Your Password</h2>
+          <h2 className="text-lg sm:text-2xl font-bold mb-2">
+            Reset Your Password
+          </h2>
           <p className="text-indigo-100">
             Enter your new password below to update your account password.
           </p>
         </div>
-
-        {/* Reset Password Form */}
         <div className="bg-white dark:bg-gray-950 rounded-lg shadow-lg p-6 space-y-6">
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
@@ -112,7 +111,6 @@ export default function ResetPasswordClient() {
                 />
               </div>
             </div>
-
             <div>
               <label className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-1">
                 Confirm Password
@@ -132,7 +130,6 @@ export default function ResetPasswordClient() {
                 />
               </div>
             </div>
-
             <button
               type="submit"
               disabled={loading || !!error}
@@ -141,7 +138,6 @@ export default function ResetPasswordClient() {
               {loading ? "Updating..." : "Update Password"}
             </button>
           </form>
-
           {message && <p className="text-green-600 text-center">{message}</p>}
           {error && <p className="text-red-600 text-center">{error}</p>}
         </div>

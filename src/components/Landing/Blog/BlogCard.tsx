@@ -8,7 +8,7 @@ export default function BlogCard({ post }: BlogCardProps) {
       className="p-6 bg-white dark:bg-gray-950 rounded-lg shadow-sm hover:shadow-md transition border"
     >
       <Link href={`/blog/${post.id}`}>
-        <h2 className="text-2xl font-semibold text-indigo-600 dark:text-indigo-500 hover:underline">
+        <h2 className="sm:text-2xl font-semibold text-indigo-600 dark:text-indigo-500 hover:underline">
           {post.title}
         </h2>
       </Link>
@@ -16,7 +16,7 @@ export default function BlogCard({ post }: BlogCardProps) {
       <div className="flex justify-between items-center mt-4">
         <time
           dateTime={post.date}
-          className="text-sm text-gray-500 dark:text-gray-400"
+          className="text-xs sm:text-sm text-gray-500 dark:text-gray-400"
         >
           {new Date(post.date).toLocaleDateString()}
         </time>

@@ -62,11 +62,11 @@ export default function LoginClient() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-800 p-6">
-      <div className="w-full max-w-md space-y-6">
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-800 p-3 sm:p-6">
+      <div className="w-full max-w-md space-y-3 sm:space-y-6">
         {/* Welcome Banner (matches Dashboard style) */}
         <div className="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-lg p-6 text-white shadow-lg">
-          <h2 className="text-2xl font-bold mb-2">Welcome Back!</h2>
+          <h2 className="text-lg sm:text-2xl font-bold mb-2">Welcome Back!</h2>
           <p className="text-indigo-100">
             Sign in to continue to your study workspace.
           </p>

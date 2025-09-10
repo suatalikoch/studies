@@ -168,15 +168,13 @@ export default function TasksClient({ tasksDB }: { tasksDB: Task[] }) {
 
   return (
     <div className="flex flex-col h-full">
-      {/* Header */}
-      <div className="p-4 flex items-center justify-between border-b border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-950">
+      <div className="p-4 items-center justify-between border-b border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-950 hidden sm:flex">
         <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">
           Tasks
         </h2>
         <div>
           <div className="flex items-center gap-2">
             <div className="flex items-center space-x-2">
-              {/* Filter icon */}
               <Funnel className="w-5 h-5 text-gray-600 dark:text-gray-300" />
               <select
                 value={filter}
@@ -205,72 +203,196 @@ export default function TasksClient({ tasksDB }: { tasksDB: Task[] }) {
           </div>
         </div>
       </div>
-
-      {/* Content */}
-      <div className="flex-1 p-4 flex flex-col gap-4">
-        {/* Stat Cards */}
-        {!showForm && (
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <div className="bg-white dark:bg-gray-950 rounded-lg p-4 border border-gray-200 dark:border-gray-600">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-gray-600 dark:text-gray-300">
-                    Total Tasks
-                  </p>
-                  <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-                    {totalTasks}
-                  </p>
+      <div className="flex-1 overflow-y-auto flex flex-col gap-4">
+        <div className="p-4 space-y-4">
+          {!showForm && (
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div className="bg-white dark:bg-gray-950 rounded-lg p-4 border border-gray-200 dark:border-gray-600">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm font-medium text-gray-600 dark:text-gray-300">
+                      Total Tasks
+                    </p>
+                    <p className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+                      {totalTasks}
+                    </p>
+                  </div>
+                  <SquareCheck className="w-7 sm:w-8 h-7 sm:h-8 text-indigo-600" />
                 </div>
-                {/* CheckSquare icon */}
-                <SquareCheck className="w-8 h-8 text-indigo-600" />
+              </div>
+              <div className="bg-white dark:bg-gray-950 rounded-lg p-4 border border-gray-200 dark:border-gray-600">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm font-medium text-gray-600 dark:text-gray-300">
+                      Completed
+                    </p>
+                    <p className="text-2xl font-bold text-green-600">
+                      {completedCount}
+                    </p>
+                  </div>
+                  <Check className="w-7 sm:w-8 h-7 sm:h-8 text-green-600" />
+                </div>
+              </div>
+              <div className="bg-white dark:bg-gray-950 rounded-lg p-4 border border-gray-200 dark:border-gray-600">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm font-medium text-gray-600 dark:text-gray-300">
+                      Pending
+                    </p>
+                    <p className="text-2xl font-bold text-yellow-600">
+                      {pendingCount}
+                    </p>
+                  </div>
+                  <Clock className="w-7 sm:w-8 h-7 sm:h-8 text-yellow-600" />
+                </div>
+              </div>
+              <div className="bg-white dark:bg-gray-950 rounded-lg p-4 border border-gray-200 dark:border-gray-600">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm font-medium text-gray-600 dark:text-gray-300">
+                      High Priority
+                    </p>
+                    <p className="text-2xl font-bold text-red-600">
+                      {highPriorityCount}
+                    </p>
+                  </div>
+                  <Flag className="w-7 sm:w-8 h-7 sm:h-8 text-red-600" />
+                </div>
               </div>
             </div>
-            <div className="bg-white dark:bg-gray-950 rounded-lg p-4 border border-gray-200 dark:border-gray-600">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-gray-600 dark:text-gray-300">
-                    Completed
-                  </p>
-                  <p className="text-2xl font-bold text-green-600">
-                    {completedCount}
-                  </p>
+          )}
+          {!showForm && (
+            <div className="flex-1 space-y-4">
+              {filteredTasks.map((task) => {
+                return (
+                  <div
+                    key={task.id}
+                    className="bg-white dark:bg-gray-950 rounded-lg border border-gray-200 dark:border-gray-600 hover:border-indigo-400 p-4 transition-all hover:shadow-md cursor-pointer"
+                  >
+                    <div className="flex items-start space-x-4">
+                      <button
+                        onClick={() => toggleTask(task.id)}
+                        className={`mt-1 ${
+                          task.completed
+                            ? "text-green-600"
+                            : "text-gray-400 hover:text-green-600"
+                        }`}
+                        aria-label={
+                          task.completed
+                            ? "Mark as pending"
+                            : "Mark as completed"
+                        }
+                      >
+                        {task.completed ? (
+                          <SquareCheck className="w-5 h-5" />
+                        ) : (
+                          <Square className="w-5 h-5" />
+                        )}
+                      </button>
+                      <div className="flex-1">
+                        <div className="flex justify-between">
+                          <h3
+                            className={`font-semibold ${
+                              task.completed
+                                ? "text-gray-400 dark:text-gray-500 line-through"
+                                : "text-gray-900 dark:text-gray-100"
+                            }`}
+                          >
+                            {task.title}
+                          </h3>
+                          <div className="flex gap-3 items-center">
+                            <Badge
+                              className={`${
+                                task.completed
+                                  ? "bg-green-100 text-green-800"
+                                  : "bg-yellow-100 text-yellow-800"
+                              }`}
+                            >
+                              {task.completed ? "Completed" : "Pending"}
+                            </Badge>
+                            <button
+                              onClick={() => toggleStar(task.id)}
+                              className={`text-gray-400 hover:text-yellow-500 cursor-pointer ${
+                                task.starred ? "text-yellow-500" : ""
+                              }`}
+                              aria-label={
+                                task.starred ? "Unstar task" : "Star task"
+                              }
+                            >
+                              <Star className="w-5 h-5" />
+                            </button>
+                            <button
+                              onClick={() => deleteTask(task.id)}
+                              className="text-gray-400 hover:text-red-600 cursor-pointer"
+                              aria-label="Delete task"
+                            >
+                              <Trash className="w-5 h-5" />
+                            </button>
+                          </div>
+                        </div>
+                        <div>
+                          {task.description && (
+                            <p className="text-sm text-gray-600 mt-1">
+                              {task.description}
+                            </p>
+                          )}
+                          {!task.description && (
+                            <p className="text-xs text-gray-400 mt-1">
+                              No content available
+                            </p>
+                          )}
+                        </div>
+                        <div className="flex justify-between items-center flex-wrap mt-2">
+                          <div className="flex gap-3">
+                            <Badge variant="secondary">{task.category}</Badge>
+                            <Badge
+                              className={`${
+                                task.priority === "high"
+                                  ? "bg-red-100 text-red-800"
+                                  : task.priority === "medium"
+                                  ? "bg-orange-100 text-orange-800"
+                                  : "bg-lime-100 text-lime-800"
+                              }`}
+                            >
+                              {task.priority === "high"
+                                ? "High"
+                                : task.priority === "medium"
+                                ? "Medium"
+                                : "Low"}
+                            </Badge>
+                            {task.starred && (
+                              <div className="flex flex-row items-center gap-1">
+                                <Badge className="bg-amber-50 text-amber-700">
+                                  <Star className="w-4 h-4" />
+                                  <p>Starred</p>
+                                </Badge>
+                              </div>
+                            )}
+                          </div>
+                          <div>
+                            {task.due_date && (
+                              <span className="flex gap-1">
+                                <Badge variant="secondary">Due:</Badge>
+                                <Badge variant="secondary">
+                                  {new Date(task.due_date).toLocaleDateString()}
+                                </Badge>
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+              {filteredTasks.length === 0 && (
+                <div className="text-center text-gray-500 py-8">
+                  No tasks found for this view.
                 </div>
-                {/* Check icon */}
-                <Check className="w-8 h-8 text-green-600" />
-              </div>
+              )}
             </div>
-            <div className="bg-white dark:bg-gray-950 rounded-lg p-4 border border-gray-200 dark:border-gray-600">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-gray-600 dark:text-gray-300">
-                    Pending
-                  </p>
-                  <p className="text-2xl font-bold text-yellow-600">
-                    {pendingCount}
-                  </p>
-                </div>
-                {/* Clock icon */}
-                <Clock className="w-8 h-8 text-yellow-600" />
-              </div>
-            </div>
-            <div className="bg-white dark:bg-gray-950 rounded-lg p-4 border border-gray-200 dark:border-gray-600">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-gray-600 dark:text-gray-300">
-                    High Priority
-                  </p>
-                  <p className="text-2xl font-bold text-red-600">
-                    {highPriorityCount}
-                  </p>
-                </div>
-                {/* Flag icon */}
-                <Flag className="w-8 h-8 text-red-600" />
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Add Task Form */}
+          )}
+        </div>
         {showForm && (
           <div className="bg-white dark:bg-gray-950 rounded-lg border border-gray-200 dark:border-gray-600 p-6 mb-6">
             <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">
@@ -305,7 +427,6 @@ export default function TasksClient({ tasksDB }: { tasksDB: Task[] }) {
                   }
                 />
               </div>
-
               <div>
                 <label
                   className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-1"
@@ -324,7 +445,6 @@ export default function TasksClient({ tasksDB }: { tasksDB: Task[] }) {
                   }
                 ></textarea>
               </div>
-
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <div>
                   <label
@@ -346,7 +466,6 @@ export default function TasksClient({ tasksDB }: { tasksDB: Task[] }) {
                     <option value="high">High</option>
                   </select>
                 </div>
-
                 <div>
                   <label
                     className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-1"
@@ -368,7 +487,6 @@ export default function TasksClient({ tasksDB }: { tasksDB: Task[] }) {
                     <option value="Other">Other</option>
                   </select>
                 </div>
-
                 <div>
                   <label
                     className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-1"
@@ -387,7 +505,6 @@ export default function TasksClient({ tasksDB }: { tasksDB: Task[] }) {
                   />
                 </div>
               </div>
-
               <div className="flex items-center space-x-3">
                 <Button variant="default" type="submit">
                   Add Task
@@ -397,142 +514,6 @@ export default function TasksClient({ tasksDB }: { tasksDB: Task[] }) {
                 </Button>
               </div>
             </form>
-          </div>
-        )}
-
-        {/* Tasks List */}
-        {!showForm && (
-          <div className="flex-1 overflow-y-auto space-y-4">
-            {filteredTasks.map((task) => {
-              return (
-                <div
-                  key={task.id}
-                  className="bg-white dark:bg-gray-950 rounded-lg border border-gray-200 dark:border-gray-600 hover:border-indigo-400 p-4 transition-all hover:shadow-md cursor-pointer"
-                >
-                  <div className="flex items-start space-x-4">
-                    <button
-                      onClick={() => toggleTask(task.id)}
-                      className={`mt-1 ${
-                        task.completed
-                          ? "text-green-600"
-                          : "text-gray-400 hover:text-green-600"
-                      }`}
-                      aria-label={
-                        task.completed ? "Mark as pending" : "Mark as completed"
-                      }
-                    >
-                      {/* Toggle square/checked square */}
-                      {task.completed ? (
-                        <SquareCheck className="w-5 h-5" />
-                      ) : (
-                        <Square className="w-5 h-5" />
-                      )}
-                    </button>
-
-                    <div className="flex-1">
-                      <div className="flex justify-between">
-                        <h3
-                          className={`font-semibold ${
-                            task.completed
-                              ? "text-gray-400 dark:text-gray-500 line-through"
-                              : "text-gray-900 dark:text-gray-100"
-                          }`}
-                        >
-                          {task.title}
-                        </h3>
-                        <div className="flex gap-3 items-center">
-                          <Badge
-                            className={`${
-                              task.completed
-                                ? "bg-green-100 text-green-800"
-                                : "bg-yellow-100 text-yellow-800"
-                            }`}
-                          >
-                            {task.completed ? "Completed" : "Pending"}
-                          </Badge>
-                          {/* Star toggle */}
-                          <button
-                            onClick={() => toggleStar(task.id)}
-                            className={`text-gray-400 hover:text-yellow-500 cursor-pointer ${
-                              task.starred ? "text-yellow-500" : ""
-                            }`}
-                            aria-label={
-                              task.starred ? "Unstar task" : "Star task"
-                            }
-                          >
-                            <Star className="w-5 h-5" />
-                          </button>
-                          <button
-                            onClick={() => deleteTask(task.id)}
-                            className="text-gray-400 hover:text-red-600 cursor-pointer"
-                            aria-label="Delete task"
-                          >
-                            {/* Trash icon */}
-                            <Trash className="w-5 h-5" />
-                          </button>
-                        </div>
-                      </div>
-                      <div>
-                        {task.description && (
-                          <p className="text-sm text-gray-600 mt-1">
-                            {task.description}
-                          </p>
-                        )}
-                        {!task.description && (
-                          <p className="text-xs text-gray-400 mt-1">
-                            No content available
-                          </p>
-                        )}
-                      </div>
-                      <div className="flex justify-between items-center flex-wrap mt-2">
-                        <div className="flex gap-3">
-                          <Badge variant="secondary">{task.category}</Badge>
-                          <Badge
-                            className={`${
-                              task.priority === "high"
-                                ? "bg-red-100 text-red-800"
-                                : task.priority === "medium"
-                                ? "bg-orange-100 text-orange-800"
-                                : "bg-lime-100 text-lime-800"
-                            }`}
-                          >
-                            {task.priority === "high"
-                              ? "High"
-                              : task.priority === "medium"
-                              ? "Medium"
-                              : "Low"}
-                          </Badge>
-                          {task.starred && (
-                            <div className="flex flex-row items-center gap-1">
-                              <Badge className="bg-amber-50 text-amber-700">
-                                <Star className="w-4 h-4" />
-                                <p>Starred</p>
-                              </Badge>
-                            </div>
-                          )}
-                        </div>
-                        <div>
-                          {task.due_date && (
-                            <span className="flex gap-1">
-                              <Badge variant="secondary">Due:</Badge>
-                              <Badge variant="secondary">
-                                {new Date(task.due_date).toLocaleDateString()}
-                              </Badge>
-                            </span>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              );
-            })}
-            {/* Empty state */}
-            {filteredTasks.length === 0 && (
-              <div className="text-center text-gray-500 py-8">
-                No tasks found for this view.
-              </div>
-            )}
           </div>
         )}
       </div>

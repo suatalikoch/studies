@@ -171,13 +171,10 @@ export default function DrawingBoardClient() {
 
   return (
     <div className="h-full flex flex-col bg-gray-50 dark:bg-gray-800 transition-colors duration-300">
-      {/* Toolbar */}
-      <div className="bg-white dark:bg-gray-950 border-b border-gray-200 p-4">
+      <div className="bg-white dark:bg-gray-950 border-b border-gray-200 dark:border-gray-600 p-4 overflow-x-auto sm:overflow-x-visible">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
-            {/* Drawing Tools */}
             <div className="flex items-center space-x-2 border-r border-gray-300 dark:border-gray-600 pr-4">
-              {/* Buttons with static styling; highlight active tool manually or via JS */}
               {(
                 ["pen", "eraser", "square", "circle", "line", "text"] as Tool[]
               ).map((t) => (
@@ -192,7 +189,6 @@ export default function DrawingBoardClient() {
                   title={t.charAt(0).toUpperCase() + t.slice(1)}
                   type="button"
                 >
-                  {/* Icons simplified for brevity */}
                   {t === "pen" && <PenLine className="w-5 h-5" />}
                   {t === "eraser" && <Eraser className="w-5 h-5" />}
                   {t === "square" && <Square className="w-5 h-5" />}
@@ -202,8 +198,6 @@ export default function DrawingBoardClient() {
                 </button>
               ))}
             </div>
-
-            {/* Brush Size */}
             <div className="flex items-center space-x-2 border-r border-gray-300 dark:border-gray-600 pr-4">
               <span className="text-sm text-gray-600 dark:text-gray-300">
                 Size:
@@ -220,8 +214,6 @@ export default function DrawingBoardClient() {
                 {brushSize}
               </span>
             </div>
-
-            {/* Colors */}
             <div className="flex items-center space-x-2">
               <Palette className="w-5 h-5 text-gray-600" />
               <div className="flex space-x-1">
@@ -240,7 +232,6 @@ export default function DrawingBoardClient() {
                   )
                 )}
               </div>
-
               <input
                 type="color"
                 value={color}
@@ -249,8 +240,6 @@ export default function DrawingBoardClient() {
               />
             </div>
           </div>
-
-          {/* Action Buttons */}
           <div className="flex items-center space-x-2">
             <button
               onClick={zoomOut}
@@ -258,7 +247,6 @@ export default function DrawingBoardClient() {
               title="Zoom Out"
               type="button"
             >
-              {/* Zoom Out */}
               <ZoomOut className="w-5 h-5" />
             </button>
             <span className="text-sm text-gray-600 dark:text-gray-300 px-2">
@@ -270,28 +258,22 @@ export default function DrawingBoardClient() {
               title="Zoom In"
               type="button"
             >
-              {/* Zoom In */}
               <ZoomIn className="w-5 h-5" />
             </button>
 
             <div className="border-l border-gray-300 pl-2 ml-2 flex space-x-2">
-              {/* Upload */}
               <button className="p-2 text-gray-600 dark:text-gray-300 hover:text-indigo-600 hover:bg-indigo-50 dark:hover:bg-indigo-900 rounded-lg transition-colors">
                 <Upload className="w-5 h-5" />
               </button>
-              {/* Download */}
               <button className="p-2 text-gray-600 dark:text-gray-300 hover:text-indigo-600 hover:bg-indigo-50 dark:hover:bg-indigo-900 rounded-lg transition-colors">
                 <Download className="w-5 h-5" />
               </button>
-              {/* Save */}
               <button className="p-2 text-gray-600 dark:text-gray-300 hover:text-indigo-600 hover:bg-indigo-50 dark:hover:bg-indigo-900 rounded-lg transition-colors">
                 <Save className="w-5 h-5" />
               </button>
-              {/* Rotate */}
               <button className="p-2 text-gray-600 dark:text-gray-300 hover:text-indigo-600 hover:bg-indigo-50 dark:hover:bg-indigo-900 rounded-lg transition-colors">
                 <RotateCw className="w-5 h-5" />
               </button>
-              {/* Trash */}
               <button
                 onClick={clearCanvas}
                 className="p-2 text-gray-600 dark:text-gray-300 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900 rounded-lg transition-colors"
@@ -304,10 +286,8 @@ export default function DrawingBoardClient() {
           </div>
         </div>
       </div>
-
-      {/* Canvas Area */}
       <div className="flex-1 p-4">
-        <div className="h-full bg-white dark:bg-gray-950 rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+        <div className="h-full bg-white dark:bg-gray-950 rounded-lg shadow-sm border border-gray-200 dark:border-gray-600 overflow-hidden">
           <canvas
             ref={canvasRef}
             className="w-full h-full cursor-crosshair"
@@ -319,9 +299,7 @@ export default function DrawingBoardClient() {
           ></canvas>
         </div>
       </div>
-
-      {/* Status Bar */}
-      <div className="bg-white dark:bg-gray-950 border-t border-gray-200 px-4 py-2">
+      <div className="bg-white dark:bg-gray-950 border-t border-gray-200 dark:border-gray-600 px-4 py-2">
         <div className="flex items-center justify-between text-sm text-gray-600 dark:text-gray-300">
           <div className="flex items-center space-x-4">
             <span>

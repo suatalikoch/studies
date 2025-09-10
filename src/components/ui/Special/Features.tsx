@@ -3,7 +3,7 @@ import { features } from "@/lib/constants";
 export default function Features() {
   return (
     <section
-      className="max-w-7xl mx-auto px-6 py-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-4"
+      className="max-w-7xl mx-auto px-3 sm:px-6 py-8 sm:py-16 grid gap-4 sm:gap-8 sm:grid-cols-2 lg:grid-cols-4"
       role="list"
     >
       {features.map(({ Icon, title, desc, color }, idx) => (
