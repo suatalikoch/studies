@@ -9,7 +9,6 @@ export default function UpcomingEvents({ exams }: { exams: Exam[] }) {
       <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">
         Upcoming Events
       </h2>
-
       <div className="space-y-4 overflow-y-auto">
         {exams.map((exam, index) => (
           <div
@@ -34,8 +33,6 @@ export default function UpcomingEvents({ exams }: { exams: Exam[] }) {
           </div>
         ))}
       </div>
-
-      {/* Quick Actions */}
       <div className="border-gray-200 dark:border-gray-600 space-y-3">
         <Button variant="secondary" className="w-full">
           <BookOpen className="w-4 h-4" /> Start Revision Session

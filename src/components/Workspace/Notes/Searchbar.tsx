@@ -17,7 +17,7 @@ export default function Searchbar({
       value={value}
       onChange={handleChange}
       placeholder={placeholder}
-      className="w-full max-w-sm"
+      className="w-full max-w-sm hidden sm:block"
     />
   );
 }

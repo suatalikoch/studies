@@ -1,6 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import { createClient } from "@/lib/supabase/client";
+import Link from "next/link";
+import { toast } from "sonner";
+import { Exam } from "@/types";
 import {
   Trash2,
   Check,
@@ -26,16 +30,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/UI/Library/card";
-import { Exam } from "@/types";
-import { createClient } from "@/lib/supabase/client";
-import Link from "next/link";
 
 export default function ExamsClient({ examsDB }: { examsDB: Exam[] }) {
   const [exams, setExams] = useState<Exam[]>(examsDB);
   const [subject, setSubject] = useState("");
   const [date, setDate] = useState("");
   const [location, setLocation] = useState("");
-
   const [open, setOpen] = useState(false);
   const [dateC, setDateC] = useState<Date | undefined>(undefined);
 
@@ -57,8 +57,7 @@ export default function ExamsClient({ examsDB }: { examsDB: Exam[] }) {
       .select();
 
     if (error) {
-      // showToast("error", "Failed to add task");
-      alert("Failed to add task: " + error.message);
+      toast.error("Failed to add exam: " + error.message);
       return;
     }
 
@@ -97,7 +96,6 @@ export default function ExamsClient({ examsDB }: { examsDB: Exam[] }) {
         </Link>
         <h1 className="text-2xl font-bold">Exams</h1>
       </div>
-
       <Card className="shadow-none">
         <CardHeader>
           <CardTitle>Add New Exam</CardTitle>
@@ -113,7 +111,6 @@ export default function ExamsClient({ examsDB }: { examsDB: Exam[] }) {
                 placeholder="Enter subject"
               />
             </div>
-
             <div className="grid w-full items-center gap-3">
               <div className="flex flex-col gap-3">
                 <Label htmlFor="date" className="px-1">
@@ -147,7 +144,6 @@ export default function ExamsClient({ examsDB }: { examsDB: Exam[] }) {
               </div>
             </div>
           </div>
-
           <div className="grid w-full items-center gap-3">
             <Label htmlFor="location">Location</Label>
             <Input
@@ -157,7 +153,6 @@ export default function ExamsClient({ examsDB }: { examsDB: Exam[] }) {
               placeholder="Room 001"
             />
           </div>
-
           <Button
             onClick={() => addExam("e52e5151-a495-4bda-86bd-43ccf1394c32")}
           >
@@ -165,8 +160,6 @@ export default function ExamsClient({ examsDB }: { examsDB: Exam[] }) {
           </Button>
         </CardContent>
       </Card>
-
-      {/* Exams List */}
       <div className="space-y-4">
         {exams.map((exam) => (
           <Card

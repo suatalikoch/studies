@@ -1,7 +1,21 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { Plus, Triangle, X } from "lucide-react";
+import { CalendarIcon, Plus, Triangle, X } from "lucide-react";
 import { CalendarEvent, Exam } from "@/types";
-import { Button } from "@/components/UI";
+import {
+  Button,
+  Calendar as CalendarComponent,
+  Input,
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/UI";
 
 type Props = {
   events?: CalendarEvent[];
@@ -32,7 +46,7 @@ function examsToCalendarEvents(exams: Exam[]): CalendarEvent[] {
       hour: "2-digit",
       minute: "2-digit",
     }),
-    color: "bg-red-100 text-red-700", // mark exams in red
+    color: "bg-red-100 text-red-700",
   }));
 }
 
@@ -135,7 +149,6 @@ export default function Calendar({ events = [], exams = [] }: Props) {
 
   return (
     <div className="flex-1 bg-white dark:bg-gray-950 border border-gray-200 dark:border-gray-600 rounded-lg p-6">
-      {/* Header */}
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">
           Calendar
@@ -144,10 +157,7 @@ export default function Calendar({ events = [], exams = [] }: Props) {
           <Plus className="w-4 h-4" /> Add Event
         </Button>
       </div>
-
-      {/* Calendar Grid */}
       <div className="rounded-lg border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-950">
-        {/* Month controls */}
         <div className="flex items-center justify-between px-4 py-3 border-b bg-gray-50 dark:bg-gray-800 rounded-t-lg">
           <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-50">
             {label}
@@ -177,8 +187,6 @@ export default function Calendar({ events = [], exams = [] }: Props) {
             </Button>
           </div>
         </div>
-
-        {/* Weekday headers */}
         <div className="grid grid-cols-7 gap-2 text-sm text-gray-500 bg-gray-100 dark:bg-gray-900 p-3 border-b border-gray-200 dark:border-gray-600">
           {["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map((d) => (
             <div key={d} className="text-center uppercase font-medium">
@@ -186,8 +194,6 @@ export default function Calendar({ events = [], exams = [] }: Props) {
             </div>
           ))}
         </div>
-
-        {/* Days */}
         <div className="p-3 grid grid-cols-7 gap-2">
           {monthMatrix.map((week, wi) =>
             week.map((iso, di) => {
@@ -196,7 +202,6 @@ export default function Calendar({ events = [], exams = [] }: Props) {
               const isToday = iso === todayISO;
               const isSelected = date === iso;
               const muted = !isSameMonth(iso);
-
               return (
                 <button
                   key={`${wi}-${di}`}
@@ -215,7 +220,6 @@ export default function Calendar({ events = [], exams = [] }: Props) {
                   }
                 `}
                 >
-                  {/* Date */}
                   <div
                     className={`text-sm font-medium ${
                       isToday ? "text-indigo-600" : ""
@@ -223,8 +227,6 @@ export default function Calendar({ events = [], exams = [] }: Props) {
                   >
                     {day.getDate()}
                   </div>
-
-                  {/* Event tags */}
                   <div className="mt-2 flex flex-wrap gap-1 w-full">
                     {evs.slice(0, 3).map((e) => (
                       <span
@@ -254,22 +256,20 @@ export default function Calendar({ events = [], exams = [] }: Props) {
           )}
         </div>
       </div>
-
-      {/* Modal */}
       {modalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-          <div className="bg-white rounded-lg p-6 w-96 relative">
-            <button
-              className="absolute top-6 right-6 text-gray-500 hover:text-gray-800 cursor-pointer"
+          <div className="bg-white dark:bg-gray-950 rounded-lg p-6 w-96 relative">
+            <Button
+              variant="ghost"
+              size="icon"
               onClick={() => setModalOpen(false)}
+              className="absolute top-6 right-6 cursor-pointer"
             >
               <X />
-            </button>
-
+            </Button>
             <h3 className="text-lg font-semibold mb-4">
               {editingEvent ? "Edit Event" : "Add Event"}
             </h3>
-
             <EventForm
               event={editingEvent}
               onSave={saveEvent}
@@ -285,7 +285,6 @@ export default function Calendar({ events = [], exams = [] }: Props) {
   );
 }
 
-// --- Event Form Component ---
 type EventFormProps = {
   event?: CalendarEvent | null;
   onSave: (ev: CalendarEvent) => void;
@@ -300,6 +299,8 @@ function EventForm({ event, onSave, onDelete, selectedDate }: EventFormProps) {
     event?.color || "bg-indigo-100 text-indigo-700"
   );
   const [date, setDate] = useState(event?.date || selectedDate);
+  const [open, setOpen] = useState(false);
+  const [dateC, setDateC] = useState<Date | undefined>(undefined);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -314,37 +315,58 @@ function EventForm({ event, onSave, onDelete, selectedDate }: EventFormProps) {
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-3">
-      <input
+      <Input
         type="text"
         placeholder="Event title"
-        className="border p-2 rounded-lg"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
         required
       />
-      <input
-        type="date"
-        className="border p-2 rounded-lg"
-        value={date}
-        onChange={(e) => setDate(e.target.value)}
-        required
-      />
-      <input
+      <Popover open={open} onOpenChange={setOpen}>
+        <PopoverTrigger asChild>
+          <Button
+            variant="outline"
+            id="date"
+            className="justify-between font-normal"
+          >
+            {dateC ? dateC.toLocaleDateString() : "Select date"}
+            <CalendarIcon className="ml-auto h-4 w-4" />
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent className="w-auto overflow-hidden p-0" align="start">
+          <CalendarComponent
+            mode="single"
+            selected={dateC}
+            onSelect={(date) => {
+              setDateC(date);
+              setOpen(false);
+            }}
+          />
+        </PopoverContent>
+      </Popover>
+      <Input
         type="time"
-        className="border p-2 rounded-lg"
         value={time}
         onChange={(e) => setTime(e.target.value)}
       />
-      <select
-        className="border p-2 rounded-lg"
-        value={color}
-        onChange={(e) => setColor(e.target.value)}
-      >
-        <option value="bg-indigo-100 text-indigo-700">Indigo</option>
-        <option value="bg-green-100 text-green-700">Green</option>
-        <option value="bg-yellow-100 text-yellow-700">Yellow</option>
-        <option value="bg-red-100 text-red-700">Red</option>
-      </select>
+      <Select value={color} onValueChange={(e) => setColor(e)}>
+        <SelectTrigger className="w-full">
+          <SelectValue placeholder="Select a color" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectGroup>
+            <SelectLabel>Colors</SelectLabel>
+            <SelectItem value="bg-indigo-100 text-indigo-700">
+              Indigo
+            </SelectItem>
+            <SelectItem value="bg-green-100 text-green-700">Green</SelectItem>
+            <SelectItem value="bg-yellow-100 text-yellow-700">
+              Yellow
+            </SelectItem>
+            <SelectItem value="bg-red-100 text-red-700">Red</SelectItem>
+          </SelectGroup>
+        </SelectContent>
+      </Select>
       <div className="flex justify-between items-center">
         {onDelete && (
           <Button type="button" onClick={onDelete} variant="destructive">

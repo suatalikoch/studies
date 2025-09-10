@@ -32,8 +32,8 @@ export const NotesList = ({ user_id }: { user_id: string }) => {
 
   return (
     <div className="flex flex-col h-full">
-      <div className="p-4 flex items-center justify-between border-b border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-950">
-        <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">
+      <div className="p-4 items-center justify-between border-b border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-950 hidden sm:flex">
+        <h2 className="text-sm sm:text-xl font-bold text-gray-900 dark:text-gray-100">
           Notes
         </h2>
         <div className="flex items-center gap-2">
@@ -66,6 +66,14 @@ export const NotesList = ({ user_id }: { user_id: string }) => {
             onToggleFavorite={toggleFavorite}
           />
         ))}
+
+        <div
+          className="fixed bottom-16 right-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-full p-2 shadow-md block sm:hidden"
+          onClick={() => addNote(user_id)}
+          title="Add Note"
+        >
+          <Plus className="w-8 h-8" />
+        </div>
       </div>
     </div>
   );
