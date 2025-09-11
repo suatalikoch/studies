@@ -2,10 +2,11 @@ import { useRef, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { CalendarIcon } from "lucide-react";
 import {
-  Assignment,
-  AssignmentFormProps,
-  AssignmentFormState,
-  AssignmentStatus,
+  TaskCategory,
+  Task,
+  TaskFormProps,
+  TaskFormState,
+  TaskPriority,
 } from "@/types";
 import {
   Button,
@@ -22,67 +23,62 @@ import {
   SelectValue,
   Textarea,
 } from "@/components/UI";
-import { SelectGroup } from "@radix-ui/react-select";
 
-export default function AssignmentForm({
-  user,
-  onAdd,
-  onCancel,
-}: AssignmentFormProps) {
-  const [form, setForm] = useState<AssignmentFormState>({
+export default function TaskForm({ user, onAdd, onCancel }: TaskFormProps) {
+  const [form, setForm] = useState<TaskFormState>({
     title: "",
-    subject: "",
-    status: "Not Started",
-    priority: "",
+    description: "",
+    priority: "low",
+    category: "Other",
     due_date: "",
   });
   const titleRef = useRef<HTMLInputElement>(null);
   const [open, setOpen] = useState(false);
   const [date, setDate] = useState<Date | undefined>(undefined);
 
-  const setField = <K extends keyof AssignmentFormState>(
+  const setField = <K extends keyof TaskFormState>(
     key: K,
-    value: AssignmentFormState[K]
+    value: TaskFormState[K]
   ) => {
     setForm((f) => ({ ...f, [key]: value }));
   };
 
-  const addAssignment = async () => {
-    if (!user) return;
-
+  const addTask = async (user_id: string) => {
     const title = form.title.trim();
     if (!title) {
       titleRef.current?.focus();
       return;
     }
 
-    const newAssignment: Omit<Assignment, "id"> = {
-      user_id: user.id,
-      title: form.title,
-      subject: form.subject,
-      status: form.status,
+    const newTask: Omit<Task, "id"> = {
+      user_id,
+      title: form.title.trim(),
+      description: form.description.trim(),
       priority: form.priority,
+      category: form.category,
       due_date: form.due_date,
-      created_at: new Date().toISOString(),
+      completed: false,
+      starred: false,
       updated_at: new Date().toISOString(),
+      created_at: new Date().toISOString(),
     };
 
     const { data, error } = await createClient()
-      .from("assignments")
-      .insert([newAssignment])
+      .from("tasks")
+      .insert([newTask])
       .select();
 
     if (error) {
-      alert("Failed to add assignment: " + error.message);
+      alert("Failed to add task: " + error.message);
       return;
     }
 
     onAdd(data[0]);
     setForm({
       title: "",
-      subject: "",
-      status: "Not Started",
-      priority: "",
+      description: "",
+      priority: "low",
+      category: "Other",
       due_date: "",
     });
   };
@@ -91,13 +87,16 @@ export default function AssignmentForm({
     <div className="flex-1 p-4 flex flex-col gap-4">
       <div className="bg-white dark:bg-gray-950 rounded-lg border border-gray-200 dark:border-gray-600 p-6 mb-6">
         <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">
-          Add New Assignment
+          Add New Task
         </h3>
         <form
           className="space-y-4"
           onSubmit={(e) => {
             e.preventDefault();
-            addAssignment();
+
+            if (user) {
+              addTask(user.id);
+            }
           }}
         >
           <div>
@@ -111,7 +110,7 @@ export default function AssignmentForm({
               ref={titleRef}
               type="text"
               id="title"
-              placeholder="Enter assignment title..."
+              placeholder="Enter task title..."
               value={form.title}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 setField("title", e.target.value)
@@ -120,47 +119,22 @@ export default function AssignmentForm({
           </div>
           <div>
             <Label
-              htmlFor="subject"
+              htmlFor="description"
               className="text-gray-700 dark:text-gray-400 mb-2"
             >
-              Subject
+              Description
             </Label>
             <Textarea
-              id="subject"
+              id="description"
               rows={3}
-              placeholder="Enter subject..."
-              value={form.subject}
+              placeholder="Enter task description..."
+              value={form.description}
               onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
-                setField("subject", e.target.value)
+                setField("description", e.target.value)
               }
             />
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div>
-              <Label
-                htmlFor="status"
-                className="text-gray-700 dark:text-gray-400 mb-2"
-              >
-                Status
-              </Label>
-              <Select
-                value={form.status}
-                onValueChange={(value) =>
-                  setField("status", value as AssignmentStatus)
-                }
-              >
-                <SelectTrigger id="status" className="w-full">
-                  <SelectValue placeholder="Select status" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    <SelectItem value="Not Started">Not Started</SelectItem>
-                    <SelectItem value="In Progress">In Progress</SelectItem>
-                    <SelectItem value="Completed">Completed</SelectItem>
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
-            </div>
             <div>
               <Label
                 htmlFor="priority"
@@ -170,17 +144,41 @@ export default function AssignmentForm({
               </Label>
               <Select
                 value={form.priority}
-                onValueChange={(value) => setField("priority", value)}
+                onValueChange={(value) =>
+                  setField("priority", value as TaskPriority)
+                }
               >
                 <SelectTrigger id="priority" className="w-full">
                   <SelectValue placeholder="Select priority" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectGroup>
-                    <SelectItem value="low">Low</SelectItem>
-                    <SelectItem value="medium">Medium</SelectItem>
-                    <SelectItem value="high">High</SelectItem>
-                  </SelectGroup>
+                  <SelectItem value="low">Low</SelectItem>
+                  <SelectItem value="medium">Medium</SelectItem>
+                  <SelectItem value="high">High</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div>
+              <Label
+                htmlFor="category"
+                className="text-gray-700 dark:text-gray-400 mb-2"
+              >
+                Category
+              </Label>
+              <Select
+                value={form.category}
+                onValueChange={(value) =>
+                  setField("category", value as TaskCategory)
+                }
+              >
+                <SelectTrigger id="category" className="w-full">
+                  <SelectValue placeholder="Select category" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="Work">Work</SelectItem>
+                  <SelectItem value="Personal">Personal</SelectItem>
+                  <SelectItem value="Shopping">Shopping</SelectItem>
+                  <SelectItem value="Other">Other</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -224,7 +222,7 @@ export default function AssignmentForm({
           </div>
           <div className="flex items-center space-x-3">
             <Button variant="default" type="submit">
-              Add Assignment
+              Add Task
             </Button>
             <Button variant="secondary" onClick={onCancel} type="button">
               Cancel

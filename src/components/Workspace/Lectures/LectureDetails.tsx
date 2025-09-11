@@ -1,9 +1,9 @@
-import { Button, Label, Textarea } from "@/components/UI";
-import { Lecture } from "@/types";
+import { Badge, Button, Checkbox, Label, Textarea } from "@/components/UI";
+import { LectureDetailsProps } from "@/types";
 import { Download, Play, Upload } from "lucide-react";
 import Link from "next/link";
 
-export default function LectureDetails({ lecture }: { lecture: Lecture }) {
+export default function LectureDetails({ lecture }: LectureDetailsProps) {
   return (
     <div className="flex-1 bg-white dark:bg-gray-950 flex flex-col">
       <div className="h-full flex flex-col">
@@ -19,21 +19,20 @@ export default function LectureDetails({ lecture }: { lecture: Lecture }) {
                 <span>{lecture.professor}</span>
                 <span>•</span>
                 <span>{new Date(lecture.date).toLocaleDateString()}</span>
-                <span>•</span>
-                <span>{lecture.duration || "1h 30m"}</span>
+                {lecture.duration && (
+                  <div className="flex items-center space-x-4">
+                    <span>•</span>
+                    <span>{lecture.duration}</span>
+                  </div>
+                )}
               </div>
             </div>
             <div className="flex items-center space-x-2">
-              <span className="px-3 py-1 rounded-lg text-sm font-medium bg-indigo-100 text-indigo-800">
+              <Badge variant="secondary" className="text-sm">
                 {lecture.type}
-              </span>
+              </Badge>
               <label className="flex items-center space-x-2 cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked
-                  readOnly
-                  className="rounded text-indigo-600 focus:ring-indigo-500"
-                />
+                <Checkbox checked={lecture.attended} />
                 <span className="text-sm text-gray-600 dark:text-gray-300">
                   {lecture.attended ? "Attended" : "Not attended"}
                 </span>
@@ -41,26 +40,35 @@ export default function LectureDetails({ lecture }: { lecture: Lecture }) {
             </div>
           </div>
           <div className="flex items-center space-x-3">
-            <Button type="button" className="bg-blue-600 hover:bg-blue-700">
+            <Button
+              type="button"
+              className="bg-blue-600 hover:bg-blue-700 dark:text-gray-100"
+            >
               <Play className="w-4 h-4" />
               Watch Recording
             </Button>
-            <Button type="button" className="bg-gray-600 hover:bg-gray-700">
+            <Button
+              type="button"
+              className="bg-gray-600 hover:bg-gray-700 dark:text-gray-100"
+            >
               <Download className="w-4 h-4" />
               Export Notes
             </Button>
-            <Button type="button" className="bg-indigo-600 hover:bg-indigo-700">
+            <Button
+              type="button"
+              className="bg-indigo-600 hover:bg-indigo-700 dark:text-gray-100"
+            >
               <Upload className="w-4 h-4" />
               Upload Files
             </Button>
           </div>
         </div>
         <div className="flex-1 p-6 overflow-y-auto space-y-6">
-          <div className="bg-gray-900 rounded-lg aspect-video flex items-center justify-center">
-            <div className="text-center text-white">
+          <div className="bg-gray-100 dark:bg-gray-900 rounded-lg aspect-video flex items-center justify-center">
+            <div className="text-center">
               <Play className="w-14 h-14 mx-auto mb-4" />
               <p className="text-lg">Video Player</p>
-              <p className="text-sm text-gray-300">
+              <p className="text-sm text-gray-600 dark:text-gray-300">
                 Click to play lecture recording
               </p>
             </div>

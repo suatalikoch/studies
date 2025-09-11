@@ -1,3 +1,5 @@
+import { LectureFilter, LecturesHeaderProps } from "@/types";
+import { ChevronLeft, Plus, Search } from "lucide-react";
 import {
   Button,
   Input,
@@ -7,20 +9,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/UI";
-import { ChevronLeft, Plus, Search } from "lucide-react";
-
-interface LecturesHeaderProps {
-  showDetails: boolean;
-  showForm: boolean;
-  onToggleForm: () => void;
-  onBack: () => void;
-}
+import { SelectGroup } from "@radix-ui/react-select";
 
 export default function LecturesHeader({
   showDetails,
   showForm,
   onToggleForm,
   onBack,
+  subjectFilter,
+  setSubjectFilter,
+  typeFilter,
+  setTypeFilter,
 }: LecturesHeaderProps) {
   return (
     <div className="flex-col gap-4 p-4 border-b border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-950 hidden sm:flex">
@@ -32,23 +31,29 @@ export default function LecturesHeader({
             </h2>
             <div className="flex gap-2">
               <Select
+                value={subjectFilter}
                 onValueChange={(value) =>
-                  console.log("Selected subject:", value)
+                  setSubjectFilter(value as LectureFilter)
                 }
+                defaultValue="all"
               >
                 <SelectTrigger>
                   <SelectValue placeholder="All Subjects" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">All Subjects</SelectItem>
-                  <SelectItem value="math">Math</SelectItem>
-                  <SelectItem value="science">Science</SelectItem>
-                  <SelectItem value="history">History</SelectItem>
+                  <SelectGroup>
+                    <SelectItem value="all">All Subjects</SelectItem>
+                    <SelectItem value="math">Math</SelectItem>
+                    <SelectItem value="science">Science</SelectItem>
+                    <SelectItem value="history">History</SelectItem>
+                  </SelectGroup>
                 </SelectContent>
               </Select>
 
               <Select
-                onValueChange={(value) => console.log("Selected type:", value)}
+                value={typeFilter}
+                onValueChange={(value) => setTypeFilter(value as LectureFilter)}
+                defaultValue="all"
               >
                 <SelectTrigger>
                   <SelectValue placeholder="All Types" />
@@ -81,7 +86,7 @@ export default function LecturesHeader({
             </div>
           </>
         ) : (
-          <Button variant="secondary" onClick={onBack}>
+          <Button variant="outline" onClick={onBack}>
             <ChevronLeft />
             Back
           </Button>

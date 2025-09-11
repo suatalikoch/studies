@@ -1,11 +1,15 @@
-"use client";
-
 import { useRef, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
-import { Lecture, LectureFormState } from "@/types";
+import {
+  Lecture,
+  LectureFormProps,
+  LectureFormState,
+  LectureType,
+} from "@/types";
 import {
   Button,
   Calendar,
+  Checkbox,
   Input,
   Label,
   Popover,
@@ -24,11 +28,7 @@ export default function LectureForm({
   user,
   onAdd,
   onCancel,
-}: {
-  user: { id: string } | null;
-  onAdd: (assignment: Lecture) => void;
-  onCancel: () => void;
-}) {
+}: LectureFormProps) {
   const [form, setForm] = useState<LectureFormState>({
     title: "",
     subject: "",
@@ -40,9 +40,11 @@ export default function LectureForm({
     attended: false,
     checked: false,
   });
+
   const titleRef = useRef<HTMLInputElement>(null);
   const [open, setOpen] = useState(false);
   const [date, setDate] = useState<Date | undefined>(undefined);
+  const [tagInput, setTagInput] = useState("");
 
   const setField = <K extends keyof LectureFormState>(
     key: K,
@@ -51,7 +53,7 @@ export default function LectureForm({
     setForm((f) => ({ ...f, [key]: value }));
   };
 
-  const addAssignment = async () => {
+  const addLecture = async () => {
     if (!user) return;
 
     const title = form.title.trim();
@@ -66,22 +68,22 @@ export default function LectureForm({
       subject: form.subject,
       professor: form.professor,
       date: form.date,
-      duration: "",
-      type: "Recorded",
-      tags: [],
-      attended: false,
+      duration: form.duration,
+      type: form.type,
+      tags: form.tags,
+      attended: form.attended,
       checked: false,
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
     };
 
     const { data, error } = await createClient()
-      .from("assignments")
+      .from("lectures")
       .insert([newLecture])
       .select();
 
     if (error) {
-      alert("Failed to add assignment: " + error.message);
+      alert("Failed to add lecture: " + error.message);
       return;
     }
 
@@ -99,6 +101,18 @@ export default function LectureForm({
     });
   };
 
+  const handleTagKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" || e.key === ",") {
+      const newTag = tagInput.trim();
+      if (form.tags) {
+        if (newTag && !form.tags.includes(newTag)) {
+          setField("tags", [...form.tags, newTag]);
+        }
+      }
+      setTagInput("");
+    }
+  };
+
   return (
     <div className="flex-1 p-4 flex flex-col gap-4">
       <div className="bg-white dark:bg-gray-950 rounded-lg border border-gray-200 dark:border-gray-600 p-6 mb-6">
@@ -109,7 +123,7 @@ export default function LectureForm({
           className="space-y-4"
           onSubmit={(e) => {
             e.preventDefault();
-            addAssignment();
+            addLecture();
           }}
         >
           <div>
@@ -227,10 +241,10 @@ export default function LectureForm({
               </Label>
               <Select
                 onValueChange={(value) => {
-                  console.log("Selected type: " + value);
+                  setField("type", value as LectureType);
                 }}
               >
-                <SelectTrigger id="type">
+                <SelectTrigger id="type" className="w-full">
                   <SelectValue placeholder="All Types" />
                 </SelectTrigger>
                 <SelectContent>
@@ -248,25 +262,57 @@ export default function LectureForm({
               >
                 Tags
               </Label>
-              <Input id="tags" type="text" onChange={(e) => console.log("")} />
+              <Input
+                id="tags"
+                type="text"
+                value={tagInput}
+                placeholder="Type and press Enter..."
+                onChange={(e) => setTagInput(e.target.value)}
+                onKeyDown={handleTagKeyDown}
+              />
             </div>
-            <div>
-              <Label
-                htmlFor="attended"
-                className="text-gray-700 dark:text-gray-400 mb-2"
-              >
-                Attended
-              </Label>
-              <Input id="attended" type="checkbox" checked={false} />
+            <div className="flex items-center gap-3">
+              <Checkbox
+                id="attended"
+                checked={form.attended}
+                onCheckedChange={(checked) =>
+                  setField("attended", checked === true)
+                }
+              />
+              <Label htmlFor="attended">attended</Label>
             </div>
           </div>
-          <div className="flex items-center space-x-3">
-            <Button variant="default" type="submit">
-              Add Lecture
-            </Button>
-            <Button variant="secondary" onClick={onCancel} type="button">
-              Cancel
-            </Button>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-3">
+              <Button variant="default" type="submit">
+                Add Lecture
+              </Button>
+              <Button variant="secondary" onClick={onCancel} type="button">
+                Cancel
+              </Button>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {form.tags?.map((tag, idx) => (
+                <div
+                  key={idx}
+                  className="flex items-center bg-gray-200 dark:bg-gray-700 rounded-full px-3 py-1 text-sm"
+                >
+                  {tag}
+                  <button
+                    type="button"
+                    className="ml-1 text-gray-500 hover:text-gray-800 dark:hover:text-gray-300"
+                    onClick={() =>
+                      setField(
+                        "tags",
+                        form.tags?.filter((t) => t !== tag)
+                      )
+                    }
+                  >
+                    ×
+                  </button>
+                </div>
+              ))}
+            </div>
           </div>
         </form>
       </div>
