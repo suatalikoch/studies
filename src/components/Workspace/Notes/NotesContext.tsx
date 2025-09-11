@@ -1,27 +1,9 @@
 "use client";
 
 import { createContext, useContext, useState, ReactNode } from "react";
-import { Note } from "@/types";
+import { Note, NotesContextType } from "@/types";
 import { createClient } from "@/lib/supabase/client";
 import { toast } from "sonner";
-
-type NotesContextType = {
-  notes: Note[];
-  selectedNote: Note | null;
-  setSelectedNote: (note: Note | null) => void;
-  addNote: (user_id: string) => Promise<void>;
-  saveNote: (note: Note) => Promise<void>;
-  deleteNote: (id: string) => Promise<void>;
-  toggleFavorite: (id: string) => void;
-  undo: (id: string) => void;
-  redo: (id: string) => void;
-  searchTerm: string;
-  setSearchTerm: (term: string) => void;
-  viewMode: "grid" | "list";
-  setViewMode: (mode: "grid" | "list") => void;
-  isEditing: boolean;
-  setIsEditing: (val: boolean) => void;
-};
 
 const NotesContext = createContext<NotesContextType | undefined>(undefined);
 
@@ -37,8 +19,6 @@ export function NotesProvider({
   const [searchTerm, setSearchTerm] = useState("");
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [isEditing, setIsEditing] = useState(false);
-
-  // history: id -> array of versions
   const [history, setHistory] = useState<Record<string, Note[]>>({});
   const [future, setFuture] = useState<Record<string, Note[]>>({});
 
@@ -94,18 +74,19 @@ export function NotesProvider({
   };
 
   const saveNote = async (note: Note) => {
-    // push current note to history before updating
     setHistory((prev) => ({
       ...prev,
       [note.id]: [...(prev[note.id] || []), note],
     }));
-    setFuture((prev) => ({ ...prev, [note.id]: [] })); // reset redo stack
+
+    setFuture((prev) => ({ ...prev, [note.id]: [] }));
 
     const updatedNote = { ...note, updated_at: new Date().toISOString() };
 
     setNotes((prev) =>
       prev.map((n) => (n.id === updatedNote.id ? updatedNote : n))
     );
+
     _setSelectedNote(updatedNote);
     setIsEditing(false);
 
@@ -113,6 +94,7 @@ export function NotesProvider({
       .from("notes")
       .update(updatedNote)
       .eq("id", updatedNote.id);
+
     toast.success("Note saved successfully!", {
       duration: 5000,
       position: "bottom-right",
@@ -143,7 +125,9 @@ export function NotesProvider({
     }));
 
     setNotes((prev) => prev.map((n) => (n.id === id ? prevVersion : n)));
+
     if (selectedNote?.id === id) _setSelectedNote(prevVersion);
+
     toast.success("Undo applied!", {
       duration: 5000,
       position: "bottom-right",
@@ -217,13 +201,12 @@ export function NotesProvider({
       return;
     }
 
-    // only track if we already have a note selected (avoid pushing on initial load)
     if (selectedNote && selectedNote.id === note.id) {
       setHistory((prev) => ({
         ...prev,
         [note.id]: [...(prev[note.id] || []), selectedNote],
       }));
-      setFuture((prev) => ({ ...prev, [note.id]: [] })); // reset redo stack
+      setFuture((prev) => ({ ...prev, [note.id]: [] }));
     }
 
     _setSelectedNote(note);

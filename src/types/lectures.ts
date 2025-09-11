@@ -5,8 +5,8 @@ export interface Lecture {
   subject: string;
   professor: string;
   date: string;
-  duration: string;
-  type: "Live" | "Recorded" | "Seminar";
+  duration?: string;
+  type: LectureType;
   tags?: string[];
   attended: boolean;
   checked: boolean;
@@ -19,9 +19,50 @@ export type LectureFormState = {
   subject: string;
   professor: string;
   date: string;
-  duration: string;
-  type: "Live" | "Recorded" | "Seminar";
+  duration?: string;
+  type: LectureType;
   tags?: string[];
   attended: boolean;
   checked: boolean;
 };
+
+export type LectureType = "Live" | "Recorded" | "Seminar";
+export type LectureFilter =
+  | "all"
+  | "math"
+  | "science"
+  | "history"
+  | "live"
+  | "recorded"
+  | "seminar";
+
+export interface LectureCardProps {
+  lecture: Lecture;
+  onClick: () => void;
+}
+
+export interface LectureDetailsProps {
+  lecture: Lecture;
+}
+
+export interface LectureFormProps {
+  user: { id: string } | null;
+  onAdd: (assignment: Lecture) => void;
+  onCancel: () => void;
+}
+
+export interface LecturesHeaderProps {
+  showDetails: boolean;
+  showForm: boolean;
+  onToggleForm: () => void;
+  onBack: () => void;
+  subjectFilter: LectureFilter;
+  setSubjectFilter: (value: LectureFilter) => void;
+  typeFilter: LectureFilter;
+  setTypeFilter: (value: LectureFilter) => void;
+}
+
+export interface LecturesListProps {
+  lectures: Lecture[];
+  onSelect: (lecture: Lecture) => void;
+}

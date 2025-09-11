@@ -27,14 +27,12 @@ export default function NotesEditor() {
             if (isEditing && !confirm("Discard unsaved changes?")) {
               return;
             }
-
             setSelectedNote(null);
           }}
         >
           <ChevronLeft />
           Back
         </Button>
-
         <div className="flex items-center gap-2">
           {!isEditing ? (
             <Button onClick={() => setIsEditing(true)}>Edit</Button>
@@ -60,10 +58,7 @@ export default function NotesEditor() {
           </Button>
         </div>
       </div>
-
-      {/* Content */}
       <div className="p-4 flex-1 overflow-auto flex flex-col gap-4">
-        {/* Title */}
         {isEditing ? (
           <Input
             value={selectedNote.title}
@@ -75,8 +70,6 @@ export default function NotesEditor() {
         ) : (
           <h1 className="text-2xl font-bold">{selectedNote?.title}</h1>
         )}
-
-        {/* Subject */}
         {isEditing ? (
           <Input
             value={selectedNote.subject}
@@ -90,8 +83,6 @@ export default function NotesEditor() {
             {selectedNote?.subject}
           </p>
         )}
-
-        {/* Content */}
         {!isEditing ? (
           <MarkdownRenderer
             content={selectedNote.content ? selectedNote.content : ""}
@@ -105,8 +96,6 @@ export default function NotesEditor() {
             className="flex-1 resize-note"
           />
         )}
-
-        {/* Tags */}
         {isEditing && <TagInput note={selectedNote} />}
       </div>
     </div>

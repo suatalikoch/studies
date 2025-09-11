@@ -23,13 +23,39 @@ export interface NoteCardProps {
   onToggleFavorite: (id: string) => void;
 }
 
-export interface ViewModeToggleProps {
-  viewMode: "list" | "grid";
-  setViewMode: (mode: "list" | "grid") => void;
+export type NotesContextType = {
+  notes: Note[];
+  selectedNote: Note | null;
+  setSelectedNote: (note: Note | null) => void;
+  addNote: (user_id: string) => Promise<void>;
+  saveNote: (note: Note) => Promise<void>;
+  deleteNote: (id: string) => Promise<void>;
+  toggleFavorite: (id: string) => void;
+  undo: (id: string) => void;
+  redo: (id: string) => void;
+  searchTerm: string;
+  setSearchTerm: (term: string) => void;
+  viewMode: "grid" | "list";
+  setViewMode: (mode: "grid" | "list") => void;
+  isEditing: boolean;
+  setIsEditing: (val: boolean) => void;
+};
+
+export interface NotesListProps {
+  user_id: string;
 }
 
 export interface SearchbarProps {
   value: string;
   onChange: (value: string) => void;
   placeholder?: string;
+}
+
+export interface TagInputProps {
+  note: Note;
+}
+
+export interface ViewModeToggleProps {
+  viewMode: "list" | "grid";
+  setViewMode: (mode: "list" | "grid") => void;
 }

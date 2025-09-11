@@ -11,3 +11,22 @@ export interface Plan {
 }
 
 export type BillingCycle = "monthly" | "yearly";
+
+export interface BillingToggleProps {
+  billingCycle: BillingCycle;
+  setBillingCycle: (cycle: BillingCycle) => void;
+}
+
+export interface AnimatedPriceProps {
+  price: number;
+}
+
+export interface FeatureComparisonTableProps {
+  plans: Plan[];
+  billingCycle: BillingCycle;
+}
+
+export interface PricingCardProps {
+  plan: Plan;
+  billingCycle: BillingCycle;
+}

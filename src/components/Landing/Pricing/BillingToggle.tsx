@@ -1,12 +1,9 @@
-import { BillingCycle } from "@/types";
+import { BillingCycle, BillingToggleProps } from "@/types";
 
 export default function BillingToggle({
   billingCycle,
   setBillingCycle,
-}: {
-  billingCycle: BillingCycle;
-  setBillingCycle: (cycle: BillingCycle) => void;
-}) {
+}: BillingToggleProps) {
   return (
     <div className="bg-white dark:bg-gray-950 border border-gray-300 dark:border-gray-600 rounded-full flex p-1">
       {["monthly", "yearly"].map((cycle) => (

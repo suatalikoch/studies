@@ -1,12 +1,13 @@
-import { Button } from "@/components/UI";
 import { useMemo } from "react";
+import { Plus } from "lucide-react";
+import { NotesListProps } from "@/types";
+import { Button } from "@/components/UI";
 import NoteCard from "./NoteCard";
 import { useNotes } from "./NotesContext";
 import ViewModeToggle from "./ViewModeToggle";
 import Searchbar from "./Searchbar";
-import { Plus } from "lucide-react";
 
-export const NotesList = ({ user_id }: { user_id: string }) => {
+export const NotesList = ({ user_id }: NotesListProps) => {
   const {
     notes,
     viewMode,
@@ -49,7 +50,6 @@ export const NotesList = ({ user_id }: { user_id: string }) => {
           <ViewModeToggle viewMode={viewMode} setViewMode={setViewMode} />
         </div>
       </div>
-
       <div
         className={`flex-1 overflow-y-auto p-4 bg-gray-50 dark:bg-gray-800 ${
           viewMode === "grid"
@@ -66,7 +66,11 @@ export const NotesList = ({ user_id }: { user_id: string }) => {
             onToggleFavorite={toggleFavorite}
           />
         ))}
-
+        {filteredNotes.length === 0 && (
+          <div className="text-center text-gray-500 py-8">
+            No notes found for this view.
+          </div>
+        )}
         <div
           className="fixed bottom-16 right-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-full p-2 shadow-md block sm:hidden"
           onClick={() => addNote(user_id)}

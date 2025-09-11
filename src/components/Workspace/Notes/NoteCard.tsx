@@ -20,10 +20,8 @@ export default function NoteCard({
   const bannerSizePx = 16;
 
   function getContrastYIQ(hexcolor: string) {
-    // Remove hash if present
     hexcolor = hexcolor.replace("#", "");
 
-    // Convert 3-digit hex to 6-digit
     if (hexcolor.length === 3) {
       hexcolor = hexcolor
         .split("")
@@ -35,7 +33,6 @@ export default function NoteCard({
     const g = parseInt(hexcolor.substring(2, 4), 16);
     const b = parseInt(hexcolor.substring(4, 6), 16);
 
-    // Calculate YIQ (brightness)
     const yiq = (r * 299 + g * 587 + b * 114) / 1000;
 
     return yiq >= 128 ? "black" : "white";
@@ -58,11 +55,9 @@ export default function NoteCard({
         backgroundClip: "border-box",
       }}
     >
-      {/* Color Bar */}
       <div
         className={`flex-shrink-0 ${viewMode === "list" ? "w-4" : "h-4"}`}
       ></div>
-
       <div className="h-full p-3 flex flex-col flex-1 min-w-0 justify-between">
         <div>
           <div className="flex justify-between items-start">
@@ -94,8 +89,6 @@ export default function NoteCard({
           <p className="text-sm text-gray-600 dark:text-gray-300 truncate mt-1">
             {note.content}
           </p>
-
-          {/* Show placeholder only if no content */}
           {(!note.content || note.content.length === 0) && (
             <p className="text-xs text-gray-400 mt-1">No content available</p>
           )}

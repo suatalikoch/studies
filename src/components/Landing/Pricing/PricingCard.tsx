@@ -1,16 +1,10 @@
-import { BillingCycle, Plan } from "@/types";
+import { PricingCardProps } from "@/types";
 import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import AnimatedPrice from "./AnimatedPrice";
 import Link from "next/link";
 
-export default function PricingCard({
-  plan,
-  billingCycle,
-}: {
-  plan: Plan;
-  billingCycle: BillingCycle;
-}) {
+export default function PricingCard({ plan, billingCycle }: PricingCardProps) {
   const [pop, setPop] = useState(false);
   const prevPriceRef = useRef(
     billingCycle === "monthly" ? plan.price_monthly : plan.price_yearly

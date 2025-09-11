@@ -1,11 +1,11 @@
 import type { ProgressDay } from "@/types";
 import { TrendingUp } from "lucide-react";
 
-export default function WeeklyProgress({
-  progress,
-}: {
+interface WeeklyProgressProps {
   progress: ProgressDay[];
-}) {
+}
+
+export default function WeeklyProgress({ progress }: WeeklyProgressProps) {
   return (
     <section
       className="bg-white dark:bg-gray-950 rounded-lg border border-gray-200 dark:border-gray-600"

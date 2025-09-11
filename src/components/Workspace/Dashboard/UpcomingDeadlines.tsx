@@ -2,11 +2,13 @@ import type { Deadline } from "@/types";
 import { format, parseISO } from "date-fns";
 import { AlertCircle } from "lucide-react";
 
+interface UpcomingDeadlinesProps {
+  deadlines: Deadline[];
+}
+
 export default function UpcomingDeadlines({
   deadlines,
-}: {
-  deadlines: Deadline[];
-}) {
+}: UpcomingDeadlinesProps) {
   return (
     <section
       className="bg-white dark:bg-gray-950 rounded-lg border border-gray-200 dark:border-gray-600"

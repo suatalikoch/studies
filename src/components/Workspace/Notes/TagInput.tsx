@@ -1,8 +1,8 @@
 import { Badge, Input, Label } from "@/components/UI";
-import { Note } from "@/types";
 import { useNotes } from "./NotesContext";
+import { TagInputProps } from "@/types";
 
-export default function TagInput({ note }: { note: Note }) {
+export default function TagInput({ note }: TagInputProps) {
   const { setSelectedNote } = useNotes();
 
   const addTag = (tag: string) => {

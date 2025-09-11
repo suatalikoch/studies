@@ -1,7 +1,8 @@
+import { AnimatedPriceProps } from "@/types";
 import { animate, useMotionValue } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 
-export default function AnimatedPrice({ price }: { price: number }) {
+export default function AnimatedPrice({ price }: AnimatedPriceProps) {
   const priceMotion = useMotionValue(0);
   const [displayPrice, setDisplayPrice] = useState(0);
   const firstRender = useRef(true);

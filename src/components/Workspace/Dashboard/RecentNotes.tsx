@@ -2,7 +2,11 @@ import { Note } from "@/types";
 import { formatDistanceToNow } from "date-fns";
 import { Star } from "lucide-react";
 
-export default function RecentNotes({ notes }: { notes: Note[] }) {
+interface RecentNotesProps {
+  notes: Note[];
+}
+
+export default function RecentNotes({ notes }: RecentNotesProps) {
   return (
     <section
       className="bg-white dark:bg-gray-950 rounded-lg border border-gray-200 dark:border-gray-600"

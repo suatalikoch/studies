@@ -1,13 +1,27 @@
 import { StatsCard } from "@/components/UI";
 import { BookOpen, CheckSquare, Clock, FileText } from "lucide-react";
 
+interface CardsProps {
+  noteCount: number;
+  noteCountWeek: number;
+  assignmentsCount: number;
+  assignmentsDueSoon: number;
+  taskCountCompleted: number;
+  taskCountWeek: number;
+  studyHours: number;
+  studyHoursWeek: number;
+}
+
 export default function Cards({
   noteCount,
   noteCountWeek,
-}: {
-  noteCount: number;
-  noteCountWeek: number;
-}) {
+  assignmentsCount,
+  assignmentsDueSoon,
+  taskCountCompleted,
+  taskCountWeek,
+  studyHours,
+  studyHoursWeek,
+}: CardsProps) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
       <StatsCard
@@ -20,25 +34,25 @@ export default function Cards({
 
       <StatsCard
         title="Assignments"
-        count={25}
+        count={assignmentsCount}
         icon={<BookOpen className="w-8 h-8 text-orange-600" />}
-        changeText="3 due soon"
+        changeText={`${assignmentsDueSoon} due soon`}
         changeColor="text-red-600"
       />
 
       <StatsCard
         title="Completed Tasks"
-        count={89}
+        count={taskCountCompleted}
         icon={<CheckSquare className="w-8 h-8 text-green-600" />}
-        changeText="+12 this week"
+        changeText={`+${taskCountWeek} this week`}
         changeColor="text-green-600"
       />
 
       <StatsCard
         title="Study Hours"
-        count="32h"
+        count={`${studyHours}h`}
         icon={<Clock className="w-8 h-8 text-purple-600" />}
-        changeText="+5h this week"
+        changeText={`+${studyHoursWeek}h this week`}
         changeColor="text-green-600"
       />
     </div>

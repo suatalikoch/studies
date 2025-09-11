@@ -1,7 +1,11 @@
 import type { Deadline } from "@/types";
 import { useUser } from "@/hooks/useUser";
 
-export default function Welcome({ deadlines }: { deadlines: Deadline[] }) {
+interface WelcomeProps {
+  deadlines: Deadline[];
+}
+
+export default function Welcome({ deadlines }: WelcomeProps) {
   const user = useUser();
 
   return (

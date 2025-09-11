@@ -1,14 +1,11 @@
 import { formatPrice } from "@/lib/utils/pricing";
-import { BillingCycle, Plan } from "@/types";
+import { FeatureComparisonTableProps } from "@/types";
 import Link from "next/link";
 
 export default function FeatureComparisonTable({
   plans,
   billingCycle,
-}: {
-  plans: Plan[];
-  billingCycle: BillingCycle;
-}) {
+}: FeatureComparisonTableProps) {
   const allFeatures = Array.from(new Set(plans.flatMap((p) => p.features)));
 
   return (

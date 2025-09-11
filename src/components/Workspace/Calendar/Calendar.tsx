@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { CalendarIcon, Plus, Triangle, X } from "lucide-react";
-import { CalendarEvent, Exam } from "@/types";
+import { CalendarEvent, CalendarProps, EventFormProps, Exam } from "@/types";
 import {
   Button,
   Calendar as CalendarComponent,
@@ -16,11 +16,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/UI";
-
-type Props = {
-  events?: CalendarEvent[];
-  exams?: Exam[];
-};
 
 function toISO(d: Date) {
   return [
@@ -50,7 +45,7 @@ function examsToCalendarEvents(exams: Exam[]): CalendarEvent[] {
   }));
 }
 
-export default function Calendar({ events = [], exams = [] }: Props) {
+export default function Calendar({ events = [], exams = [] }: CalendarProps) {
   const [date, setDate] = useState<string>(toISO(new Date()));
 
   const todayISO = toISO(new Date());
@@ -284,13 +279,6 @@ export default function Calendar({ events = [], exams = [] }: Props) {
     </div>
   );
 }
-
-type EventFormProps = {
-  event?: CalendarEvent | null;
-  onSave: (ev: CalendarEvent) => void;
-  onDelete?: () => void;
-  selectedDate: string;
-};
 
 function EventForm({ event, onSave, onDelete, selectedDate }: EventFormProps) {
   const [title, setTitle] = useState(event?.title || "");

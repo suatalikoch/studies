@@ -1,9 +1,9 @@
 import { Button } from "@/components/UI";
-import { Exam } from "@/types";
+import { UpcomingEventsProps } from "@/types";
 import { Plus, BookOpen, Clock, MapPin } from "lucide-react";
 import Link from "next/link";
 
-export default function UpcomingEvents({ exams }: { exams: Exam[] }) {
+export default function UpcomingEvents({ exams }: UpcomingEventsProps) {
   return (
     <div className="w-full md:w-96 bg-white dark:bg-gray-950 border border-gray-200 dark:border-gray-600 rounded-lg p-6 space-y-6">
       <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">
