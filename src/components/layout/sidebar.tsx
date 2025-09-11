@@ -8,7 +8,7 @@ import { createClient } from "@/lib/supabase/client";
 import { Settings, LogOut, ChevronDown } from "lucide-react";
 import Image from "next/image";
 import { sidebarItems } from "@/lib/constants";
-import { Skeleton } from "../UI";
+import { Badge, Skeleton } from "@/components/UI";
 
 export default function Sidebar() {
   const router = useRouter();
@@ -117,25 +117,19 @@ export default function Sidebar() {
             <span className="text-gray-600 dark:text-gray-300 text-sm">
               Due Today
             </span>
-            <span className="bg-red-100 text-red-800 px-2 py-1 rounded-full text-xs font-medium">
-              3
-            </span>
+            <Badge className="bg-red-100 text-red-800">3</Badge>
           </div>
           <div className="flex items-center justify-between">
             <span className="text-gray-600 dark:text-gray-300 text-sm">
               This Week
             </span>
-            <span className="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-xs font-medium">
-              7
-            </span>
+            <Badge className="bg-yellow-100 text-yellow-800">7</Badge>
           </div>
           <div className="flex items-center justify-between">
             <span className="text-gray-600 dark:text-gray-300 text-sm">
               Completed
             </span>
-            <span className="bg-green-100 text-green-800 px-2 py-1 rounded-full text-xs font-medium">
-              12
-            </span>
+            <Badge className="bg-green-100 text-green-800">12</Badge>
           </div>
         </div>
       </div>

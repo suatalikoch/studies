@@ -1,7 +1,13 @@
+export {
+  Alert,
+  AlertTitle,
+  AlertDescription,
+} from "@/components/UI/Library/alert";
 export { Badge } from "@/components/UI/Library/badge";
 export { Button } from "@/components/UI/Library/button";
 export { Calendar } from "@/components/UI/Library/calendar";
 export { Card } from "@/components/UI/Library/card";
+export { Checkbox } from "@/components/UI/Library/checkbox";
 export {
   DropdownMenu,
   DropdownMenuContent,
@@ -45,6 +51,12 @@ export { Skeleton } from "@/components/UI/Library/skeleton";
 export { Toaster } from "@/components/UI/Library/sonner";
 export { default as StatsCard } from "@/components/UI/Special/StatsCard";
 export { default as Testimonials } from "@/components/UI/Special/Testimonials";
+export {
+  Tabs,
+  TabsContent,
+  TabsTrigger,
+  TabsList,
+} from "@/components/UI/Library/tabs";
 export { Textarea } from "@/components/UI/Library/textarea";
 export { ThemeToggle } from "@/components/UI/Theme/ThemeToggle";
 export { default as NotificationMenu } from "@/components/UI/Notification/NotificationMenu";
