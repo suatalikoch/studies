@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import SettingsClient from "./client";
 import { getCurrentUser } from "@/lib/supabase/crud";
 import { Header } from "@/components/Layout";
+import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
   title: "Studies | Settings",
@@ -16,9 +17,10 @@ export default async function SettingsPage() {
   }
 
   return (
-    <div>
+    <div className="min-h-screen flex flex-col">
       <Header />
       <SettingsClient />
+      <Toaster />
     </div>
   );
 }
