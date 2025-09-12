@@ -1,10 +1,23 @@
 export {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogOverlay,
+  AlertDialogPortal,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/UI/Library/alert-dialog";
+export {
   Alert,
   AlertTitle,
   AlertDescription,
 } from "@/components/UI/Library/alert";
 export { Badge } from "@/components/UI/Library/badge";
-export { Button } from "@/components/UI/Library/button";
+export { Button, buttonVariants } from "@/components/UI/Library/button";
 export { Calendar } from "@/components/UI/Library/calendar";
 export { Card } from "@/components/UI/Library/card";
 export { Checkbox } from "@/components/UI/Library/checkbox";
