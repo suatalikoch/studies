@@ -1,7 +1,7 @@
-import { Input } from "@/components/UI";
+import { ChangeEvent } from "react";
 import { SearchbarProps } from "@/types";
 import { Search } from "lucide-react";
-import { ChangeEvent } from "react";
+import { Input } from "@/components/UI";
 
 export default function Searchbar({
   value,

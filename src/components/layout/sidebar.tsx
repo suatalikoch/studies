@@ -14,6 +14,8 @@ export default function Sidebar() {
   const router = useRouter();
   const pathname = usePathname();
   const supabase = createClient();
+
+  const [collapsed, setCollapsed] = useState(false);
   const [flyoutOpen, setFlyoutOpen] = useState(false);
   const flyoutRef = useRef<HTMLDivElement>(null);
   const [loading, setLoading] = useState(true);
@@ -76,6 +78,22 @@ export default function Sidebar() {
     };
   }, [flyoutOpen]);
 
+  //- THIS SHOULD BE CHANGED OR REMOVED FOR NOW SIDEBAR IS COLLAPSED BY KEY SHORTCUT CTRL+S
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.ctrlKey && event.key.toLowerCase() === "s") {
+        event.preventDefault();
+        setCollapsed((prev) => !prev);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [collapsed]);
+
   async function handleLogout() {
     const { error } = await supabase.auth.signOut();
     if (error) {
@@ -88,53 +106,75 @@ export default function Sidebar() {
   }
 
   return (
-    <aside className="hidden sm:w-64 bg-white dark:bg-gray-950 border-r border-gray-200 dark:border-gray-600 sm:flex flex-col flex-shrink-0">
-      <nav className="p-4 space-y-2 overflow-y-auto flex-1">
+    <aside
+      className={`hidden bg-white dark:bg-gray-950 border-r border-gray-200 dark:border-gray-600 sm:flex flex-col flex-shrink-0 ${
+        collapsed ? "sm:w-16" : "sm:w-64"
+      }`}
+    >
+      <nav
+        className={`space-y-2 overflow-y-auto flex-1 ${
+          collapsed ? "p-2" : "p-4"
+        }`}
+      >
         {sidebarItems.map((item) => {
           const Icon = item.icon;
           return (
             <Link
               href={`/${item.path}`}
               key={item.id}
-              className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-left transition-colors text-gray-700 hover:bg-gray-100 cursor-pointer ${
+              className={`w-full flex items-center space-x-3 rounded-lg transition-colors text-gray-700 hover:bg-gray-100 cursor-pointer ${
                 pathname === `/${item.path}`
                   ? "text-indigo-700 bg-indigo-100 dark:bg-indigo-950 border border-indigo-200"
                   : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-900"
-              }`}
+              } ${collapsed ? "justify-center aspect-square" : "px-4 py-3"}`}
             >
               <Icon className="w-5 h-5" />
-              <span className="font-medium">{item.label}</span>
+              {!collapsed && (
+                <span className="font-medium truncate">{item.label}</span>
+              )}
             </Link>
           );
         })}
       </nav>
       <div className="p-4 border-t border-gray-200 dark:border-gray-600">
-        <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-3">
-          Quick Statistics
-        </h3>
-        <div className="space-y-2">
-          <div className="flex items-center justify-between">
-            <span className="text-gray-600 dark:text-gray-300 text-sm">
-              Due Today
-            </span>
+        {collapsed ? (
+          <div className="flex flex-col gap-2 items-center">
             <Badge className="bg-red-100 text-red-800">3</Badge>
-          </div>
-          <div className="flex items-center justify-between">
-            <span className="text-gray-600 dark:text-gray-300 text-sm">
-              This Week
-            </span>
             <Badge className="bg-yellow-100 text-yellow-800">7</Badge>
-          </div>
-          <div className="flex items-center justify-between">
-            <span className="text-gray-600 dark:text-gray-300 text-sm">
-              Completed
-            </span>
             <Badge className="bg-green-100 text-green-800">12</Badge>
           </div>
-        </div>
+        ) : (
+          <>
+            <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-3 truncate">
+              Quick Statistics
+            </h3>
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <span className="text-gray-600 dark:text-gray-300 text-sm truncate">
+                  Due Today
+                </span>
+                <Badge className="bg-red-100 text-red-800">3</Badge>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-gray-600 dark:text-gray-300 text-sm truncate">
+                  This Week
+                </span>
+                <Badge className="bg-yellow-100 text-yellow-800">7</Badge>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-gray-600 dark:text-gray-300 text-sm truncate">
+                  Completed
+                </span>
+                <Badge className="bg-green-100 text-green-800">12</Badge>
+              </div>
+            </div>
+          </>
+        )}
       </div>
       <div
-        className="border-t border-gray-200 dark:border-gray-600 p-4 relative"
+        className={`border-t border-gray-200 dark:border-gray-600 relative ${
+          collapsed ? "p-2 aspect-square" : "p-4"
+        }`}
         ref={flyoutRef}
       >
         {loading ? (
@@ -149,7 +189,11 @@ export default function Sidebar() {
         ) : (
           <button
             onClick={() => setFlyoutOpen(!flyoutOpen)}
-            className="flex items-center w-full space-x-3 focus:outline-none cursor-pointer"
+            className={`flex items-center w-full focus:outline-none cursor-pointer ${
+              collapsed
+                ? "flex items-center justify-center h-full"
+                : "space-x-3"
+            }`}
           >
             <Image
               src={user?.avatar || "/images/avatar.png"}
@@ -158,27 +202,31 @@ export default function Sidebar() {
               height={40}
               className="rounded-full object-cover"
             />
-            <div className="flex-1 text-left min-w-0">
-              <p className="text-gray-900 dark:text-gray-100 font-semibold text-sm truncate">
-                {user?.name}
-              </p>
-              <p className="text-gray-600 dark:text-gray-300 text-xs truncate">
-                {user?.email}
-              </p>
-            </div>
-            <div
-              className={`rounded-lg p-1 transition-colors ${
-                flyoutOpen
-                  ? "bg-gray-200 dark:bg-gray-700"
-                  : "hover:bg-gray-200 dark:hover:bg-gray-700"
-              }`}
-            >
-              <ChevronDown
-                className={`w-5 h-5 text-gray-600 dark:text-gray-300 transition-transform ${
-                  flyoutOpen ? "rotate-180" : ""
+            {!collapsed && (
+              <div className="flex-1 text-left min-w-0">
+                <p className="text-gray-900 dark:text-gray-100 font-semibold text-sm truncate">
+                  {user?.name}
+                </p>
+                <p className="text-gray-600 dark:text-gray-300 text-xs truncate">
+                  {user?.email}
+                </p>
+              </div>
+            )}
+            {!collapsed && (
+              <div
+                className={`rounded-lg p-1 transition-colors ${
+                  flyoutOpen
+                    ? "bg-gray-200 dark:bg-gray-700"
+                    : "hover:bg-gray-200 dark:hover:bg-gray-700"
                 }`}
-              />
-            </div>
+              >
+                <ChevronDown
+                  className={`w-5 h-5 text-gray-600 dark:text-gray-300 transition-transform ${
+                    flyoutOpen ? "rotate-180" : ""
+                  }`}
+                />
+              </div>
+            )}
           </button>
         )}
         {flyoutOpen && (
