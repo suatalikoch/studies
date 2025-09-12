@@ -19,30 +19,16 @@ export type NotePriority = 1 | 2 | 3 | 4 | 5;
 export interface NoteCardProps {
   note: Note;
   viewMode: "list" | "grid";
-  onSelect: (note: Note) => void;
   onToggleFavorite: (id: string) => void;
 }
 
-export type NotesContextType = {
-  notes: Note[];
-  selectedNote: Note | null;
-  setSelectedNote: (note: Note | null) => void;
-  addNote: (user_id: string) => Promise<void>;
-  saveNote: (note: Note) => Promise<void>;
-  deleteNote: (id: string) => Promise<void>;
-  toggleFavorite: (id: string) => void;
-  undo: (id: string) => void;
-  redo: (id: string) => void;
-  searchTerm: string;
-  setSearchTerm: (term: string) => void;
-  viewMode: "grid" | "list";
-  setViewMode: (mode: "grid" | "list") => void;
-  isEditing: boolean;
-  setIsEditing: (val: boolean) => void;
-};
+export interface NoteEditorProps {
+  note: Note;
+}
 
 export interface NotesListProps {
   user_id: string;
+  notes: Note[];
 }
 
 export interface SearchbarProps {
@@ -53,6 +39,7 @@ export interface SearchbarProps {
 
 export interface TagInputProps {
   note: Note;
+  setNote: (note: Note) => void;
 }
 
 export interface ViewModeToggleProps {

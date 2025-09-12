@@ -1,5 +1,5 @@
 import { Note } from "@/types";
-import { createClient } from "../server";
+import { createClient } from "@/lib/supabase/server";
 
 export async function getNotes(userId: string) {
   const supabase = await createClient();
