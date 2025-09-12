@@ -25,14 +25,14 @@ export default function Hero() {
           <div className="flex justify-center gap-4">
             <Link
               href="/register"
-              className="bg-white text-indigo-600 font-semibold px-6 py-3 rounded-lg shadow-md
+              className="self-center text-sm bg-white text-indigo-600 font-semibold px-4 py-2 rounded-md shadow-md
                   hover:scale-105 hover:opacity-90 transition-transform focus:outline-none focus:ring-4 focus:ring-indigo-300"
             >
               Get Started
             </Link>
             <Link
               href="/login"
-              className="bg-transparent border border-white font-semibold px-6 py-3 rounded-lg
+              className="self-center text-sm bg-transparent border border-white font-semibold px-4 py-2 rounded-md
                   hover:bg-white hover:scale-105 hover:text-indigo-600 transition-transform transition-colors focus:outline-none focus:ring-4 focus:ring-indigo-300"
             >
               Sign In

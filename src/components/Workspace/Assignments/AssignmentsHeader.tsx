@@ -1,14 +1,14 @@
 import { AssignmentFilter, AssignmentsHeaderProps } from "@/types";
-import { ChevronLeft, Plus } from "lucide-react";
+import { ChevronLeft, Funnel, Plus } from "lucide-react";
 import {
   Button,
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
   SelectTrigger,
   SelectValue,
 } from "@/components/UI";
-import { SelectGroup } from "@radix-ui/react-select";
 
 export default function AssignmentsHeader({
   showDetails,
@@ -19,20 +19,21 @@ export default function AssignmentsHeader({
   setFilter,
 }: AssignmentsHeaderProps) {
   return (
-    <div className="bg-white dark:bg-gray-950 p-4 border-b border-gray-200 dark:border-gray-600 hidden sm:block">
+    <div className="flex-col gap-4 p-4 bg-white dark:bg-gray-950 border-b border-gray-200 dark:border-gray-600 hidden sm:flex">
       <div className="flex items-center justify-between">
         {!showDetails ? (
           <>
             <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">
               Assignments
             </h2>
-            <div className="flex flex-row gap-2">
+            <div className="flex gap-2">
+              <Funnel className="w-5 h-5 text-gray-600 dark:text-gray-300 self-center" />
               <Select
                 value={filter}
                 onValueChange={(value) => setFilter(value as AssignmentFilter)}
                 defaultValue="all"
               >
-                <SelectTrigger className="w-full text-sm px-3 py-2 rounded-lg">
+                <SelectTrigger>
                   <SelectValue placeholder="All Assignments" />
                 </SelectTrigger>
                 <SelectContent>
