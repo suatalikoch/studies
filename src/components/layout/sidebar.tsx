@@ -158,11 +158,11 @@ export default function Sidebar() {
               height={40}
               className="rounded-full object-cover"
             />
-            <div className="flex-1 text-left">
-              <p className="text-gray-900 dark:text-gray-100 font-semibold text-sm">
+            <div className="flex-1 text-left min-w-0">
+              <p className="text-gray-900 dark:text-gray-100 font-semibold text-sm truncate">
                 {user?.name}
               </p>
-              <p className="text-gray-600 dark:text-gray-300 text-xs">
+              <p className="text-gray-600 dark:text-gray-300 text-xs truncate">
                 {user?.email}
               </p>
             </div>

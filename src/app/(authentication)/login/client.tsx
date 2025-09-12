@@ -1,16 +1,24 @@
 "use client";
 
 import { useState } from "react";
-import { Lock, User } from "lucide-react";
+import { AlertCircle, Lock, User } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+  Button,
+  Input,
+  Label,
+} from "@/components/UI";
 
 export default function LoginClient() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [errors, setErrors] = useState<string[] | null>(null);
   const router = useRouter();
 
   const supabase = createClient();
@@ -18,7 +26,8 @@ export default function LoginClient() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setError(null);
+    setErrors(null);
+    setErrors(null);
 
     const { error: signInError } = await supabase.auth.signInWithPassword({
       email,
@@ -28,7 +37,7 @@ export default function LoginClient() {
     setLoading(false);
 
     if (signInError) {
-      setError(signInError.message);
+      setErrors(signInError.message.split(". "));
       return;
     }
 
@@ -42,7 +51,7 @@ export default function LoginClient() {
   // Google OAuth sign-in handler
   const handleGoogleSignIn = async () => {
     setLoading(true);
-    setError(null);
+    setErrors(null);
 
     const { error: oAuthError } = await supabase.auth.signInWithOAuth({
       provider: "google",
@@ -55,7 +64,7 @@ export default function LoginClient() {
     setLoading(false);
 
     if (oAuthError) {
-      setError(oAuthError.message);
+      setErrors(oAuthError.message.split(". "));
       return;
     }
     // No need to manually redirect because supabase will redirect user to Google OAuth and back
@@ -64,73 +73,82 @@ export default function LoginClient() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-800 p-3 sm:p-6">
       <div className="w-full max-w-md space-y-3 sm:space-y-6">
-        {/* Welcome Banner (matches Dashboard style) */}
         <div className="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-lg p-6 text-white shadow-lg">
           <h2 className="text-lg sm:text-2xl font-bold mb-2">Welcome Back!</h2>
           <p className="text-indigo-100">
             Sign in to continue to your study workspace.
           </p>
         </div>
-
-        {/* Login Form */}
-        <div className="bg-white dark:bg-gray-950 rounded-lg shadow-lg p-6 space-y-6">
+        <div className="bg-white dark:bg-gray-950 rounded-lg shadow-lg p-6 space-y-4">
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-1">
+              <Label
+                htmlFor="email"
+                className="text-gray-700 dark:text-gray-400 mb-2"
+              >
                 Email
-              </label>
-              <div className="flex items-center border border-gray-300 dark:border-gray-500 rounded-lg overflow-hidden">
-                <span className="px-3 text-gray-400">
-                  <User className="w-5 h-5" />
-                </span>
-                <input
+              </Label>
+              <div className="relative">
+                <User className="absolute left-3 top-[50%] translate-y-[-50%] w-5 h-5 text-gray-400" />
+                <Input
+                  id="email"
                   type="email"
-                  className="flex-1 px-3 py-2 focus:outline-none"
+                  className="pl-12"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="you@example.com"
+                  placeholder="yourname@example.com"
                   required
                 />
               </div>
             </div>
-
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-1">
+              <Label
+                htmlFor="password"
+                className="text-gray-700 dark:text-gray-400 mb-2"
+              >
                 Password
-              </label>
-              <div className="flex items-center border border-gray-300 dark:border-gray-500 rounded-lg overflow-hidden">
-                <span className="px-3 text-gray-400">
-                  <Lock className="w-5 h-5" />
-                </span>
-                <input
+              </Label>
+              <div className="relative">
+                <Lock className="absolute left-3 top-[50%] translate-y-[-50%] w-5 h-5 text-gray-400" />
+                <Input
+                  id="password"
                   type="password"
-                  className="flex-1 px-3 py-2 focus:outline-none"
+                  className="pl-12"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  placeholder="••••••••"
+                  placeholder="•••••••••••"
                   required
                 />
               </div>
             </div>
-
-            {error && (
-              <p className="text-sm text-red-600 font-medium">{error}</p>
+            {errors && errors.length === 1 && (
+              <Alert variant="destructive">
+                <AlertCircle />
+                <AlertDescription>{errors[0]}</AlertDescription>
+              </Alert>
             )}
-
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-medium py-2 rounded-lg hover:opacity-90 transition disabled:opacity-50"
-            >
+            {errors && errors.length > 1 && (
+              <Alert variant="destructive">
+                <AlertCircle />
+                <AlertTitle>Please fix the following errors</AlertTitle>
+                <AlertDescription>
+                  <ul className="list-disc space-y-1 pl-4 mt-2">
+                    {errors.map((error, idx) => (
+                      <li key={idx}>{error}.</li>
+                    ))}
+                  </ul>
+                </AlertDescription>
+              </Alert>
+            )}
+            <Button type="submit" disabled={loading} className="w-full mt-2">
               {loading ? "Signing In..." : "Sign In"}
-            </button>
+            </Button>
           </form>
-
-          {/* Google Sign-In */}
-          <button
+          <Button
+            variant="outline"
             onClick={handleGoogleSignIn}
             disabled={loading}
-            className="w-full flex items-center justify-center gap-2 border border-gray-300 dark:border-gray-500 rounded-lg py-2 text-gray-700 dark:text-gray-400 hover:bg-gray-100 transition disabled:opacity-50"
+            className="w-full"
           >
             <svg
               className="w-5 h-5"
@@ -153,12 +171,11 @@ export default function LoginClient() {
                 d="M272 107.7c39.9 0 75.8 13.7 104 40.7l78-78C405 24.9 344.3 0 272 0 168.5 0 75.1 61.2 29.6 150.5l88.1 70.8c21.8-65.1 82.6-113.6 154.3-113.6z"
                 fill="#EA4335"
               />
+              {loading ? "Processing..." : "Sign in with Google"}
             </svg>
-            {loading ? "Processing..." : "Sign in with Google"}
-          </button>
-
-          {/* Additional Links */}
-          <div className="text-center text-sm text-gray-500 dark:text-gray-400">
+            Google
+          </Button>
+          <div className="text-center text-sm text-gray-500 dark:text-gray-400 mt-2">
             <p>
               Don’t have an account?{" "}
               <Link

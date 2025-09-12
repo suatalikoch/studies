@@ -1,14 +1,22 @@
 "use client";
 
 import { useState } from "react";
-import { Mail } from "lucide-react";
+import { AlertCircle, CheckCheck, Mail } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import Link from "next/link";
+import {
+  Alert,
+  AlertDescription,
+  AlertTitle,
+  Button,
+  Input,
+  Label,
+} from "@/components/UI";
 
 export default function ForgotPasswordClient() {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState<string | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const [errors, setErrors] = useState<string[] | null>(null);
   const [loading, setLoading] = useState(false);
 
   const supabase = createClient();
@@ -16,7 +24,7 @@ export default function ForgotPasswordClient() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setMessage(null);
-    setError(null);
+    setErrors(null);
     setLoading(true);
 
     const { error } = await supabase.auth.resetPasswordForEmail(email, {
@@ -26,7 +34,7 @@ export default function ForgotPasswordClient() {
     setLoading(false);
 
     if (error) {
-      setError(error.message);
+      setErrors(error.message.split(". "));
     } else {
       setMessage("Check your email for password reset instructions.");
     }
@@ -47,33 +55,56 @@ export default function ForgotPasswordClient() {
         <div className="bg-white dark:bg-gray-950 rounded-lg shadow-lg p-6 space-y-6">
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-400 mb-1">
+              <Label
+                htmlFor="email"
+                className="text-gray-700 dark:text-gray-400 mb-2"
+              >
                 Email
-              </label>
-              <div className="flex items-center border border-gray-300 dark:border-gray-500 rounded-lg overflow-hidden">
-                <span className="px-3 text-gray-400">
-                  <Mail className="w-5 h-5" />
-                </span>
-                <input
+              </Label>
+              <div className="relative">
+                <Mail className="absolute left-3 top-[50%] translate-y-[-50%] w-5 h-5 text-gray-400" />
+                <Input
+                  id="email"
                   type="email"
-                  className="flex-1 px-3 py-2 focus:outline-none"
+                  className="pl-12"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="you@example.com"
+                  placeholder="yourname@example.com"
                   required
                 />
               </div>
             </div>
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-medium py-2 rounded-lg hover:opacity-90 transition disabled:opacity-50"
-            >
+            <Button type="submit" disabled={loading} className="w-full">
               {loading ? "Sending..." : "Send Reset Link"}
-            </button>
+            </Button>
           </form>
-          {message && <p className="text-green-600 text-center">{message}</p>}
-          {error && <p className="text-red-600 text-center">{error}</p>}
+          {message && (
+            <Alert variant="default">
+              <CheckCheck />
+              <AlertDescription className="text-green-600">
+                {message}
+              </AlertDescription>
+            </Alert>
+          )}
+          {errors && errors.length === 1 && (
+            <Alert variant="destructive">
+              <AlertCircle />
+              <AlertDescription>{errors[0]}</AlertDescription>
+            </Alert>
+          )}
+          {errors && errors.length > 1 && (
+            <Alert variant="destructive">
+              <AlertCircle />
+              <AlertTitle>Please fix the following errors</AlertTitle>
+              <AlertDescription>
+                <ul className="list-disc space-y-1 pl-4 mt-2">
+                  {errors.map((error, idx) => (
+                    <li key={idx}>{error}.</li>
+                  ))}
+                </ul>
+              </AlertDescription>
+            </Alert>
+          )}
           <div className="text-center text-sm text-gray-500 dark:text-gray-400">
             <p>
               Remembered your password?{" "}

@@ -1,15 +1,15 @@
 import { LectureFilter, LecturesHeaderProps } from "@/types";
-import { ChevronLeft, Plus, Search } from "lucide-react";
+import { ChevronLeft, Funnel, Plus, Search } from "lucide-react";
 import {
   Button,
   Input,
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
   SelectTrigger,
   SelectValue,
 } from "@/components/UI";
-import { SelectGroup } from "@radix-ui/react-select";
 
 export default function LecturesHeader({
   showDetails,
@@ -22,7 +22,7 @@ export default function LecturesHeader({
   setTypeFilter,
 }: LecturesHeaderProps) {
   return (
-    <div className="flex-col gap-4 p-4 border-b border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-950 hidden sm:flex">
+    <div className="flex-col gap-4 p-4 bg-white dark:bg-gray-950 border-b border-gray-200 dark:border-gray-600 hidden sm:flex">
       <div className="flex items-center justify-between">
         {!showDetails ? (
           <>
@@ -30,6 +30,7 @@ export default function LecturesHeader({
               Lectures
             </h2>
             <div className="flex gap-2">
+              <Funnel className="w-5 h-5 text-gray-600 dark:text-gray-300 self-center" />
               <Select
                 value={subjectFilter}
                 onValueChange={(value) =>
