@@ -1,13 +1,15 @@
-import { Badge } from "@/components/UI";
+import { useRouter } from "next/navigation";
 import { NoteCardProps } from "@/types";
 import { Star } from "lucide-react";
+import { Badge } from "@/components/UI";
 
 export default function NoteCard({
   note,
   viewMode,
-  onSelect,
   onToggleFavorite,
 }: NoteCardProps) {
+  const router = useRouter();
+
   const subjectColors: Record<string, string> = {
     General: "#be1e1eff",
     Work: "#1765ccff",
@@ -40,7 +42,7 @@ export default function NoteCard({
 
   return (
     <div
-      onClick={() => onSelect(note)}
+      onClick={() => router.push(`/notes/${note.id}`)}
       className={`rounded-lg cursor-pointer transition hover:shadow-md bg-white dark:bg-gray-950 border border-gray-200 dark:border-gray-600 ${
         viewMode === "list" ? "flex" : "flex flex-col"
       }`}

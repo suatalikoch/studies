@@ -1,21 +1,17 @@
 import { Badge, Input, Label } from "@/components/UI";
-import { useNotes } from "./NotesContext";
 import { TagInputProps } from "@/types";
 
-export default function TagInput({ note }: TagInputProps) {
-  const { setSelectedNote } = useNotes();
-
+export default function TagInput({ note, setNote }: TagInputProps) {
   const addTag = (tag: string) => {
     if (!(note.tags ?? []).includes(tag)) {
-      setSelectedNote({ ...note, tags: [...(note.tags ?? []), tag] });
+      const updatedTags = [...(note.tags || []), tag];
+      setNote({ ...note, tags: updatedTags });
     }
   };
 
   const removeTag = (tag: string) => {
-    setSelectedNote({
-      ...note,
-      tags: (note.tags ?? []).filter((t) => t !== tag),
-    });
+    const updatedTags = (note.tags || []).filter((t) => t !== tag);
+    setNote({ ...note, tags: updatedTags });
   };
 
   return (

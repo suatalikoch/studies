@@ -1,23 +1,19 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
+import NoteCard from "@/components/Workspace/Notes/NoteCard";
+import ViewModeToggle from "@/components/Workspace/Notes/ViewModeToggle";
+import Searchbar from "@/components/Workspace/Notes/Searchbar";
+import { Note, NotesListProps } from "@/types";
+import { toast } from "sonner";
+import { createClient } from "@/lib/supabase/client";
 import { Plus } from "lucide-react";
-import { NotesListProps } from "@/types";
 import { Button } from "@/components/UI";
-import NoteCard from "./NoteCard";
-import { useNotes } from "./NotesContext";
-import ViewModeToggle from "./ViewModeToggle";
-import Searchbar from "./Searchbar";
 
-export const NotesList = ({ user_id }: NotesListProps) => {
-  const {
-    notes,
-    viewMode,
-    searchTerm,
-    setSelectedNote,
-    addNote,
-    toggleFavorite,
-    setViewMode,
-    setSearchTerm,
-  } = useNotes();
+export default function NotesList({ user_id, notes }: NotesListProps) {
+  const router = useRouter();
+
+  const [searchTerm, setSearchTerm] = useState("");
+  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
 
   const filteredNotes = useMemo(
     () =>
@@ -30,6 +26,81 @@ export const NotesList = ({ user_id }: NotesListProps) => {
       ),
     [notes, searchTerm]
   );
+
+  const addNote = async (user_id: string) => {
+    const newNote: Omit<Note, "id"> = {
+      user_id,
+      title: "Untitled Note",
+      subject: "General",
+      content: "",
+      tags: [],
+      status: "draft",
+      priority: 3,
+      is_favourite: false,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+      color: "#fef3c7",
+    };
+
+    const { error } = await createClient()
+      .from("notes")
+      .insert([newNote])
+      .select();
+
+    if (error) {
+      toast.error("Failed to add note!", {
+        duration: 5000,
+        position: "bottom-right",
+        richColors: true,
+        closeButton: true,
+        action: {
+          label: "Close",
+          onClick: () => console.log("Closed toast."),
+        },
+      });
+
+      return;
+    }
+
+    router.refresh();
+
+    toast.success("Note added successfully!", {
+      duration: 5000,
+      position: "bottom-right",
+      richColors: true,
+      closeButton: true,
+      action: {
+        label: "Close",
+        onClick: () => console.log("Closed toast."),
+      },
+    });
+  };
+
+  const toggleFavorite = async (id: string) => {
+    const updatedNotes = notes.map((note) =>
+      note.id === id ? { ...note, is_favourite: !note.is_favourite } : note
+    );
+
+    const noteToUpdate = updatedNotes.find((n) => n.id === id);
+    if (!noteToUpdate) return;
+
+    const { error } = await createClient()
+      .from("notes")
+      .update({ is_favourite: noteToUpdate.is_favourite })
+      .eq("id", id);
+
+    if (error) {
+      toast.error("Failed to update favorite!");
+    } else {
+      router.refresh();
+
+      toast.success(
+        noteToUpdate.is_favourite
+          ? "Marked as favorite!"
+          : "Removed from favorites!"
+      );
+    }
+  };
 
   return (
     <div className="flex flex-col h-full">
@@ -62,7 +133,6 @@ export const NotesList = ({ user_id }: NotesListProps) => {
             key={note.id}
             note={note}
             viewMode={viewMode}
-            onSelect={setSelectedNote}
             onToggleFavorite={toggleFavorite}
           />
         ))}
@@ -81,4 +151,4 @@ export const NotesList = ({ user_id }: NotesListProps) => {
       </div>
     </div>
   );
-};
+}
