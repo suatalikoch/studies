@@ -177,37 +177,36 @@ export default function Canvas({
     const dist = Math.sqrt(
       (latest.x - start.x) ** 2 + (latest.y - start.y) ** 2
     );
-    if (dist < 5) {
-      // dot
+
+    if (tool === "pen") {
       ctx.beginPath();
       ctx.arc(start.x, start.y, brushSize / 2, 0, Math.PI * 2);
       ctx.fill();
-    } else {
-      if (tool === "square") {
-        ctx.strokeRect(
-          start.x,
-          start.y,
-          latest.x - start.x,
-          latest.y - start.y
-        );
-      } else if (tool === "circle") {
-        const radius = Math.sqrt(
-          (latest.x - start.x) ** 2 + (latest.y - start.y) ** 2
-        );
-        ctx.beginPath();
-        ctx.arc(start.x, start.y, radius, 0, Math.PI * 2);
-        ctx.stroke();
-      } else if (tool === "line") {
-        ctx.beginPath();
-        ctx.moveTo(start.x, start.y);
-        ctx.lineTo(latest.x, latest.y);
-        ctx.stroke();
-      } else if (tool === "text") {
-        const text = prompt("Enter text:");
-        if (text) {
-          ctx.font = `${brushSize * 4}px sans-serif`;
-          ctx.fillText(text, start.x, start.y);
-        }
+    }
+
+    if (dist < 1) {
+      return;
+    }
+
+    if (tool === "square") {
+      ctx.strokeRect(start.x, start.y, latest.x - start.x, latest.y - start.y);
+    } else if (tool === "circle") {
+      const radius = Math.sqrt(
+        (latest.x - start.x) ** 2 + (latest.y - start.y) ** 2
+      );
+      ctx.beginPath();
+      ctx.arc(start.x, start.y, radius, 0, Math.PI * 2);
+      ctx.stroke();
+    } else if (tool === "line") {
+      ctx.beginPath();
+      ctx.moveTo(start.x, start.y);
+      ctx.lineTo(latest.x, latest.y);
+      ctx.stroke();
+    } else if (tool === "text") {
+      const text = prompt("Enter text:");
+      if (text) {
+        ctx.font = `${brushSize * 4}px sans-serif`;
+        ctx.fillText(text, start.x, start.y);
       }
     }
 
