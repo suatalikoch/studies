@@ -6,6 +6,7 @@ export default function Statusbar({
   color,
   zoom,
   isDrawing,
+  statusMessage,
 }: StatusbarProps) {
   return (
     <div className="bg-white dark:bg-gray-950 border-t border-gray-200 dark:border-gray-600 px-4 py-2">
@@ -29,7 +30,7 @@ export default function Statusbar({
           <span>
             Zoom: <strong>{(zoom * 100).toFixed(0)}%</strong>
           </span>
-          <span>{isDrawing ? "Drawing..." : "Ready"}</span>
+          <span>{statusMessage}</span>
         </div>
       </div>
     </div>
