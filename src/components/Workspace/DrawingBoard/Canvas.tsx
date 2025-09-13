@@ -177,7 +177,7 @@ export default function Canvas({
     const dist = Math.sqrt(
       (latest.x - start.x) ** 2 + (latest.y - start.y) ** 2
     );
-
+    
     if (tool === "pen") {
       ctx.beginPath();
       ctx.arc(start.x, start.y, brushSize / 2, 0, Math.PI * 2);
