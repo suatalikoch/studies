@@ -26,6 +26,28 @@ export default function DrawingBoardClient() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
   };
 
+  const getStatusMessage = () => {
+    if (isDrawing) {
+      switch (tool) {
+        case "pen":
+          return "Drawing...";
+        case "eraser":
+          return "Erasing...";
+        case "square":
+          return "Drawing Rectangle...";
+        case "circle":
+          return "Drawing Circle...";
+        case "line":
+          return "Drawing Line...";
+        case "text":
+          return "Placing Text...";
+        default:
+          return "Working...";
+      }
+    }
+    return "Ready";
+  };
+
   return (
     <div className="h-full flex flex-col bg-gray-50 dark:bg-gray-800 transition-colors duration-300">
       <div className="bg-white dark:bg-gray-950 border-b border-gray-200 dark:border-gray-600 p-4 overflow-x-auto sm:overflow-x-visible">
@@ -58,6 +80,7 @@ export default function DrawingBoardClient() {
         color={color}
         zoom={zoom}
         isDrawing={isDrawing}
+        statusMessage={getStatusMessage()}
       />
     </div>
   );
