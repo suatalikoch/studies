@@ -4,7 +4,7 @@ export interface CanvasProps {
   color: string;
   zoom: number;
   setIsDrawing: (drawing: boolean) => void;
-  externalRefs?: {
+  externalRefs: {
     canvasRef: React.RefObject<HTMLCanvasElement | null>;
     ctxRef: React.RefObject<CanvasRenderingContext2D | null>;
   };
@@ -16,6 +16,7 @@ export interface StatusbarProps {
   color: string;
   zoom: number;
   isDrawing: boolean;
+  statusMessage: string;
 }
 
 export interface ToolbarProps {
