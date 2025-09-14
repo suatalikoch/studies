@@ -29,6 +29,10 @@ export default function LectureForm({
   onAdd,
   onCancel,
 }: LectureFormProps) {
+  const titleRef = useRef<HTMLInputElement>(null);
+  const [open, setOpen] = useState(false);
+  const [date, setDate] = useState<Date | undefined>(undefined);
+  const [tagInput, setTagInput] = useState("");
   const [form, setForm] = useState<LectureFormState>({
     title: "",
     subject: "",
@@ -40,11 +44,6 @@ export default function LectureForm({
     attended: false,
     checked: false,
   });
-
-  const titleRef = useRef<HTMLInputElement>(null);
-  const [open, setOpen] = useState(false);
-  const [date, setDate] = useState<Date | undefined>(undefined);
-  const [tagInput, setTagInput] = useState("");
 
   const setField = <K extends keyof LectureFormState>(
     key: K,
@@ -72,7 +71,7 @@ export default function LectureForm({
       type: form.type,
       tags: form.tags,
       attended: form.attended,
-      checked: false,
+      checked: form.checked,
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
     };
@@ -248,7 +247,6 @@ export default function LectureForm({
                   <SelectValue placeholder="All Types" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="All">All Types</SelectItem>
                   <SelectItem value="Live">Live</SelectItem>
                   <SelectItem value="Recorded">Recorded</SelectItem>
                   <SelectItem value="Seminar">Seminar</SelectItem>

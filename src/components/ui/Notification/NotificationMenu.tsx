@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Bell } from "lucide-react";
 import { Notification } from "@/types";
+import { createClient } from "@/lib/supabase/client";
+import { useUser } from "@/hooks";
 import {
   Button,
   DropdownMenu,
@@ -13,9 +15,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/UI";
-import { createClient } from "@/lib/supabase/client";
-import { toast } from "sonner";
-import { useUser } from "@/hooks/useUser";
 
 export default function NotificationMenu() {
   const [notifications, setNotifications] = useState<Notification[]>([]);
@@ -73,24 +72,6 @@ export default function NotificationMenu() {
       supabase.removeChannel(channel);
     };
   }, [user]);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      toast("This is a toast notification!", {
-        description: "Every 10 minutes for development and testing.",
-        duration: 10000,
-        position: "bottom-right",
-        richColors: true,
-        closeButton: true,
-        action: {
-          label: "Undo",
-          onClick: () => console.log("Undo"),
-        },
-      });
-    }, 600000);
-
-    return () => clearInterval(interval);
-  }, []);
 
   const unreadCount = notifications.filter((n) => !n.is_read).length;
 

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { GraduationCap, Search, Settings } from "lucide-react";
-import { useUser } from "@/hooks/useUser";
+import { useUser } from "@/hooks";
 import {
   Button,
   NavigationMenu,

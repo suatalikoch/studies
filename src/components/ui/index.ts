@@ -22,6 +22,21 @@ export { Calendar } from "@/components/UI/Library/calendar";
 export { Card } from "@/components/UI/Library/card";
 export { Checkbox } from "@/components/UI/Library/checkbox";
 export {
+  ContextMenu,
+  ContextMenuItem,
+  ContextMenuCheckboxItem,
+  ContextMenuContent,
+  ContextMenuTrigger,
+  ContextMenuLabel,
+  ContextMenuRadioGroup,
+  ContextMenuRadioItem,
+  ContextMenuSeparator,
+  ContextMenuShortcut,
+  ContextMenuSub,
+  ContextMenuSubContent,
+  ContextMenuSubTrigger,
+} from "@/components/UI/Library/context-menu";
+export {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuTrigger,

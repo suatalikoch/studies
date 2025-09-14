@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useCallback, useMemo, useState } from "react";
+import React, { Suspense, useCallback, useMemo, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
-import { useUser } from "@/hooks/useUser";
-import { TaskFilter, Task, TaskFormState } from "@/types";
+import { useUser } from "@/hooks";
+import { TaskFilter, Task } from "@/types";
 import TasksList from "@/components/Workspace/Tasks/TaskList";
 import TasksHeader from "@/components/Workspace/Tasks/TaskHeader";
 import TaskForm from "@/components/Workspace/Tasks/TaskForm";
@@ -13,13 +13,6 @@ export default function TasksClient({ tasksDB }: { tasksDB: Task[] }) {
   const [tasks, setTasks] = useState<Task[]>(tasksDB);
   const [showForm, setShowForm] = useState(false);
   const [filter, setFilter] = useState<TaskFilter>("all");
-  const [form, setForm] = useState<TaskFormState>({
-    title: "",
-    description: "",
-    priority: "low",
-    category: "Work",
-    due_date: "",
-  });
 
   const user = useUser();
 
@@ -38,13 +31,6 @@ export default function TasksClient({ tasksDB }: { tasksDB: Task[] }) {
   );
 
   const cancelForm = useCallback(() => {
-    setForm({
-      title: "",
-      description: "",
-      priority: "low",
-      category: "Work",
-      due_date: "",
-    });
     setShowForm(false);
   }, []);
 
@@ -139,18 +125,20 @@ export default function TasksClient({ tasksDB }: { tasksDB: Task[] }) {
         />
       )}
       {!showForm && (
-        <TasksList
-          tasks={filteredTasks}
-          onToggle={toggleTask}
-          onStar={toggleStar}
-          onDelete={deleteTask}
-        />
+        <Suspense fallback={<div>Loading tasks...</div>}>
+          <TasksList
+            tasks={filteredTasks}
+            onToggle={toggleTask}
+            onStar={toggleStar}
+            onDelete={deleteTask}
+          />
+        </Suspense>
       )}
       {showForm && (
         <TaskForm
           user={user}
           onAdd={(task) => {
-            setTasks((prev) => [...prev, task]);
+            setTasks((prev) => [task, ...prev]);
           }}
           onCancel={cancelForm}
         />
