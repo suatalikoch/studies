@@ -1,4 +1,4 @@
-import { createClient } from "../server";
+import { createClient } from "@/lib/supabase/server";
 
 export async function getProgress(userId: string) {
   const supabase = await createClient();
@@ -18,5 +18,5 @@ export async function getProgress(userId: string) {
     return dayOrder.indexOf(a.day) - dayOrder.indexOf(b.day);
   });
 
-  return sortedData;
+  return sortedData ?? [];
 }

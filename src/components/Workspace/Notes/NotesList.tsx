@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { Suspense, useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import NoteCard from "@/components/Workspace/Notes/NoteCard";
 import ViewModeToggle from "@/components/Workspace/Notes/ViewModeToggle";
@@ -8,12 +8,16 @@ import { toast } from "sonner";
 import { createClient } from "@/lib/supabase/client";
 import { Plus } from "lucide-react";
 import { Button } from "@/components/UI";
+import { usePersistentState } from "@/hooks";
 
 export default function NotesList({ user_id, notes }: NotesListProps) {
   const router = useRouter();
 
   const [searchTerm, setSearchTerm] = useState("");
-  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
+  const [viewMode, setViewMode] = usePersistentState<"grid" | "list">(
+    "view-state",
+    "grid"
+  );
 
   const filteredNotes = useMemo(
     () =>
@@ -22,7 +26,9 @@ export default function NotesList({ user_id, notes }: NotesListProps) {
           note.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
           note.subject.toLowerCase().includes(searchTerm.toLowerCase()) ||
           note.content?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          note.tags?.some((tag) => tag.includes(searchTerm.toLowerCase()))
+          note.tags?.some((tag) =>
+            tag.toLowerCase().includes(searchTerm.toLowerCase())
+          )
       ),
     [notes, searchTerm]
   );
@@ -40,6 +46,8 @@ export default function NotesList({ user_id, notes }: NotesListProps) {
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
       color: "#fef3c7",
+      is_public: false,
+      shared_with: [],
     };
 
     const { error } = await createClient()
@@ -128,14 +136,16 @@ export default function NotesList({ user_id, notes }: NotesListProps) {
             : "flex flex-col gap-4"
         }`}
       >
-        {filteredNotes.map((note) => (
-          <NoteCard
-            key={note.id}
-            note={note}
-            viewMode={viewMode}
-            onToggleFavorite={toggleFavorite}
-          />
-        ))}
+        <Suspense fallback={<div>Loading notes...</div>}>
+          {filteredNotes.map((note) => (
+            <NoteCard
+              key={note.id}
+              note={note}
+              viewMode={viewMode}
+              onToggleFavorite={toggleFavorite}
+            />
+          ))}
+        </Suspense>
         {filteredNotes.length === 0 && (
           <div className="text-center text-gray-500 py-8">
             No notes found for this view.

@@ -9,13 +9,17 @@ import { Settings, LogOut, ChevronDown } from "lucide-react";
 import Image from "next/image";
 import { sidebarItems } from "@/lib/constants";
 import { Badge, Skeleton } from "@/components/UI";
+import { useKeyboardShortcuts, usePersistentState } from "@/hooks";
 
 export default function Sidebar() {
   const router = useRouter();
   const pathname = usePathname();
   const supabase = createClient();
 
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = usePersistentState<boolean>(
+    "sidebar-collapsed",
+    false
+  );
   const [flyoutOpen, setFlyoutOpen] = useState(false);
   const flyoutRef = useRef<HTMLDivElement>(null);
   const [loading, setLoading] = useState(true);
@@ -78,21 +82,12 @@ export default function Sidebar() {
     };
   }, [flyoutOpen]);
 
-  //- THIS SHOULD BE CHANGED OR REMOVED FOR NOW SIDEBAR IS COLLAPSED BY KEY SHORTCUT CTRL+S
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.ctrlKey && event.key.toLowerCase() === "s") {
-        event.preventDefault();
-        setCollapsed((prev) => !prev);
-      }
-    };
-
-    window.addEventListener("keydown", handleKeyDown);
-
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-    };
-  }, [collapsed]);
+  useKeyboardShortcuts({
+    shortcuts: [
+      { combo: "ctrl+s", handler: () => setCollapsed((prev) => !prev) },
+      { combo: "meta+s", handler: () => setCollapsed((prev) => !prev) },
+    ],
+  });
 
   async function handleLogout() {
     const { error } = await supabase.auth.signOut();

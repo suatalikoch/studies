@@ -1,8 +1,8 @@
 "use client";
 
-import { useCallback, useMemo, useState } from "react";
-import { useUser } from "@/hooks/useUser";
-import { Assignment, AssignmentFormState } from "@/types";
+import { Suspense, useCallback, useMemo, useState } from "react";
+import { useUser } from "@/hooks";
+import { Assignment } from "@/types";
 import AssignmentsList from "@/components/Workspace/Assignments/AssignmentsList";
 import AssignmentDetails from "@/components/Workspace/Assignments/AssignmentDetails";
 import AssignmentForm from "@/components/Workspace/Assignments/AssignmentForm";
@@ -19,24 +19,10 @@ export default function AssignmentsClient({
   const [selectedAssignment, setSelectedAssignment] =
     useState<Assignment | null>(null);
   const [filter, setFilter] = useState("");
-  const [form, setForm] = useState<AssignmentFormState>({
-    title: "",
-    subject: "",
-    status: "Not Started",
-    priority: "",
-    due_date: "",
-  });
 
   const user = useUser();
 
   const cancelForm = useCallback(() => {
-    setForm({
-      title: "",
-      subject: "",
-      status: "Not Started",
-      priority: "",
-      due_date: "",
-    });
     setShowForm(false);
   }, []);
 
@@ -71,10 +57,12 @@ export default function AssignmentsClient({
         setFilter={setFilter}
       />
       {!showForm && !showDetails && (
-        <AssignmentsList
-          assignments={filteredAssignments}
-          onSelect={handleSelectAssignment}
-        />
+        <Suspense fallback={<div>Loading assignments...</div>}>
+          <AssignmentsList
+            assignments={filteredAssignments}
+            onSelect={handleSelectAssignment}
+          />
+        </Suspense>
       )}
       {showDetails && selectedAssignment && (
         <AssignmentDetails assignment={selectedAssignment} />
@@ -83,7 +71,7 @@ export default function AssignmentsClient({
         <AssignmentForm
           user={user}
           onAdd={(assignment) => {
-            setAssignments((prev) => [...prev, assignment]);
+            setAssignments((prev) => [assignment, ...prev]);
           }}
           onCancel={cancelForm}
         />

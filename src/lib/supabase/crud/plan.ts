@@ -1,4 +1,4 @@
-import { createClient } from "../server";
+import { createClient } from "@/lib/supabase/server";
 
 export async function getPlans() {
   const supabase = await createClient();
@@ -12,5 +12,5 @@ export async function getPlans() {
     throw new Error("Failed to fetch plans");
   }
 
-  return data;
+  return data ?? [];
 }

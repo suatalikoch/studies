@@ -1,8 +1,8 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { useUser } from "@/hooks/useUser";
-import { Lecture, LectureFilter, LectureFormState } from "@/types";
+import { Suspense, useMemo, useState } from "react";
+import { useUser } from "@/hooks";
+import { Lecture, LectureFilter } from "@/types";
 import LecturesHeader from "@/components/Workspace/Lectures/LecturesHeader";
 import LecturesList from "@/components/Workspace/Lectures/LecturesList";
 import LectureDetails from "@/components/Workspace/Lectures/LectureDetails";
@@ -19,32 +19,10 @@ export default function LecturesClient({
   const [selectedLecture, setSelectedLecture] = useState<Lecture | null>(null);
   const [subjectFilter, setSubjectFilter] = useState<LectureFilter>("all");
   const [typeFilter, setTypeFilter] = useState<LectureFilter>("all");
-  const [form, setForm] = useState<LectureFormState>({
-    title: "",
-    subject: "",
-    professor: "",
-    date: "",
-    duration: "",
-    type: "Live",
-    tags: [],
-    attended: false,
-    checked: false,
-  });
 
   const user = useUser();
 
   const cancelForm = () => {
-    setForm({
-      title: "",
-      subject: "",
-      professor: "",
-      date: "",
-      duration: "",
-      type: "Live",
-      tags: [],
-      attended: false,
-      checked: false,
-    });
     setShowForm(false);
   };
 
@@ -57,15 +35,10 @@ export default function LecturesClient({
     return lectures.filter((lecture) => {
       const subjectMatch =
         subjectFilter === "all" ||
-        (subjectFilter === "math" && lecture.subject === "Mathematics") ||
-        (subjectFilter === "science" && lecture.subject === "Science") ||
-        (subjectFilter === "history" && lecture.subject === "History");
+        lecture.subject.toLowerCase() === subjectFilter;
 
       const typeMatch =
-        typeFilter === "all" ||
-        (typeFilter === "live" && lecture.type === "Live") ||
-        (typeFilter === "recorded" && lecture.type === "Recorded") ||
-        (typeFilter === "seminar" && lecture.type === "Seminar");
+        typeFilter === "all" || lecture.type.toLowerCase() === typeFilter;
 
       return subjectMatch && typeMatch;
     });
@@ -84,10 +57,12 @@ export default function LecturesClient({
         setTypeFilter={setTypeFilter}
       />
       {!showForm && !showDetails && (
-        <LecturesList
-          lectures={filteredLectures}
-          onSelect={handleSelectLecture}
-        />
+        <Suspense fallback={<div>Loading lectures...</div>}>
+          <LecturesList
+            lectures={filteredLectures}
+            onSelect={handleSelectLecture}
+          />
+        </Suspense>
       )}
       {showDetails && selectedLecture && (
         <LectureDetails lecture={selectedLecture} />
@@ -96,7 +71,7 @@ export default function LecturesClient({
         <LectureForm
           user={user}
           onAdd={(lecture) => {
-            setLectures((prev) => [...prev, lecture]);
+            setLectures((prev) => [lecture, ...prev]);
           }}
           onCancel={cancelForm}
         />

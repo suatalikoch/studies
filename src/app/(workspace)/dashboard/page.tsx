@@ -19,11 +19,13 @@ export default async function DashboardPage() {
 
   if (!user) redirect("/login");
 
-  const deadlines = await getDeadlines(user.id);
-  const notes = await getNotes(user.id);
-  const assignments = await getAssignments(user.id);
-  const tasks = await getTasks(user.id);
-  const progress = await getProgress(user.id);
+  const [deadlines, notes, assignments, tasks, progress] = await Promise.all([
+    getDeadlines(user.id),
+    getNotes(user.id),
+    getAssignments(user.id),
+    getTasks(user.id),
+    getProgress(user.id),
+  ]);
 
   return (
     <DashboardClient

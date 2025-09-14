@@ -8,7 +8,6 @@ export default function TermsPage() {
   return (
     <div className="px-3 py-6 sm:p-6 flex items-center justify-center">
       <div className="w-full max-w-4xl space-y-8">
-        {/* Header */}
         <div className="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-lg p-6 text-white shadow-lg">
           <h1 className="text-lg sm:text-3xl font-bold mb-0 sm:mb-2">
             Terms of Service
@@ -17,8 +16,6 @@ export default function TermsPage() {
             Last updated: {new Date("August 10, 2025").toLocaleDateString()}
           </p>
         </div>
-
-        {/* Content */}
         <div className="bg-white dark:bg-gray-950 rounded-lg shadow-lg p-6 space-y-6">
           <section>
             <h2 className="sm:text-xl font-semibold text-gray-800 dark:text-gray-50 mb-2">
@@ -29,7 +26,6 @@ export default function TermsPage() {
               Service and all applicable laws.
             </p>
           </section>
-
           <section>
             <h2 className="sm:text-xl font-semibold text-gray-800 dark:text-gray-50 mb-2">
               2. User Responsibilities
@@ -45,7 +41,6 @@ export default function TermsPage() {
               <li>All activity under your account is your responsibility.</li>
             </ul>
           </section>
-
           <section>
             <h2 className="sm:text-xl font-semibold text-gray-800 dark:text-gray-50 mb-2">
               3. Prohibited Activities
@@ -55,7 +50,6 @@ export default function TermsPage() {
               any activity that harms the platform or its users.
             </p>
           </section>
-
           <section>
             <h2 className="sm:text-xl font-semibold text-gray-800 dark:text-gray-50 mb-2">
               4. Limitation of Liability
@@ -65,7 +59,6 @@ export default function TermsPage() {
               damages arising from your use of the platform.
             </p>
           </section>
-
           <section>
             <h2 className="sm:text-xl font-semibold text-gray-800 dark:text-gray-50 mb-2">
               5. Changes to Terms
@@ -75,7 +68,6 @@ export default function TermsPage() {
               platform constitutes acceptance of the new terms.
             </p>
           </section>
-
           <section>
             <h2 className="sm:text-xl font-semibold text-gray-800 dark:text-gray-50 mb-2">
               6. Contact Us

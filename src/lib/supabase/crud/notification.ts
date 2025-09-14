@@ -1,4 +1,4 @@
-import { createClient } from "../server";
+import { createClient } from "@/lib/supabase/server";
 
 export async function getNotifications(userId: string) {
   const supabase = await createClient();
@@ -13,5 +13,5 @@ export async function getNotifications(userId: string) {
     throw new Error("Failed to fetch notifications");
   }
 
-  return data;
+  return data ?? [];
 }

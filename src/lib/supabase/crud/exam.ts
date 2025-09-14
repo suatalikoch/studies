@@ -1,4 +1,4 @@
-import { createClient } from "../server";
+import { createClient } from "@/lib/supabase/server";
 
 export async function getExams(userId: string) {
   const supabase = await createClient();
@@ -13,5 +13,5 @@ export async function getExams(userId: string) {
     throw new Error("Failed to fetch exams");
   }
 
-  return data;
+  return data ?? [];
 }

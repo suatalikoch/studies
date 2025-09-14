@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { CalendarIcon } from "lucide-react";
+import { toast } from "sonner";
 import {
   Assignment,
   AssignmentFormProps,
@@ -17,12 +18,12 @@ import {
   PopoverTrigger,
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
   SelectTrigger,
   SelectValue,
   Textarea,
 } from "@/components/UI";
-import { SelectGroup } from "@radix-ui/react-select";
 
 export default function AssignmentForm({
   user,
@@ -74,6 +75,18 @@ export default function AssignmentForm({
 
     if (error) {
       alert("Failed to add assignment: " + error.message);
+
+      toast.error("Failed to add assignment!", {
+        duration: 5000,
+        position: "bottom-right",
+        richColors: true,
+        closeButton: true,
+        action: {
+          label: "Close",
+          onClick: () => console.log("Closed toast."),
+        },
+      });
+
       return;
     }
 
@@ -84,6 +97,17 @@ export default function AssignmentForm({
       status: "Not Started",
       priority: "",
       due_date: "",
+    });
+
+    toast.success("Note added successfully!", {
+      duration: 5000,
+      position: "bottom-right",
+      richColors: true,
+      closeButton: true,
+      action: {
+        label: "Close",
+        onClick: () => console.log("Closed toast."),
+      },
     });
   };
 

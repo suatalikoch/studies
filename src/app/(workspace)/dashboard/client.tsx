@@ -6,6 +6,7 @@ import UpcomingDeadlines from "@/components/Workspace/Dashboard/UpcomingDeadline
 import WeeklyProgress from "@/components/Workspace/Dashboard/WeeklyProgress";
 import Welcome from "@/components/Workspace/Dashboard/Welcome";
 import { Assignment, Deadline, Note, ProgressDay, Task } from "@/types";
+import { Suspense } from "react";
 
 export default function DashboardClient({
   deadlines,
@@ -56,7 +57,7 @@ export default function DashboardClient({
 
   return (
     <div className="p-4 space-y-4">
-      <Welcome deadlines={deadlines} />
+      <Welcome deadlinesCount={deadlines.length} />
       <Cards
         noteCount={notes.length}
         noteCountWeek={notesCreatedThisWeek}
@@ -68,10 +69,16 @@ export default function DashboardClient({
         studyHoursWeek={weekStudyHours}
       />
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        <UpcomingDeadlines deadlines={deadlines} />
-        <RecentNotes notes={notes} />
+        <Suspense fallback={<div>Loading deadlines...</div>}>
+          <UpcomingDeadlines deadlines={deadlines} />
+        </Suspense>
+        <Suspense fallback={<div>Loading notes...</div>}>
+          <RecentNotes notes={notes} />
+        </Suspense>
       </div>
-      <WeeklyProgress progress={progress} />
+      <Suspense fallback={<div>Loading progress...</div>}>
+        <WeeklyProgress progress={progress} />
+      </Suspense>
     </div>
   );
 }

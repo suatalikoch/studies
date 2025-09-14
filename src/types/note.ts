@@ -11,6 +11,8 @@ export interface Note {
   updated_at: string;
   created_at: string;
   color?: string;
+  is_public: boolean;
+  shared_with: string[];
 }
 
 export type Status = "draft" | "published" | "archived";

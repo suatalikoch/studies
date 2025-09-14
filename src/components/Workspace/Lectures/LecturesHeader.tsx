@@ -44,7 +44,7 @@ export default function LecturesHeader({
                 <SelectContent>
                   <SelectGroup>
                     <SelectItem value="all">All Subjects</SelectItem>
-                    <SelectItem value="math">Math</SelectItem>
+                    <SelectItem value="mathematics">Mathematics</SelectItem>
                     <SelectItem value="science">Science</SelectItem>
                     <SelectItem value="history">History</SelectItem>
                   </SelectGroup>

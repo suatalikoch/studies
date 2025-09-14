@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useUser } from "@/hooks/useUser";
+import { useUser } from "@/hooks";
 import { createClient } from "@/lib/supabase/client";
 import {
   Alert,

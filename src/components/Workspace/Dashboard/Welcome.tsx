@@ -1,11 +1,10 @@
-import type { Deadline } from "@/types";
-import { useUser } from "@/hooks/useUser";
+import { useUser } from "@/hooks";
 
 interface WelcomeProps {
-  deadlines: Deadline[];
+  deadlinesCount: number;
 }
 
-export default function Welcome({ deadlines }: WelcomeProps) {
+export default function Welcome({ deadlinesCount }: WelcomeProps) {
   const user = useUser();
 
   return (
@@ -14,8 +13,8 @@ export default function Welcome({ deadlines }: WelcomeProps) {
         Welcome back, {user?.user_metadata?.full_name}!
       </h2>
       <p className="text-indigo-100">
-        You have {deadlines.length} assignments due this week. Let&apos;s stay
-        on track!
+        You have {deadlinesCount} assignments due this week. Let&apos;s stay on
+        track!
       </p>
     </div>
   );
