@@ -1,10 +1,15 @@
 "use client";
 
+import { useRef, useState } from "react";
 import Link from "next/link";
-import { GraduationCap, Search, Settings } from "lucide-react";
+import Image from "next/image";
+import { GraduationCap, LogOut, Search, Settings } from "lucide-react";
 import { useUser } from "@/hooks";
+import { createClient } from "@/lib/supabase/client";
 import {
+  Badge,
   Button,
+  Input,
   NavigationMenu,
   NavigationMenuContent,
   NavigationMenuItem,
@@ -56,6 +61,18 @@ const components: { title: string; href: string; description: string }[] = [
 export default function HeaderLanding() {
   const user = useUser();
 
+  const [flyoutOpen, setFlyoutOpen] = useState(false);
+  const flyoutRef = useRef<HTMLDivElement>(null);
+
+  async function handleLogout() {
+    const { error } = await createClient().auth.signOut();
+    if (error) {
+      alert("Error logging out: " + error.message);
+    } else {
+      setFlyoutOpen(false);
+    }
+  }
+
   return (
     <header className="sticky top-0 z-1 bg-white dark:bg-gray-950 border-b border-gray-200 dark:border-gray-600 px-3 sm:px-6 py-2 sm:py-4 flex-shrink-0 overflow-x-auto sm:overflow-x-visible">
       <div className="flex items-center justify-between">
@@ -66,7 +83,6 @@ export default function HeaderLanding() {
               Student Hub
             </h1>
           </Link>
-
           <NavigationMenu viewport={false} className="z-1">
             <NavigationMenuList>
               <NavigationMenuItem>
@@ -207,27 +223,66 @@ export default function HeaderLanding() {
             </NavigationMenuList>
           </NavigationMenu>
         </div>
-
         <div className="flex items-center space-x-4">
           <div className="relative hidden sm:block">
             <Search className="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-            <input
+            <Input
               type="text"
               aria-label="Search everything"
               placeholder="Search everything..."
-              className="pl-10 pr-4 py-2 w-80 border border-gray-300 dark:border-gray-500 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+              className="pl-10"
             />
           </div>
-
+          {user && (
+            <Link href="/dashboard">
+              <Badge variant="secondary" className="px-3 py-1">
+                Dashboard
+              </Badge>
+            </Link>
+          )}
           <div className="flex items-center space-x-2">
-            {!user ? "" : <NotificationMenu />}
-
+            {user && <NotificationMenu />}
             <Link href="/settings" className="hidden sm:block">
               <Button title="Settings" variant="ghost" size="icon">
                 <Settings className="w-5 h-5 dark:text-gray-400" />
               </Button>
             </Link>
           </div>
+          {user && (
+            <div className="relative" ref={flyoutRef}>
+              <button
+                onClick={() => setFlyoutOpen(!flyoutOpen)}
+                className="flex items-center w-full focus:outline-none cursor-pointer space-x-3"
+              >
+                <Image
+                  src={user.user_metadata.avatar_url || "/images/avatar.png"}
+                  alt="User Avatar"
+                  width={36}
+                  height={36}
+                  className="rounded-full object-cover"
+                />
+              </button>
+              {flyoutOpen && (
+                <div className="absolute -bottom-26 -right-4 ml-2 w-40 bg-white dark:bg-gray-950 border border-gray-200 dark:border-gray-600 rounded-lg shadow-lg z-10">
+                  <Link
+                    href="/settings"
+                    className="flex items-center px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-900 text-gray-700 dark:text-gray-200 rounded-t-lg"
+                    onClick={() => setFlyoutOpen(false)}
+                  >
+                    <Settings className="w-4 h-4 mr-2" />
+                    Settings
+                  </Link>
+                  <button
+                    onClick={handleLogout}
+                    className="flex items-center w-full rounded-b-lg px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-900 text-gray-700 dark:text-gray-200 cursor-pointer"
+                  >
+                    <LogOut className="w-4 h-4 mr-2" />
+                    Logout
+                  </button>
+                </div>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </header>
