@@ -1,9 +1,11 @@
 import { Tool, ToolbarProps } from "@/types";
+import ColorSelector from "@/components/Workspace/DrawingBoard/ColorSelector";
 import {
   Circle,
   Download,
   Eraser,
   Minus,
+  PaintBucket,
   Palette,
   PenLine,
   RotateCw,
@@ -15,6 +17,14 @@ import {
   ZoomIn,
   ZoomOut,
 } from "lucide-react";
+import {
+  Badge,
+  Button,
+  Separator,
+  Slider,
+  ToggleGroup,
+  ToggleGroupItem,
+} from "@/components/UI";
 
 export default function Toolbar({
   tool,
@@ -28,117 +38,133 @@ export default function Toolbar({
   zoomOut,
   clearCanvas,
 }: ToolbarProps) {
+  const PALETTE_COLORS = [
+    "#ef4444",
+    "#f59e0b",
+    "#10b981",
+    "#3b82f6",
+    "#8b5cf6",
+  ];
+
   return (
     <div className="flex items-center justify-between">
-      <div className="flex items-center space-x-4">
-        <div className="flex items-center space-x-2 border-r border-gray-300 dark:border-gray-600 pr-4">
+      <div className="flex items-center gap-4">
+        <ToggleGroup
+          type="single"
+          variant="outline"
+          value={tool}
+          onValueChange={(value: Tool) => value && setTool(value)}
+        >
           {(
-            ["pen", "eraser", "square", "circle", "line", "text"] as Tool[]
+            [
+              "pen",
+              "eraser",
+              "square",
+              "circle",
+              "line",
+              "bucket",
+              "text",
+            ] as Tool[]
           ).map((t) => (
-            <button
+            <ToggleGroupItem
               key={t}
-              onClick={() => setTool(t)}
-              className={`p-2 rounded-lg transition-colors ${
-                tool === t
-                  ? "bg-indigo-500 text-white"
-                  : "text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
-              }`}
+              value={t}
               title={t.charAt(0).toUpperCase() + t.slice(1)}
-              type="button"
+              className="aspect-square"
             >
-              {t === "pen" && <PenLine className="w-5 h-5" />}
-              {t === "eraser" && <Eraser className="w-5 h-5" />}
-              {t === "square" && <Square className="w-5 h-5" />}
-              {t === "circle" && <Circle className="w-5 h-5" />}
-              {t === "line" && <Minus className="w-5 h-5" />}
-              {t === "text" && <Type className="w-5 h-5" />}
-            </button>
+              {t === "pen" && <PenLine />}
+              {t === "eraser" && <Eraser />}
+              {t === "square" && <Square />}
+              {t === "circle" && <Circle />}
+              {t === "line" && <Minus />}
+              {t === "bucket" && <PaintBucket />}
+              {t === "text" && <Type />}
+            </ToggleGroupItem>
           ))}
-        </div>
-        <div className="flex items-center space-x-2 border-r border-gray-300 dark:border-gray-600 pr-4">
+        </ToggleGroup>
+        <Separator orientation="vertical" />
+        <div className="flex items-center space-x-2">
           <span className="text-sm text-gray-600 dark:text-gray-300">
             Size:
           </span>
-          <input
-            type="range"
+          <Slider
             min={1}
             max={99}
-            value={brushSize}
-            onChange={(e) => setBrushSize(Number(e.target.value))}
+            step={1}
+            value={[brushSize]}
+            onValueChange={(value) => setBrushSize(value[0])}
             className="w-20"
           />
           <span className="text-sm text-gray-600 dark:text-gray-300 w-6">
             {brushSize}
           </span>
         </div>
-        <div className="flex items-center space-x-2">
-          <Palette className="w-5 h-5 text-gray-600" />
-          <div className="flex space-x-1">
-            {["#ef4444", "#f59e0b", "#10b981", "#3b82f6", "#8b5cf6"].map(
-              (c) => (
-                <button
-                  key={c}
-                  onClick={() => setColor(c)}
-                  className={`w-6 h-6 rounded-full border-1 ${
-                    color === c ? "border-indigo-600" : "border-gray-300"
-                  }`}
-                  style={{ backgroundColor: c }}
-                  type="button"
-                  title={`Color ${c}`}
-                />
-              )
-            )}
+        <Separator orientation="vertical" />
+        <div className="flex items-center gap-2">
+          <Palette className="w-6 h-6 text-gray-600" />
+          <div className="flex items-center gap-1">
+            {PALETTE_COLORS.map((c) => (
+              <Button
+                key={c}
+                onClick={() => setColor(c)}
+                className={`w-6 h-6 p-0 rounded-full border-1 ${
+                  color === c ? "border-indigo-600" : "border-gray-300"
+                }`}
+                style={{ backgroundColor: c }}
+                type="button"
+                title={`Color: ${c.toUpperCase()}`}
+              />
+            ))}
+            <ColorSelector color={color} setColor={setColor} />
           </div>
-          <input
-            type="color"
-            value={color}
-            onChange={(e) => setColor(e.target.value)}
-            className="w-8 h-8 rounded-full border border-gray-300"
-          />
         </div>
       </div>
-      <div className="flex items-center space-x-2">
-        <button
-          onClick={zoomOut}
-          className="p-2 text-gray-600 dark:text-gray-300 hover:text-indigo-600 hover:bg-indigo-50 dark:hover:bg-indigo-900 rounded-lg transition-colors"
-          title="Zoom Out"
+      <div className="flex items-center gap-2">
+        <Button
           type="button"
+          variant="ghost"
+          size="icon"
+          onClick={zoomOut}
+          title="Zoom In"
         >
           <ZoomOut className="w-5 h-5" />
-        </button>
-        <span className="text-sm text-gray-600 dark:text-gray-300 px-2">
+        </Button>
+        <Badge variant="secondary" className="text-sm">
           {(zoom * 100).toFixed(0)}%
-        </span>
-        <button
-          onClick={zoomIn}
-          className="p-2 text-gray-600 dark:text-gray-300 hover:text-indigo-600 hover:bg-indigo-50 dark:hover:bg-indigo-900 rounded-lg transition-colors"
-          title="Zoom In"
+        </Badge>
+        <Button
           type="button"
+          variant="ghost"
+          size="icon"
+          onClick={zoomIn}
+          title="Zoom In"
         >
           <ZoomIn className="w-5 h-5" />
-        </button>
-
-        <div className="border-l border-gray-300 pl-2 ml-2 flex space-x-2">
-          <button className="p-2 text-gray-600 dark:text-gray-300 hover:text-indigo-600 hover:bg-indigo-50 dark:hover:bg-indigo-900 rounded-lg transition-colors">
+        </Button>
+        <Separator orientation="vertical" />
+        <div className="flex items-center pl-4 gap-2">
+          <Button variant="ghost" size="icon">
             <Upload className="w-5 h-5" />
-          </button>
-          <button className="p-2 text-gray-600 dark:text-gray-300 hover:text-indigo-600 hover:bg-indigo-50 dark:hover:bg-indigo-900 rounded-lg transition-colors">
+          </Button>
+          <Button variant="ghost" size="icon">
             <Download className="w-5 h-5" />
-          </button>
-          <button className="p-2 text-gray-600 dark:text-gray-300 hover:text-indigo-600 hover:bg-indigo-50 dark:hover:bg-indigo-900 rounded-lg transition-colors">
+          </Button>
+          <Button variant="ghost" size="icon">
             <Save className="w-5 h-5" />
-          </button>
-          <button className="p-2 text-gray-600 dark:text-gray-300 hover:text-indigo-600 hover:bg-indigo-50 dark:hover:bg-indigo-900 rounded-lg transition-colors">
+          </Button>
+          <Button variant="ghost" size="icon">
             <RotateCw className="w-5 h-5" />
-          </button>
-          <button
-            onClick={clearCanvas}
-            className="p-2 text-gray-600 dark:text-gray-300 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900 rounded-lg transition-colors"
-            title="Clear Canvas"
+          </Button>
+          <Button
             type="button"
+            variant="ghost"
+            size="icon"
+            onClick={clearCanvas}
+            title="Clear Canvas"
+            className="text-red-500 hover:text-white hover:bg-red-500 hover:dark:bg-red-900"
           >
             <Trash2 className="w-5 h-5" />
-          </button>
+          </Button>
         </div>
       </div>
     </div>

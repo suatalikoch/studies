@@ -5,7 +5,6 @@ export default function Statusbar({
   brushSize,
   color,
   zoom,
-  isDrawing,
   statusMessage,
 }: StatusbarProps) {
   return (
@@ -13,15 +12,16 @@ export default function Statusbar({
       <div className="flex items-center justify-between text-sm text-gray-600 dark:text-gray-300">
         <div className="flex items-center space-x-4">
           <span>
-            Tool: <strong>{tool}</strong>
+            Tool:{" "}
+            <strong>{tool.charAt(0).toUpperCase() + tool.slice(1)}</strong>
           </span>
           <span>
             Size: <strong>{brushSize}</strong>
           </span>
-          <span>
-            Color:{" "}
+          <span className="flex items-center gap-1">
+            Color:
             <div
-              className="inline-block w-4 h-4 rounded border border-gray-300 align-middle"
+              className="inline-block w-4 h-4 rounded-full border border-gray-300 align-middle"
               style={{ backgroundColor: color }}
             ></div>
           </span>

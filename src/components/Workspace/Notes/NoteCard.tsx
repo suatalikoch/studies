@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { NoteCardProps } from "@/types";
 import { Star } from "lucide-react";
+import ShareNote from "./ShareNote";
 import {
   Badge,
   ContextMenu,
@@ -18,7 +19,6 @@ import {
   ContextMenuSubTrigger,
   ContextMenuTrigger,
 } from "@/components/UI";
-import ShareNote from "./ShareNote";
 
 export default function NoteCard({
   note,
@@ -182,7 +182,12 @@ export default function NoteCard({
             <ContextMenuSeparator />
             <ContextMenuItem>Developer Tools</ContextMenuItem>
             <ContextMenuSeparator />
-            <ContextMenuItem variant="destructive">Delete</ContextMenuItem>
+            <ContextMenuItem
+              variant="destructive"
+              onClick={() => console.log("Note deleted successfully!")}
+            >
+              Delete
+            </ContextMenuItem>
           </ContextMenuSubContent>
         </ContextMenuSub>
         <ContextMenuSeparator />

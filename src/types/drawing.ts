@@ -15,7 +15,6 @@ export interface StatusbarProps {
   brushSize: number;
   color: string;
   zoom: number;
-  isDrawing: boolean;
   statusMessage: string;
 }
 
@@ -32,4 +31,11 @@ export interface ToolbarProps {
   clearCanvas: () => void;
 }
 
-export type Tool = "pen" | "eraser" | "square" | "circle" | "line" | "text";
+export type Tool =
+  | "pen"
+  | "eraser"
+  | "square"
+  | "circle"
+  | "line"
+  | "bucket"
+  | "text";

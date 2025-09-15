@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { createClient } from "@/lib/supabase/client";
-import { QRCodeSVG } from "qrcode.react";
+import { QRCode } from "@/components/UI";
 
 interface ShareNoteProps {
   noteId: string;
@@ -162,7 +162,10 @@ export default function ShareNote({
         </button>
         {showQR && (
           <div className="mt-4 flex justify-center">
-            <QRCodeSVG value={shareUrl} size={256} />
+            <QRCode
+              data={shareUrl}
+              className="w-64 h-64 bg-gray-50 dark:bg-gray-950 p-4 rounded-md shadow-md"
+            />
           </div>
         )}
       </div>

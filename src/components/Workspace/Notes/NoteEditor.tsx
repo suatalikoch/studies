@@ -8,7 +8,20 @@ import TagInput from "@/components/Workspace/Notes/TagInput";
 import { Note, NoteEditorProps } from "@/types";
 import { toast } from "sonner";
 import { ChevronLeft } from "lucide-react";
-import { Button, Input, Textarea } from "@/components/UI";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+  Button,
+  Input,
+  Textarea,
+} from "@/components/UI";
 
 export default function NoteEditor({ note }: NoteEditorProps) {
   const router = useRouter();
@@ -167,9 +180,26 @@ export default function NoteEditor({ note }: NoteEditorProps) {
               <Button onClick={save}>Save</Button>
             </>
           )}
-          <Button variant="destructive" onClick={deleteNote}>
-            Delete
-          </Button>
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button variant="destructive">Delete</Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Delete note?</AlertDialogTitle>
+                <AlertDialogDescription>
+                  This action cannot be undone. Your note will be permanently
+                  deleted.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogAction onClick={deleteNote}>
+                  Delete
+                </AlertDialogAction>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </div>
       </div>
       <div className="p-4 flex-1 overflow-auto flex flex-col gap-4">
