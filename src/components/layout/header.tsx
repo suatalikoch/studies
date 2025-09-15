@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { GraduationCap, Search, Settings } from "lucide-react";
-import { Button, NotificationMenu, ThemeToggle } from "@/components/UI";
+import { Button, Input, NotificationMenu, ThemeToggle } from "@/components/UI";
 
 export default function Header() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -27,15 +27,15 @@ export default function Header() {
         </div>
         <div className="flex items-center space-x-4">
           <div className="relative hidden sm:block">
-            <Search className="w-5 h-5 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-            <input
+            <Search className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+            <Input
               type="text"
-              aria-label="Search everything"
-              placeholder="Search everything..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               onKeyDown={handleKeyDown}
-              className="pl-10 pr-4 py-2 w-1 sm:w-80 border border-gray-300 dark:border-gray-500 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+              aria-label="Search everything"
+              placeholder="Search everything..."
+              className="pl-10"
             />
           </div>
           <div className="flex items-center space-x-2">
