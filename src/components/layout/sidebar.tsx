@@ -1,15 +1,14 @@
 "use client";
 
-import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { useState, useRef, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import Image from "next/image";
 import { createClient } from "@/lib/supabase/client";
 import { Settings, LogOut, ChevronDown } from "lucide-react";
-import Image from "next/image";
+import { useKeyboardShortcuts, usePersistentState } from "@/hooks";
 import { sidebarItems } from "@/lib/constants";
 import { Badge, Skeleton } from "@/components/UI";
-import { useKeyboardShortcuts, usePersistentState } from "@/hooks";
 
 export default function Sidebar() {
   const router = useRouter();
@@ -104,7 +103,7 @@ export default function Sidebar() {
     <aside
       className={`hidden bg-white dark:bg-gray-950 border-r border-gray-200 dark:border-gray-600 sm:flex flex-col flex-shrink-0 ${
         collapsed ? "sm:w-16" : "sm:w-64"
-      }`}
+      } transition-all duration-100 `}
     >
       <nav
         className={`space-y-2 overflow-y-auto flex-1 ${
