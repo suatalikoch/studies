@@ -42,12 +42,10 @@ export default function PricingCard({ plan, billingCycle }: PricingCardProps) {
           Best
         </motion.div>
       )}
-
       <div className="p-6 flex-1">
         <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
           {plan.name}
         </h3>
-
         <motion.p
           className="mt-4 text-4xl font-bold text-indigo-600 flex items-baseline justify-center"
           animate={{ scale: pop ? 1.1 : 1 }}
@@ -64,11 +62,9 @@ export default function PricingCard({ plan, billingCycle }: PricingCardProps) {
             /{billingCycle === "monthly" ? "mo" : "yr"}
           </span>
         </motion.p>
-
         <p className="mt-2 text-gray-600 dark:text-gray-300">
           {plan.description}
         </p>
-
         <ul className="mt-6 space-y-3 text-gray-700 dark:text-gray-400">
           {plan.features.map((feature) => (
             <li key={feature} className="flex items-center space-x-2">
@@ -80,7 +76,6 @@ export default function PricingCard({ plan, billingCycle }: PricingCardProps) {
           ))}
         </ul>
       </div>
-
       <div className="p-6 border-t border-gray-200 dark:border-gray-600">
         <Link
           href={plan.button_link}

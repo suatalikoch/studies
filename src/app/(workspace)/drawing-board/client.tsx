@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useRef, useState } from "react";
+import { Tool } from "@/types";
 import Canvas from "@/components/Workspace/DrawingBoard/Canvas";
 import Statusbar from "@/components/Workspace/DrawingBoard/Statusbar";
-import { Tool } from "@/types";
 import Toolbar from "@/components/Workspace/DrawingBoard/Toolbar";
 
 export default function DrawingBoardClient() {
@@ -79,7 +79,6 @@ export default function DrawingBoardClient() {
         brushSize={brushSize}
         color={color}
         zoom={zoom}
-        isDrawing={isDrawing}
         statusMessage={getStatusMessage()}
       />
     </div>
