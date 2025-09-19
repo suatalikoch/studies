@@ -23,7 +23,7 @@ import { toast } from "sonner";
 import { AlertTriangle, CheckCircle2 } from "lucide-react";
 
 export default function SettingsClient() {
-  const user = useUser();
+  const { user } = useUser();
   const router = useRouter();
   const supabase = createClient();
 

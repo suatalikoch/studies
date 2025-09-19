@@ -1,15 +1,16 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
+import { toast } from "sonner";
 import { QRCode } from "@/components/UI";
 
 interface ShareNoteProps {
   noteId: string;
   isPublic: boolean;
   allowedUsers?: string[];
-  onClose: () => void; // close the modal
+  onClose: () => void;
 }
 
 export default function ShareNote({
@@ -18,15 +19,62 @@ export default function ShareNote({
   allowedUsers: initialUsers = [],
   onClose,
 }: ShareNoteProps) {
+  const router = useRouter();
+
   const [isPublic, setIsPublic] = useState(initialPublic);
   const [showQR, setShowQR] = useState(false);
-  const [users, setUsers] = useState(initialUsers);
+  const [users, setUsers] = useState<string[]>([]);
+  const [userEmails, setUserEmails] = useState<Record<string, string>>({});
   const [emailInput, setEmailInput] = useState("");
   const [shareUrl, setShareUrl] = useState("");
 
   useEffect(() => {
-    setShareUrl(`${window.location.origin}/notes/${noteId}`);
+    const origin = window.location.origin.replace("localhost", "192.168.0.106");
+    setShareUrl(`${origin}/notes/${noteId}`);
   }, [noteId]);
+
+  useEffect(() => {
+    async function fetchSharedUsers() {
+      const { data, error } = await createClient()
+        .from("notes")
+        .select("shared_with")
+        .eq("id", noteId)
+        .single();
+
+      if (error || !data) {
+        console.error("Failed to fetch shared users:", error?.message);
+        return;
+      }
+
+      setUsers([...new Set([...(data.shared_with || []), ...initialUsers])]);
+    }
+
+    fetchSharedUsers();
+  }, [noteId, initialUsers]);
+
+  useEffect(() => {
+    async function fetchUserEmails() {
+      if (users.length === 0) return;
+
+      const { data, error } = await createClient()
+        .from("auth.users")
+        .select("id, email")
+        .in("id", users);
+
+      if (error) {
+        toast.error("Failed to fetch user emails: " + error.message);
+        return;
+      }
+
+      const map: Record<string, string> = {};
+      data.forEach((u: { id: string; email: string }) => {
+        map[u.id] = u.email;
+      });
+      setUserEmails(map);
+    }
+
+    fetchUserEmails();
+  }, [users]);
 
   const copyLink = () => {
     navigator.clipboard.writeText(shareUrl);
@@ -39,7 +87,7 @@ export default function ShareNote({
 
     const { error } = await createClient()
       .from("notes")
-      .update({ isPublic: newStatus })
+      .update({ is_public: newStatus })
       .eq("id", noteId);
 
     if (error) {
@@ -47,45 +95,94 @@ export default function ShareNote({
       setIsPublic(!newStatus);
     } else {
       toast.success(`Note is now ${newStatus ? "public" : "private"}`);
+      router.refresh();
     }
   };
 
   const addUser = async () => {
     const email = emailInput.trim();
-    if (!email || users.includes(email)) return;
+    if (!email) return;
 
-    const newUsers = [...users, email];
-    setUsers(newUsers);
-    setEmailInput("");
+    const { data: userId, error: rpcError } = await createClient().rpc(
+      "get_user_id_by_email",
+      { email }
+    );
 
-    const { error } = await createClient()
+    if (rpcError) {
+      toast.error("Failed to lookup user: " + rpcError.message);
+      return;
+    }
+
+    if (!userId) {
+      toast.error("No user found with that email.");
+      return;
+    }
+
+    if (users.includes(userId)) {
+      toast.error("User already has access.");
+      return;
+    }
+
+    const newUsers = [...users, userId];
+
+    const { error: updateError } = await createClient()
       .from("notes")
-      .update({ allowedUsers: newUsers })
+      .update({ shared_with: newUsers })
       .eq("id", noteId);
 
-    if (error) {
-      toast.error("Failed to add user.");
-      setUsers(users);
-    } else {
-      toast.success(`${email} added to allowed users.`);
+    if (updateError) {
+      toast.error("Failed to add user: " + updateError.message);
+      return;
     }
+
+    setUsers(newUsers);
+    setUserEmails((prev) => ({ ...prev, [userId]: email }));
+    setEmailInput("");
+    toast.success(`${email} added to allowed users.`);
   };
 
   const removeUser = async (email: string) => {
-    const newUsers = users.filter((u) => u !== email);
-    setUsers(newUsers);
+    if (!email) return;
 
-    const { error } = await createClient()
+    const { data: userId, error: rpcError } = await createClient().rpc(
+      "get_user_id_by_email",
+      { email }
+    );
+
+    if (rpcError) {
+      toast.error("Failed to lookup user: " + rpcError.message);
+      return;
+    }
+
+    if (!userId) {
+      toast.error("No user found with that email.");
+      return;
+    }
+
+    if (!users.includes(userId)) {
+      toast.error("User does not have access.");
+      return;
+    }
+
+    const newUsers = users.filter((u) => u !== userId);
+
+    const { error: updateError } = await createClient()
       .from("notes")
-      .update({ allowedUsers: newUsers })
+      .update({ shared_with: newUsers })
       .eq("id", noteId);
 
-    if (error) {
-      toast.error("Failed to remove user.");
-      setUsers(users);
-    } else {
-      toast.success(`${email} removed.`);
+    if (updateError) {
+      toast.error("Failed to remove user: " + updateError.message);
+      return;
     }
+
+    setUsers(newUsers);
+    setUserEmails((prev) => {
+      const copy = { ...prev };
+      delete copy[userId];
+      return copy;
+    });
+    toast.success(`${email} removed from allowed users.`);
   };
 
   return (
@@ -137,14 +234,14 @@ export default function ShareNote({
               </button>
             </div>
             <ul className="space-y-1 max-h-40 overflow-y-auto">
-              {users.map((email) => (
+              {users.map((uuid, idx) => (
                 <li
-                  key={email}
+                  key={idx}
                   className="flex justify-between items-center bg-gray-200 dark:bg-gray-700 px-2 py-1 rounded"
                 >
-                  <span>{email}</span>
+                  <span>{userEmails[uuid]}</span>
                   <button
-                    onClick={() => removeUser(email)}
+                    onClick={() => removeUser(userEmails[uuid])}
                     className="text-red-500 hover:text-red-700"
                   >
                     Remove

@@ -33,7 +33,7 @@ export default function DrawingBoardClient() {
           return "Drawing...";
         case "eraser":
           return "Erasing...";
-        case "square":
+        case "rectangle":
           return "Drawing Rectangle...";
         case "circle":
           return "Drawing Circle...";

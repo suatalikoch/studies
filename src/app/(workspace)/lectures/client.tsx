@@ -20,7 +20,7 @@ export default function LecturesClient({
   const [subjectFilter, setSubjectFilter] = useState<LectureFilter>("all");
   const [typeFilter, setTypeFilter] = useState<LectureFilter>("all");
 
-  const user = useUser();
+  const { user } = useUser();
 
   const cancelForm = () => {
     setShowForm(false);

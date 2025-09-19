@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { NoteCardProps } from "@/types";
 import { Star } from "lucide-react";
@@ -19,15 +19,20 @@ import {
   ContextMenuSubTrigger,
   ContextMenuTrigger,
 } from "@/components/UI";
+import { createClient } from "@/lib/supabase/client";
 
 export default function NoteCard({
   note,
   viewMode,
   onToggleFavorite,
+  shared,
 }: NoteCardProps) {
   const router = useRouter();
 
   const [shareOpen, setShareOpen] = useState(false);
+  const [sharedUsers, setSharedUsers] = useState<
+    { id: string; name: string; avatar_url?: string }[]
+  >([]);
 
   const subjectColors: Record<string, string> = {
     General: "#be1e1eff",
@@ -39,6 +44,24 @@ export default function NoteCard({
   const color = note.color || subjectColors[note.subject] || "#ffffff";
   const maxTags = 3;
   const bannerSizePx = 16;
+
+  useEffect(() => {
+    if (!note.shared_with || note.shared_with.length === 0) return;
+
+    async function fetchUsers() {
+      const { data, error } = await createClient().rpc("get_users_by_ids", {
+        ids: note.shared_with,
+      });
+
+      if (!error && data) {
+        setSharedUsers(data);
+      } else if (error) {
+        console.error("Error fetching shared users:", error.message);
+      }
+    }
+
+    fetchUsers();
+  }, [note.shared_with]);
 
   function getContrastYIQ(hexcolor: string) {
     hexcolor = hexcolor.replace("#", "");
@@ -63,7 +86,7 @@ export default function NoteCard({
     <ContextMenu>
       <ContextMenuTrigger asChild>
         <div
-          onClick={() => router.push(`/notes/${note.id}`)}
+          onClick={() => router.push(`/notes/${note.id}?from=notes`)}
           className={`rounded-lg cursor-pointer transition hover:shadow-md bg-white dark:bg-gray-950 border border-gray-200 dark:border-gray-600 ${
             viewMode === "list" ? "flex" : "flex flex-col"
           }`}
@@ -123,30 +146,69 @@ export default function NoteCard({
                 <Badge variant="secondary">{note.subject}</Badge>
                 <span>{new Date(note.updated_at).toLocaleDateString()}</span>
               </div>
-              <div className="flex flex-wrap gap-1 mt-1">
-                {note.tags?.slice(0, maxTags).map((tag) => (
-                  <Badge key={tag} variant="outline" className="text-xs">
-                    #{tag}
-                  </Badge>
-                ))}
-                {(!note.tags || note.tags.length === 0) && (
-                  <Badge variant="outline" className="text-xs text-gray-400">
-                    #{"No tags available"}
-                  </Badge>
-                )}
-                {note.tags && note.tags.length > maxTags && (
-                  <Badge
-                    variant="secondary"
-                    className="text-xs"
-                    style={{
-                      backgroundColor: color,
-                      color: getContrastYIQ(color),
-                    }}
-                  >
-                    +{note.tags?.length - maxTags}
-                  </Badge>
-                )}
-              </div>
+              {!shared ? (
+                <div className="flex flex-wrap gap-1 mt-1">
+                  {note.tags?.slice(0, maxTags).map((tag) => (
+                    <Badge key={tag} variant="outline" className="text-xs">
+                      #{tag}
+                    </Badge>
+                  ))}
+                  {(!note.tags || note.tags.length === 0) && (
+                    <Badge variant="outline" className="text-xs text-gray-400">
+                      #{"No tags available"}
+                    </Badge>
+                  )}
+                  {note.tags && note.tags.length > maxTags && (
+                    <Badge
+                      variant="secondary"
+                      className="text-xs"
+                      style={{
+                        backgroundColor: color,
+                        color: getContrastYIQ(color),
+                      }}
+                    >
+                      +{note.tags?.length - maxTags}
+                    </Badge>
+                  )}
+                </div>
+              ) : (
+                <div className="flex justify-between mt-1">
+                  <div className="flex flex-wrap gap-1">
+                    {note.tags?.slice(0, maxTags).map((tag) => (
+                      <Badge key={tag} variant="outline" className="text-xs">
+                        #{tag}
+                      </Badge>
+                    ))}
+                    {(!note.tags || note.tags.length === 0) && (
+                      <Badge
+                        variant="outline"
+                        className="text-xs text-gray-400"
+                      >
+                        #{"No tags available"}
+                      </Badge>
+                    )}
+                    {note.tags && note.tags.length > maxTags && (
+                      <Badge
+                        variant="secondary"
+                        className="text-xs"
+                        style={{
+                          backgroundColor: color,
+                          color: getContrastYIQ(color),
+                        }}
+                      >
+                        +{note.tags?.length - maxTags}
+                      </Badge>
+                    )}
+                  </div>
+                  <div>
+                    <img
+                      src={"https://avatar.iran.liara.run/public/boy"}
+                      alt={note.user_id || "Owner"}
+                      className="w-5 h-5 rounded-full border border-gray-200 dark:border-gray-600"
+                    />
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -198,10 +260,46 @@ export default function NoteCard({
         <ContextMenuSeparator />
         <ContextMenuRadioGroup value="pedro">
           <ContextMenuLabel inset>People</ContextMenuLabel>
-          <ContextMenuRadioItem value="pedro">
-            Pedro Duarte
-          </ContextMenuRadioItem>
-          <ContextMenuRadioItem value="colm">Colm Tuite</ContextMenuRadioItem>
+          <ContextMenuItem>
+            <div className="flex flex-row items-center gap-1">
+              <img
+                src="https://avatar.iran.liara.run/public/boy"
+                alt=""
+                className="w-6 h-6"
+              />
+              <span>Suat Alikoch</span>
+            </div>
+          </ContextMenuItem>
+          <ContextMenuItem>
+            <div className="flex flex-row items-center gap-1">
+              <img
+                src="https://avatar.iran.liara.run/public/boy"
+                alt=""
+                className="w-6 h-6"
+              />
+              <span>Anton Dimitrov</span>
+            </div>
+          </ContextMenuItem>
+        </ContextMenuRadioGroup>
+        <ContextMenuRadioGroup value="">
+          {note.shared_with && note.shared_with.length > 3 && (
+            <ContextMenuSub>
+              <ContextMenuSubTrigger inset>More...</ContextMenuSubTrigger>
+              <ContextMenuSubContent>
+                {sharedUsers.slice(0, 3).map((user) => (
+                  <ContextMenuRadioItem key={user.id} value={user.id}>
+                    <div className="flex flex-row justify-between">
+                      <img
+                        src="https://avatar.iran.liara.run/public/boy"
+                        alt=""
+                      />
+                      {user.name}
+                    </div>
+                  </ContextMenuRadioItem>
+                ))}
+              </ContextMenuSubContent>
+            </ContextMenuSub>
+          )}
         </ContextMenuRadioGroup>
       </ContextMenuContent>
 
@@ -209,6 +307,7 @@ export default function NoteCard({
         <ShareNote
           noteId={note.id}
           isPublic={note.is_public}
+          allowedUsers={note.shared_with || []}
           onClose={() => setShareOpen(false)}
         />
       )}

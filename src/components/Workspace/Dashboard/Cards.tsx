@@ -27,9 +27,9 @@ export default function Cards({
       <StatsCard
         title="Total Notes"
         count={noteCount}
-        icon={<FileText className="w-8 h-8 text-blue-600" />}
-        changeText={`+${noteCountWeek} this week`}
-        changeColor="text-green-600"
+        icon={<FileText className="w-8 h-8 text-yellow-600" />}
+        changeText={`${noteCountWeek > 0 ? "+" : ""}${noteCountWeek} this week`}
+        changeColor={noteCountWeek > 0 ? "text-green-600" : ""}
       />
 
       <StatsCard
@@ -37,15 +37,15 @@ export default function Cards({
         count={assignmentsCount}
         icon={<BookOpen className="w-8 h-8 text-orange-600" />}
         changeText={`${assignmentsDueSoon} due soon`}
-        changeColor="text-red-600"
+        changeColor={assignmentsDueSoon > 0 ? "text-red-600" : ""}
       />
 
       <StatsCard
         title="Completed Tasks"
         count={taskCountCompleted}
         icon={<CheckSquare className="w-8 h-8 text-green-600" />}
-        changeText={`+${taskCountWeek} this week`}
-        changeColor="text-green-600"
+        changeText={`${taskCountWeek > 0 ? "+" : ""}${taskCountWeek} this week`}
+        changeColor={taskCountWeek > 0 ? "text-green-600" : ""}
       />
 
       <StatsCard
@@ -53,7 +53,7 @@ export default function Cards({
         count={`${studyHours}h`}
         icon={<Clock className="w-8 h-8 text-purple-600" />}
         changeText={`+${studyHoursWeek}h this week`}
-        changeColor="text-green-600"
+        changeColor={studyHoursWeek > 0 ? "text-green-600" : ""}
       />
     </div>
   );

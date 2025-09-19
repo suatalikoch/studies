@@ -157,7 +157,15 @@ export default function NoteEditor({ note }: NoteEditorProps) {
             if (isEditing && !confirm("Discard unsaved changes?")) {
               return;
             }
-            router.push("/notes");
+
+            const searchParams = new URLSearchParams(window.location.search);
+            const from = searchParams.get("from");
+
+            if (from) {
+              router.back();
+            } else {
+              router.push("/notes");
+            }
           }}
         >
           <ChevronLeft />

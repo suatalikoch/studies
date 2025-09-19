@@ -160,66 +160,70 @@ export default function ExamsClient({ examsDB }: { examsDB: Exam[] }) {
           </Button>
         </CardContent>
       </Card>
-      <div className="space-y-4">
-        <Suspense fallback={<div>Loading exams...</div>}>
-          {exams.map((exam) => (
-            <Card
-              key={exam.id}
-              className="flex justify-between items-center hover:border-indigo-400 shadow-none hover:shadow-md transition-colors"
-            >
-              <CardContent className="flex items-center gap-4 w-full justify-between">
-                <div>
-                  <h2 className="text-lg font-semibold">{exam.subject}</h2>
-                  <div className="my-1">
-                    <div className="flex items-center gap-1">
-                      <Clock className="w-4 h-4 text-yellow-600" />
-                      <p className="text-sm text-muted-foreground">
-                        {new Date(exam.date).toLocaleDateString()}
-                      </p>
+      {exams.length > 0 ? (
+        <div className="space-y-4">
+          <Suspense fallback={<div>Loading exams...</div>}>
+            {exams.map((exam) => (
+              <Card
+                key={exam.id}
+                className="flex justify-between items-center hover:border-indigo-400 shadow-none hover:shadow-md transition-colors"
+              >
+                <CardContent className="flex items-center gap-4 w-full justify-between">
+                  <div>
+                    <h2 className="text-lg font-semibold">{exam.subject}</h2>
+                    <div className="my-1">
+                      <div className="flex items-center gap-1">
+                        <Clock className="w-4 h-4 text-yellow-600" />
+                        <p className="text-sm text-muted-foreground">
+                          {new Date(exam.date).toLocaleDateString()}
+                        </p>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <MapPin className="w-4 h-4 text-red-600" />
+                        <p className="text-sm text-muted-foreground">
+                          {exam.location}
+                        </p>
+                      </div>
                     </div>
-                    <div className="flex items-center gap-1">
-                      <MapPin className="w-4 h-4 text-red-600" />
-                      <p className="text-sm text-muted-foreground">
-                        {exam.location}
-                      </p>
-                    </div>
+                    <Badge
+                      className={
+                        exam.status === "completed"
+                          ? "bg-green-100 text-green-800"
+                          : "bg-yellow-100 text-yellow-800"
+                      }
+                      variant="default"
+                    >
+                      {exam.status}
+                    </Badge>
                   </div>
-                  <Badge
-                    className={
-                      exam.status === "completed"
-                        ? "bg-green-100 text-green-800"
-                        : "bg-yellow-100 text-yellow-800"
-                    }
-                    variant="default"
-                  >
-                    {exam.status}
-                  </Badge>
-                </div>
-                <div className="flex gap-2">
-                  <Button
-                    size="icon"
-                    variant="secondary"
-                    onClick={() => toggleStatus(exam.id)}
-                  >
-                    {exam.status === "completed" ? (
-                      <X className="w-4 h-4" />
-                    ) : (
-                      <Check className="w-4 h-4" />
-                    )}
-                  </Button>
-                  <Button
-                    size="icon"
-                    variant="destructive"
-                    onClick={() => deleteExam(exam.id)}
-                  >
-                    <Trash2 className="w-4 h-4" />
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </Suspense>
-      </div>
+                  <div className="flex gap-2">
+                    <Button
+                      size="icon"
+                      variant="secondary"
+                      onClick={() => toggleStatus(exam.id)}
+                    >
+                      {exam.status === "completed" ? (
+                        <X className="w-4 h-4" />
+                      ) : (
+                        <Check className="w-4 h-4" />
+                      )}
+                    </Button>
+                    <Button
+                      size="icon"
+                      variant="destructive"
+                      onClick={() => deleteExam(exam.id)}
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </Suspense>
+        </div>
+      ) : (
+        <h3>No exams found for this view.</h3>
+      )}
     </div>
   );
 }

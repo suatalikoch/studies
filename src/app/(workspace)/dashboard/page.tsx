@@ -5,7 +5,7 @@ import {
   getAssignments,
   getCurrentUser,
   getDeadlines,
-  getNotes,
+  getNotesByUserId,
   getProgress,
   getTasks,
 } from "@/lib/supabase/crud";
@@ -21,7 +21,7 @@ export default async function DashboardPage() {
 
   const [deadlines, notes, assignments, tasks, progress] = await Promise.all([
     getDeadlines(user.id),
-    getNotes(user.id),
+    getNotesByUserId(user.id),
     getAssignments(user.id),
     getTasks(user.id),
     getProgress(user.id),

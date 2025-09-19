@@ -19,7 +19,7 @@ import {
 export default function NotificationMenu() {
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [loading, setLoading] = useState(true);
-  const user = useUser();
+  const { user } = useUser();
 
   useEffect(() => {
     if (!user) {
