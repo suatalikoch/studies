@@ -1,7 +1,22 @@
 import { Note } from "@/types";
 import { createClient } from "@/lib/supabase/server";
 
-export async function getNotes(userId: string) {
+export async function getNotes() {
+  const supabase = await createClient();
+
+  const { data, error } = await supabase
+    .from("notes")
+    .select("*")
+    .order("updated_at", { ascending: false });
+
+  if (error) {
+    throw new Error("Failed to fetch notes");
+  }
+
+  return data;
+}
+
+export async function getNotesByUserId(userId: string) {
   const supabase = await createClient();
 
   const { data, error } = await supabase

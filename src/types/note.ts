@@ -22,6 +22,7 @@ export interface NoteCardProps {
   note: Note;
   viewMode: "list" | "grid";
   onToggleFavorite: (id: string) => void;
+  shared?: boolean;
 }
 
 export interface NoteEditorProps {
