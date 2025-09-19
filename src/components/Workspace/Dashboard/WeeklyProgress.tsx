@@ -21,27 +21,31 @@ export default function WeeklyProgress({ progress }: WeeklyProgressProps) {
         <TrendingUp className="w-5 h-5 text-green-500" aria-hidden="true" />
       </header>
       <div className="p-6">
-        <div className="flex items-end justify-between space-x-2 h-32">
-          {progress.map(({ day, completed, total }) => (
-            <div key={day} className="flex flex-col items-center flex-1">
-              <div
-                className="w-full bg-gray-200 dark:bg-gray-800 rounded-t-lg relative"
-                style={{ height: "80px" }}
-                aria-label={`${day} progress`}
-              >
+        <div className="flex items-end justify-between gap-2">
+          {progress.length > 0 ? (
+            progress.map(({ day, completed, total }) => (
+              <div key={day} className="flex flex-col items-center flex-1">
                 <div
-                  className="bg-indigo-600 dark:bg-indigo-700 rounded-t-lg absolute bottom-0 w-full transition-all duration-300"
-                  style={{ height: `${(completed / total) * 100}%` }}
-                />
+                  className="w-full bg-gray-200 dark:bg-gray-800 rounded-t-lg relative"
+                  style={{ height: "84px" }}
+                  aria-label={`${day} progress`}
+                >
+                  <div
+                    className="bg-indigo-600 dark:bg-indigo-700 rounded-t-lg absolute bottom-0 w-full transition-all duration-300"
+                    style={{ height: `${(completed / total) * 100}%` }}
+                  />
+                </div>
+                <p className="text-xs font-medium text-gray-600 dark:text-gray-300 mt-2">
+                  {day}
+                </p>
+                <p className="text-xs text-gray-500 dark:text-gray-400">
+                  {completed}/{total}
+                </p>
               </div>
-              <p className="text-xs font-medium text-gray-600 dark:text-gray-300 mt-2">
-                {day}
-              </p>
-              <p className="text-xs text-gray-500 dark:text-gray-400">
-                {completed}/{total}
-              </p>
-            </div>
-          ))}
+            ))
+          ) : (
+            <h3>No weekly progress data yet.</h3>
+          )}
         </div>
       </div>
     </section>
