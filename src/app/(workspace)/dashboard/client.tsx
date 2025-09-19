@@ -1,12 +1,19 @@
 "use client";
 
+import { Suspense } from "react";
+import {
+  addDays,
+  endOfDay,
+  endOfWeek,
+  isWithinInterval,
+  startOfWeek,
+} from "date-fns";
+import { Assignment, Deadline, Note, ProgressDay, Task } from "@/types";
 import Cards from "@/components/Workspace/Dashboard/Cards";
 import RecentNotes from "@/components/Workspace/Dashboard/RecentNotes";
 import UpcomingDeadlines from "@/components/Workspace/Dashboard/UpcomingDeadlines";
 import WeeklyProgress from "@/components/Workspace/Dashboard/WeeklyProgress";
 import Welcome from "@/components/Workspace/Dashboard/Welcome";
-import { Assignment, Deadline, Note, ProgressDay, Task } from "@/types";
-import { Suspense } from "react";
 
 export default function DashboardClient({
   deadlines,
@@ -23,34 +30,33 @@ export default function DashboardClient({
 }) {
   const now = new Date();
 
-  const startOfWeek = new Date(now);
-  startOfWeek.setDate(now.getDate() - now.getDay() + 1);
-  startOfWeek.setHours(0, 0, 0, 0);
+  const weekStart = startOfWeek(now, { weekStartsOn: 1 });
+  const weekEnd = endOfWeek(now, { weekStartsOn: 1 });
 
-  const endOfWeek = new Date(startOfWeek);
-  endOfWeek.setDate(startOfWeek.getDate() + 6);
-  endOfWeek.setHours(23, 59, 59, 999);
+  const notesCreatedThisWeek = notes.filter((note) =>
+    isWithinInterval(new Date(note.created_at), {
+      start: weekStart,
+      end: weekEnd,
+    })
+  ).length;
 
-  const notesCreatedThisWeek = notes.filter((note) => {
-    const created = new Date(note.created_at);
-    return created >= startOfWeek && created <= endOfWeek;
-  }).length;
+  const soonThreshold = endOfDay(addDays(now, 7));
 
-  const soonThreshhold = new Date();
-  soonThreshhold.setDate(now.getDate() + 7);
-  soonThreshhold.setHours(23, 59, 59, 999);
-
-  const assignmentsDueSoon = assignments.filter((assignment) => {
-    const due = new Date(assignment.due_date);
-    return due >= now && due <= soonThreshhold;
-  }).length;
+  const assignmentsDueSoon = assignments.filter((assignment) =>
+    isWithinInterval(new Date(assignment.due_date), {
+      start: now,
+      end: soonThreshold,
+    })
+  ).length;
 
   const taskCountCompleted = tasks.filter((task) => task.completed).length;
 
-  const tasksCreatedThisWeek = tasks.filter((task) => {
-    const created = new Date(task.created_at);
-    return created >= startOfWeek && created <= endOfWeek;
-  }).length;
+  const tasksCreatedThisWeek = tasks.filter((task) =>
+    isWithinInterval(new Date(task.created_at), {
+      start: weekStart,
+      end: weekEnd,
+    })
+  ).length;
 
   const totalStudyHours = 32;
   const weekStudyHours = 5;
