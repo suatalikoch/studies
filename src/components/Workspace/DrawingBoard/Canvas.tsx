@@ -74,7 +74,7 @@ export default function Canvas({
     ctx.lineWidth = brushSize;
     ctx.fillStyle = color;
 
-    if (tool === "square")
+    if (tool === "rectangle")
       ctx.strokeRect(start.x, start.y, latest.x - start.x, latest.y - start.y);
     else if (tool === "circle") {
       const r = Math.sqrt(
@@ -124,7 +124,7 @@ export default function Canvas({
       return;
     }
 
-    if (tool === "square") {
+    if (tool === "rectangle") {
       ctx.strokeRect(start.x, start.y, latest.x - start.x, latest.y - start.y);
     } else if (tool === "circle") {
       const radius = Math.sqrt(

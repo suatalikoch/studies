@@ -8,9 +8,9 @@ import {
   PaintBucket,
   Palette,
   PenLine,
+  RectangleHorizontal,
   RotateCw,
   Save,
-  Square,
   Trash2,
   Type,
   Upload,
@@ -59,7 +59,7 @@ export default function Toolbar({
             [
               "pen",
               "eraser",
-              "square",
+              "rectangle",
               "circle",
               "line",
               "bucket",
@@ -74,7 +74,7 @@ export default function Toolbar({
             >
               {t === "pen" && <PenLine />}
               {t === "eraser" && <Eraser />}
-              {t === "square" && <Square />}
+              {t === "rectangle" && <RectangleHorizontal />}
               {t === "circle" && <Circle />}
               {t === "line" && <Minus />}
               {t === "bucket" && <PaintBucket />}
