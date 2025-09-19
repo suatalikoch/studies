@@ -1,4 +1,10 @@
 export {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/UI/Library/accordion";
+export {
   AlertDialog,
   AlertDialogAction,
   AlertDialogCancel,
@@ -26,6 +32,10 @@ export {
   CardContent,
   CardFooter,
 } from "@/components/UI/Library/card";
+export {
+  ChartContainer,
+  ChartTooltipContent,
+} from "@/components/UI/Library/chart";
 export { Checkbox } from "@/components/UI/Library/checkbox";
 export {
   ColorPicker,
@@ -92,6 +102,16 @@ export {
 } from "@/components/UI/Library/select";
 export { Separator } from "@/components/UI/Library/separator";
 export { default as Preview } from "@/components/UI/Special/Preview";
+export {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/UI/Library/sheet";
 export { Skeleton } from "@/components/UI/Library/skeleton";
 export { Slider } from "@/components/UI/Library/slider";
 export { Toaster } from "@/components/UI/Library/sonner";
