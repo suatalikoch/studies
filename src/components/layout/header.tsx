@@ -15,11 +15,13 @@ export default function Header() {
   };
 
   return (
-    <header className="sticky top-0 z-1 bg-white dark:bg-gray-950 border-b border-gray-200 dark:border-gray-600 px-3 sm:px-6 py-2 sm:py-4 flex-shrink-0">
+    <header className="sticky top-0 z-1 bg-white dark:bg-gray-950 border-b border-gray-200 dark:border-gray-600 p-2 sm:p-4 flex-shrink-0">
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-4">
-          <Link href="/" className="flex items-center space-x-2">
-            <GraduationCap className="w-5 h-5 sm:w-8 sm:h-8 text-indigo-600" />
+          <Link href="/" className="flex items-center gap-2 font-medium">
+            <div className="bg-primary text-primary-foreground flex items-center justify-center rounded-md p-1">
+              <GraduationCap className="size-6" />
+            </div>
             <h1 className="text-sm sm:text-2xl font-bold text-gray-900 dark:text-gray-100 whitespace-nowrap">
               Student Hub
             </h1>

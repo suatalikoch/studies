@@ -6,13 +6,8 @@ import { Button } from "@/components/UI";
 import { Input } from "@/components/UI";
 import { Label } from "@/components/UI";
 import { Separator } from "@/components/UI";
-import { Plan } from "@/types";
 
-export interface BillingPageProps {
-  plan: Plan;
-}
-
-export default function BillingPage({ plan }: BillingPageProps) {
+export default function BillingPage() {
   const [loading, setLoading] = useState(false);
 
   // Pretend this comes from state / props / context

@@ -20,7 +20,7 @@ export default function AssignmentsClient({
     useState<Assignment | null>(null);
   const [filter, setFilter] = useState("");
 
-  const user = useUser();
+  const { user } = useUser();
 
   const cancelForm = useCallback(() => {
     setShowForm(false);

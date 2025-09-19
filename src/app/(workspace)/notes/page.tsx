@@ -12,7 +12,7 @@ export default async function NotesPage() {
 
   if (!user) redirect("/login");
 
-  const notes = await getNotes(user.id);
+  const notes = await getNotes();
 
   return <NotesClient user_id={user.id} notes={notes} />;
 }

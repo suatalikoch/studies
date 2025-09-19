@@ -224,7 +224,11 @@ export default function Sidebar() {
           </button>
         )}
         {flyoutOpen && (
-          <div className="absolute -top-5 left-full ml-2 w-40 bg-white dark:bg-gray-950 border border-gray-200 dark:border-gray-600 rounded-lg shadow-lg z-10">
+          <div
+            className={`absolute left-full ml-2 w-40 bg-white dark:bg-gray-950 border border-gray-200 dark:border-gray-600 rounded-lg shadow-lg z-10 ${
+              collapsed ? "-top-7" : "-top-5"
+            }`}
+          >
             <Link
               href="/settings"
               className="flex items-center px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-900 text-gray-700 dark:text-gray-200 rounded-t-lg"

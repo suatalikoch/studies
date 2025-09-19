@@ -14,7 +14,7 @@ export default function TasksClient({ tasksDB }: { tasksDB: Task[] }) {
   const [showForm, setShowForm] = useState(false);
   const [filter, setFilter] = useState<TaskFilter>("all");
 
-  const user = useUser();
+  const { user } = useUser();
 
   const totalTasks = tasks.length;
   const completedCount = useMemo(
