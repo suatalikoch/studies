@@ -110,32 +110,13 @@ export default function NotesList({ user_id, notes }: NotesListProps) {
       .select();
 
     if (error) {
-      toast.error("Failed to add note!", {
-        duration: 5000,
-        position: "bottom-right",
-        richColors: true,
-        closeButton: true,
-        action: {
-          label: "Close",
-          onClick: () => console.log("Closed toast."),
-        },
-      });
+      toast.error("Failed to add note!");
 
       return;
     }
 
     router.refresh();
-
-    toast.success("Note added successfully!", {
-      duration: 5000,
-      position: "bottom-right",
-      richColors: true,
-      closeButton: true,
-      action: {
-        label: "Close",
-        onClick: () => console.log("Closed toast."),
-      },
-    });
+    toast.success("Note added successfully!");
   };
 
   const toggleFavorite = async (id: string) => {
@@ -165,11 +146,9 @@ export default function NotesList({ user_id, notes }: NotesListProps) {
   };
 
   return (
-    <div className="flex flex-col h-full">
-      <div className="p-4 items-center justify-between border-b border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-950 hidden sm:flex">
-        <h2 className="text-sm sm:text-xl font-bold text-gray-900 dark:text-gray-100">
-          Notes
-        </h2>
+    <div className="w-full h-full flex flex-col bg-white dark:bg-neutral-950">
+      <div className="p-4 items-center justify-between border-b bg-white dark:bg-neutral-950 hidden sm:flex">
+        <h2 className="text-sm sm:text-xl font-bold">Notes</h2>
         <div className="flex items-center gap-2">
           <Searchbar
             value={searchTerm}
@@ -185,7 +164,7 @@ export default function NotesList({ user_id, notes }: NotesListProps) {
       </div>
       {filteredShared.length <= 0 ? (
         <div
-          className={`flex-1 overflow-y-auto p-4 bg-gray-50 dark:bg-gray-800 ${
+          className={`flex-1 overflow-y-auto p-4 ${
             viewMode === "grid"
               ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4 auto-rows-min"
               : "flex flex-col gap-4"
@@ -202,7 +181,7 @@ export default function NotesList({ user_id, notes }: NotesListProps) {
             ))}
           </Suspense>
           {filteredNotes.length === 0 && (
-            <div className="text-center text-gray-500 py-8">
+            <div className="text-center text-muted-foreground py-8">
               No notes found for this view.
             </div>
           )}
@@ -215,9 +194,7 @@ export default function NotesList({ user_id, notes }: NotesListProps) {
           </div>
         </div>
       ) : (
-        <div
-          className={`flex-1 overflow-y-auto p-4 bg-gray-50 dark:bg-gray-800`}
-        >
+        <div className={`flex-1 overflow-y-auto p-4`}>
           <Suspense fallback={<div>Loading notes...</div>}>
             {/* SHARED NOTES */}
             {filteredShared.length > 0 && (
@@ -229,7 +206,7 @@ export default function NotesList({ user_id, notes }: NotesListProps) {
               >
                 <AccordionItem value="shared">
                   <AccordionTrigger>
-                    <span className="font-semibold mb-2 text-gray-700 dark:text-gray-300">
+                    <span className="font-semibold mb-2 text-muted-foreground">
                       Shared with you
                     </span>
                   </AccordionTrigger>
@@ -264,7 +241,7 @@ export default function NotesList({ user_id, notes }: NotesListProps) {
               >
                 <AccordionItem value="owned">
                   <AccordionTrigger>
-                    <span className="font-semibold mb-2 text-gray-700 dark:text-gray-300">
+                    <span className="font-semibold mb-2 text-muted-foreground">
                       Your Notes
                     </span>
                   </AccordionTrigger>
@@ -290,7 +267,7 @@ export default function NotesList({ user_id, notes }: NotesListProps) {
 
             {/* EMPTY STATE */}
             {filteredShared.length === 0 && filteredOwned.length === 0 && (
-              <div className="text-center text-gray-500 py-8">
+              <div className="text-center text-muted-foreground py-8">
                 No notes found for this view.
               </div>
             )}
