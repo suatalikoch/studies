@@ -38,7 +38,6 @@ export type LectureFilter =
 
 export interface LectureCardProps {
   lecture: Lecture;
-  onClick: () => void;
 }
 
 export interface LectureDetailsProps {
@@ -64,5 +63,4 @@ export interface LecturesHeaderProps {
 
 export interface LecturesListProps {
   lectures: Lecture[];
-  onSelect: (lecture: Lecture) => void;
 }

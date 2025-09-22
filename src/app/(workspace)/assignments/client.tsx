@@ -4,7 +4,6 @@ import { Suspense, useCallback, useMemo, useState } from "react";
 import { useUser } from "@/hooks";
 import { Assignment } from "@/types";
 import AssignmentsList from "@/components/Workspace/Assignments/AssignmentsList";
-import AssignmentDetails from "@/components/Workspace/Assignments/AssignmentDetails";
 import AssignmentForm from "@/components/Workspace/Assignments/AssignmentForm";
 import AssignmentsHeader from "@/components/Workspace/Assignments/AssignmentsHeader";
 
@@ -16,8 +15,6 @@ export default function AssignmentsClient({
   const [assignments, setAssignments] = useState<Assignment[]>(assignmentsDb);
   const [showForm, setShowForm] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
-  const [selectedAssignment, setSelectedAssignment] =
-    useState<Assignment | null>(null);
   const [filter, setFilter] = useState("");
 
   const { user } = useUser();
@@ -25,11 +22,6 @@ export default function AssignmentsClient({
   const cancelForm = useCallback(() => {
     setShowForm(false);
   }, []);
-
-  const handleSelectAssignment = (assignment: Assignment) => {
-    setSelectedAssignment(assignment);
-    setShowDetails(true);
-  };
 
   const filteredAssignments = useMemo(() => {
     return assignments.filter((assignment) => {
@@ -58,14 +50,8 @@ export default function AssignmentsClient({
       />
       {!showForm && !showDetails && (
         <Suspense fallback={<div>Loading assignments...</div>}>
-          <AssignmentsList
-            assignments={filteredAssignments}
-            onSelect={handleSelectAssignment}
-          />
+          <AssignmentsList assignments={filteredAssignments} />
         </Suspense>
-      )}
-      {showDetails && selectedAssignment && (
-        <AssignmentDetails assignment={selectedAssignment} />
       )}
       {showForm && (
         <AssignmentForm

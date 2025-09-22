@@ -27,7 +27,6 @@ export type AssignmentFilter =
 
 export interface AssignmentCardProps {
   assignment: Assignment;
-  onClick: () => void;
 }
 
 export interface AssignmentDetailsProps {
@@ -51,5 +50,4 @@ export interface AssignmentsHeaderProps {
 
 export interface AssignmentsListProps {
   assignments: Assignment[];
-  onSelect: (assignment: Assignment) => void;
 }
