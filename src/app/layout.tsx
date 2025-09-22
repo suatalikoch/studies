@@ -3,6 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import "./globals.css";
 import "./theme.css";
+import CookieConsent from "@/components/UI/Special/CookieConsent";
+import { Toaster } from "@/components/UI";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -76,7 +78,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className="scroll-smooth">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
@@ -87,6 +89,15 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <main>{children}</main>
+          <div>
+            <Toaster
+              duration={5000}
+              position="bottom-right"
+              richColors
+              closeButton
+            />
+            <CookieConsent />
+          </div>
         </ThemeProvider>
       </body>
     </html>
