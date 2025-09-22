@@ -42,7 +42,7 @@ export default function BillingPage() {
   };
 
   return (
-    <div className="mx-auto max-w-3xl space-y-8 p-6">
+    <div className="w-full max-w-xl mx-auto flex flex-col gap-8 p-6">
       <h1 className="text-2xl font-bold tracking-tight">Billing</h1>
       <p className="text-muted-foreground">
         Review your plan and enter payment details to complete your purchase.
@@ -54,12 +54,14 @@ export default function BillingPage() {
         <CardContent>
           <div className="flex items-center justify-between">
             <div>
-              <p className="font-medium">{selectedPlan.name}</p>
+              <p>{selectedPlan.name}</p>
               <p className="text-sm text-muted-foreground">
                 {selectedPlan.features.join(" · ")}
               </p>
             </div>
-            <p className="text-lg font-semibold">{selectedPlan.price}</p>
+            <p className="text-lg font-semibold self-start">
+              {selectedPlan.price}
+            </p>
           </div>
         </CardContent>
       </Card>

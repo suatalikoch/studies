@@ -10,9 +10,5 @@ export default function NotesClient({
   user_id: string;
   notes: Note[];
 }) {
-  return (
-    <div className="h-full w-full bg-gray-50 flex flex-col">
-      <NotesList user_id={user_id} notes={notes} />
-    </div>
-  );
+  return <NotesList user_id={user_id} notes={notes} />;
 }

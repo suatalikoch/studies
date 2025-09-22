@@ -17,5 +17,5 @@ export default async function AuthenticationLayout({
     redirect("/dashboard");
   }
 
-  return <div>{children}</div>;
+  return <div className="max-w-[120rem] mx-auto">{children}</div>;
 }

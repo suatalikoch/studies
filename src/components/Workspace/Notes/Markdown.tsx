@@ -16,7 +16,10 @@ function Code({ className, children, ...props }: CodeProps) {
 
   if (!isBlock) {
     return (
-      <code className={`${className} bg-gray-100 dark:bg-gray-800`} {...props}>
+      <code
+        className={`${className} bg-neutral-100 dark:bg-neutral-800`}
+        {...props}
+      >
         {children}
       </code>
     );
@@ -36,11 +39,11 @@ function Code({ className, children, ...props }: CodeProps) {
       </pre>
       <button
         onClick={handleCopy}
-        className="absolute top-[10px] right-[10px] hover:bg-gray-200 dark:hover:bg-gray-800 transition text-gray-500 dark:text-gray-400 rounded p-1 cursor-pointer"
+        className="absolute top-[10px] right-[10px] hover:bg-neutral-200 dark:hover:bg-neutral-800 transition text-muted-foreground rounded p-1 cursor-pointer"
       >
         {copied ? (
           <div className="flex flex-row gap-2 items-center">
-            <span className="bg-gray-300 dark:bg-gray-700 text-black dark:text-white text-xs rounded px-2 py-1">
+            <span className="bg-neutral-300 dark:bg-neutral-700 text-black dark:text-white text-xs rounded px-2 py-1">
               Copied!
             </span>
             <Check className="w-5 h-5 text-green-500" />
@@ -70,10 +73,11 @@ function MarkdownImage({ src, alt }: { src?: string | Blob; alt?: string }) {
       />
       {open && (
         <span
-          className="fixed inset-0 bg-black/90 flex items-center justify-center z-50"
+          className="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
           onClick={() => setOpen(false)}
         >
           <Button
+            variant="ghost"
             className="absolute top-5 right-5"
             onClick={() => setOpen(false)}
           >
@@ -98,16 +102,10 @@ export default function MarkdownRenderer({ content }: { content: string }) {
       rehypePlugins={[rehypeHighlight]}
       components={{
         h1: ({ ...props }) => (
-          <h1
-            className="text-3xl font-bold border-b border-gray-300 dark:border-gray-600 pb-2"
-            {...props}
-          />
+          <h1 className="text-3xl font-bold border-b pb-2" {...props} />
         ),
         h2: ({ ...props }) => (
-          <h2
-            className="text-2xl font-semibold border-b border-gray-200 dark:border-gray-700 pb-1"
-            {...props}
-          />
+          <h2 className="text-2xl font-semibold border-b pb-1" {...props} />
         ),
         h3: ({ ...props }) => (
           <h3 className="text-xl font-semibold mt-2" {...props} />
@@ -123,14 +121,14 @@ export default function MarkdownRenderer({ content }: { content: string }) {
         ),
         blockquote: ({ ...props }) => (
           <blockquote
-            className="border-l-4 bg-gray-100 dark:bg-gray-800 border-gray-400 pl-4 italic py-4 text-gray-700 my-3"
+            className="border-l-4 bg-neutral-100 dark:bg-neutral-800 pl-4 italic py-4 text-neutral-700 my-3"
             {...props}
           />
         ),
         a: ({ ...props }) => (
           <a
             {...props}
-            className="text-blue-600 underline hover:text-blue-800"
+            className="text-primary hover:text-primary/75 underline"
             target="_blank"
             rel="noopener noreferrer"
           />
@@ -145,34 +143,27 @@ export default function MarkdownRenderer({ content }: { content: string }) {
         li: ({ ...props }) => <li className="my-1" {...props} />,
         table: ({ ...props }) => (
           <table
-            className="border-collapse border border-gray-400 mb-1 w-full text-sm"
+            className="border-collapse border mb-1 w-full text-sm"
             {...props}
           />
         ),
         thead: ({ ...props }) => (
           <thead
-            className="bg-gray-100 dark:bg-gray-800 font-semibold"
+            className="bg-neutral-50 dark:bg-neutral-900 font-semibold"
             {...props}
           />
         ),
         th: ({ ...props }) => (
-          <th
-            className="border border-gray-400 px-3 py-2 text-left"
-            {...props}
-          />
+          <th className="border px-3 py-2 text-left" {...props} />
         ),
-        td: ({ ...props }) => (
-          <td className="border border-gray-300 px-3 py-2" {...props} />
-        ),
+        td: ({ ...props }) => <td className="border px-3 py-2" {...props} />,
         tr: ({ ...props }) => (
-          <tr className="even:bg-gray-100 dark:even:bg-gray-800" {...props} />
-        ),
-        hr: ({ ...props }) => (
-          <hr
+          <tr
+            className="even:bg-neutral-50 dark:even:bg-neutral-900"
             {...props}
-            className="border-t-4 my-2 border-gray-300 dark:border-gray-600"
           />
         ),
+        hr: ({ ...props }) => <hr {...props} className="border-t-4 my-2" />,
         img: ({ src, alt }) => <MarkdownImage src={src} alt={alt} />,
       }}
     >

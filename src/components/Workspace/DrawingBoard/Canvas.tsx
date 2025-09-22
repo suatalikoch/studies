@@ -351,7 +351,7 @@ export default function Canvas({
   };
 
   return (
-    <div className="h-full bg-white dark:bg-gray-950 rounded-lg shadow-sm border border-gray-200 dark:border-gray-600 overflow-hidden">
+    <div className="h-full bg-white dark:bg-neutral-950 rounded-lg shadow-sm border overflow-hidden">
       <canvas
         ref={canvasRef}
         className="w-full h-full cursor-crosshair"

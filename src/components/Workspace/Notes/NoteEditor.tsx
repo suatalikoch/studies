@@ -51,16 +51,7 @@ export default function NoteEditor({ note }: NoteEditorProps) {
       .update(updatedNote)
       .eq("id", updatedNote.id);
 
-    toast.success("Note saved successfully!", {
-      duration: 5000,
-      position: "bottom-right",
-      richColors: true,
-      closeButton: true,
-      action: {
-        label: "Close",
-        onClick: () => console.log("Closed toast."),
-      },
-    });
+    toast.success("Note saved successfully!");
   };
 
   const undo = () => {
@@ -82,16 +73,7 @@ export default function NoteEditor({ note }: NoteEditorProps) {
 
     setEditingNote(prevVersion);
 
-    toast.success("Undo applied!", {
-      duration: 5000,
-      position: "bottom-right",
-      richColors: true,
-      closeButton: true,
-      action: {
-        label: "Close",
-        onClick: () => console.log("Closed toast."),
-      },
-    });
+    toast.success("Undo applied!");
   };
 
   const redo = () => {
@@ -111,16 +93,7 @@ export default function NoteEditor({ note }: NoteEditorProps) {
 
     setEditingNote(nextVersion);
 
-    toast.success("Redo applied!", {
-      duration: 5000,
-      position: "bottom-right",
-      richColors: true,
-      closeButton: true,
-      action: {
-        label: "Close",
-        onClick: () => console.log("Closed toast."),
-      },
-    });
+    toast.success("Redo applied!");
   };
 
   const deleteNote = async () => {
@@ -131,26 +104,18 @@ export default function NoteEditor({ note }: NoteEditorProps) {
 
     if (error) {
       toast.error("Failed to delete note!");
+
       return;
     }
 
     router.push("/notes");
 
-    toast.success("Note deleted successfully!", {
-      duration: 5000,
-      position: "bottom-right",
-      richColors: true,
-      closeButton: true,
-      action: {
-        label: "Close",
-        onClick: () => console.log("Closed toast."),
-      },
-    });
+    toast.success("Note deleted successfully!");
   };
 
   return (
-    <div className="flex flex-col h-full bg-white dark:bg-gray-950">
-      <div className="p-4 border-b flex justify-between items-center sticky top-0 bg-white dark:bg-gray-950 z-10">
+    <div className="flex flex-col h-full bg-white dark:bg-neutral-950">
+      <div className="p-4 border-b flex justify-between items-center sticky top-0 bg-white dark:bg-neutral-950 z-10">
         <Button
           variant="outline"
           onClick={() => {
@@ -231,7 +196,7 @@ export default function NoteEditor({ note }: NoteEditorProps) {
             className="text-2xl"
           />
         ) : (
-          <p className="text-sm text-gray-500 dark:text-gray-400">
+          <p className="text-sm text-muted-foreground">
             {editingNote?.subject}
           </p>
         )}

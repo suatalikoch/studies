@@ -22,7 +22,7 @@ export default function ColorSelector({ color, setColor }: ColorSelectorProps) {
       <PopoverTrigger asChild>
         <button
           type="button"
-          className="w-8 h-8 rounded-full border border-gray-300"
+          className="w-8 h-8 rounded-full border"
           style={{ backgroundColor: color }}
           title="Choose color"
         />

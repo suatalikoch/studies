@@ -2,10 +2,10 @@ import Image from "next/image";
 
 export default function Hero() {
   return (
-    <section className="bg-white dark:bg-gray-950 py-8 sm:py-16">
-      <div className="max-w-7xl mx-auto px-6 text-center">
+    <section className="bg-white dark:bg-neutral-950 py-8 sm:py-16">
+      <div className="px-6 text-center">
         <h2 className="text-xl sm:text-3xl font-bold mb-4">See It In Action</h2>
-        <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto mb-8">
+        <p className="text-muted-foreground max-w-2xl mx-auto mb-8">
           Our dashboard is designed for simplicity and efficiency — everything
           you need is just a click away.
         </p>

@@ -5,7 +5,6 @@ import { useUser } from "@/hooks";
 import { Lecture, LectureFilter } from "@/types";
 import LecturesHeader from "@/components/Workspace/Lectures/LecturesHeader";
 import LecturesList from "@/components/Workspace/Lectures/LecturesList";
-import LectureDetails from "@/components/Workspace/Lectures/LectureDetails";
 import LectureForm from "@/components/Workspace/Lectures/LectureForm";
 
 export default function LecturesClient({
@@ -16,7 +15,6 @@ export default function LecturesClient({
   const [lectures, setLectures] = useState<Lecture[]>(lecturesDb);
   const [showForm, setShowForm] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
-  const [selectedLecture, setSelectedLecture] = useState<Lecture | null>(null);
   const [subjectFilter, setSubjectFilter] = useState<LectureFilter>("all");
   const [typeFilter, setTypeFilter] = useState<LectureFilter>("all");
 
@@ -24,11 +22,6 @@ export default function LecturesClient({
 
   const cancelForm = () => {
     setShowForm(false);
-  };
-
-  const handleSelectLecture = (lecture: Lecture) => {
-    setSelectedLecture(lecture);
-    setShowDetails(true);
   };
 
   const filteredLectures = useMemo(() => {
@@ -58,14 +51,8 @@ export default function LecturesClient({
       />
       {!showForm && !showDetails && (
         <Suspense fallback={<div>Loading lectures...</div>}>
-          <LecturesList
-            lectures={filteredLectures}
-            onSelect={handleSelectLecture}
-          />
+          <LecturesList lectures={filteredLectures} />
         </Suspense>
-      )}
-      {showDetails && selectedLecture && (
-        <LectureDetails lecture={selectedLecture} />
       )}
       {showForm && (
         <LectureForm

@@ -1,4 +1,4 @@
-import { Badge, Label, Progress, Textarea } from "@/components/UI";
+import { Badge, Button, Label, Progress, Textarea } from "@/components/UI";
 import { AssignmentDetailsProps } from "@/types";
 import { Calendar, Download, File, Upload } from "lucide-react";
 
@@ -6,25 +6,23 @@ export default function AssignmentDetails({
   assignment,
 }: AssignmentDetailsProps) {
   return (
-    <div className="flex-1 bg-white dark:bg-gray-950">
+    <div className="flex-1 bg-white dark:bg-neutral-950">
       <div className="h-full flex flex-col">
-        <div className="p-6 border-b border-gray-200 dark:border-gray-600">
+        <div className="p-6 border-b">
           <div className="flex items-start justify-between mb-4">
             <div className="flex flex-col justify-between">
               <div>
-                <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">
-                  {assignment.title}
-                </h1>
-                <p className="text-lg text-gray-600 dark:text-gray-300 mb-4">
+                <h1 className="text-2xl font-bold mb-2">{assignment.title}</h1>
+                <p className="text-lg text-muted-foreground mb-4">
                   {assignment.subject}
                 </p>
               </div>
-              <div className="flex items-center space-x-4">
+              <div className="flex items-center gap-4">
                 <Badge
                   variant="secondary"
                   className={`text-sm transition-colors ${
                     assignment.status === "Not Started"
-                      ? "bg-gray-200 text-gray-800 hover:bg-gray-300"
+                      ? "bg-neutral-200 text-neutral-800 hover:bg-neutral-300"
                       : assignment.status === "In Progress"
                       ? "bg-yellow-100 text-yellow-600 hover:bg-yellow-200"
                       : assignment.status === "Completed"
@@ -40,52 +38,50 @@ export default function AssignmentDetails({
                 >
                   {assignment.priority}
                 </Badge>
-                <div className="flex items-center space-x-1 text-sm text-gray-600 dark:text-gray-300">
-                  <Calendar className="w-4 h-4" />
-                  <span>
+                <div className="flex items-center gap-1 text-sm">
+                  <Calendar className="w-4 h-4 text-muted-foreground" />
+                  <span className="text-muted-foreground">
                     Due: {new Date(assignment.due_date).toLocaleDateString()}
                   </span>
                 </div>
               </div>
             </div>
-            <div className="flex items-center space-x-2">
-              <button
-                className="px-3 py-2 text-gray-600 dark:text-gray-300 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors"
+            <div className="flex items-center gap-2">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="hover:text-primary hover:bg-primary/10 transition-colors"
                 title="Upload"
               >
                 <Upload className="w-4 h-4" />
-              </button>
-              <button
-                className="px-3 py-2 text-gray-600 dark:text-gray-300 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors"
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="hover:text-primary hover:bg-primary/10 transition-colors"
                 title="Download"
               >
                 <Download className="w-4 h-4" />
-              </button>
+              </Button>
             </div>
           </div>
         </div>
         <div className="flex-1 p-6 overflow-y-auto">
           <div className="space-y-6">
             <div>
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-3">
-                Description
-              </h3>
-              <p className="text-gray-700 dark:text-gray-400 leading-relaxed">
+              <h3 className="text-lg font-semibold mb-3">Description</h3>
+              <p className="text-muted-foreground leading-relaxed">
                 Assignment description text goes here.
               </p>
             </div>
             <div>
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-3">
-                Attachments
-              </h3>
+              <h3 className="text-lg font-semibold mb-3">Attachments</h3>
               <div className="space-y-2">
-                <div className="flex items-center space-x-3 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg">
-                  <File className="w-5 h-5 text-gray-600 dark:text-gray-300" />
-                  <span className="flex-1 text-gray-900 dark:text-gray-100">
-                    filename.pdf
-                  </span>
+                <div className="flex items-center gap-3 p-3 bg-neutral-100 dark:bg-neutral-900 rounded-lg">
+                  <File className="w-5 h-5" />
+                  <span className="flex-1">filename.pdf</span>
                   <button
-                    className="text-indigo-600 dark:text-indigo-500 hover:text-indigo-800"
+                    className="text-primary hover:text-primary/75 cursor-pointer"
                     title="Download attachment"
                   >
                     <Download className="w-4 h-4" />
@@ -106,17 +102,13 @@ export default function AssignmentDetails({
               </div>
             </div>
             <div>
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-3">
-                Progress Tracking
-              </h3>
-              <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
+              <h3 className="text-lg font-semibold mb-3">Progress Tracking</h3>
+              <div className="bg-neutral-100 dark:bg-neutral-900 rounded-lg p-4">
                 <div className="flex items-center justify-between mb-2">
-                  <span className="text-sm font-medium text-gray-700 dark:text-gray-400">
+                  <span className="text-sm text-muted-foreground">
                     Completion
                   </span>
-                  <span className="text-sm text-gray-600 dark:text-gray-500">
-                    33%
-                  </span>
+                  <span className="text-sm text-muted-foreground">33%</span>
                 </div>
                 <Progress value={33} />
               </div>

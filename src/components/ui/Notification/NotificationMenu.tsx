@@ -80,7 +80,7 @@ export default function NotificationMenu() {
       <DropdownMenuTrigger asChild>
         <div className="relative">
           <Button title="Notifications" variant="ghost" size="icon">
-            <Bell className="w-5 h-5 dark:text-gray-400" />
+            <Bell className="w-5 h-5 dark:text-muted-foreground" />
           </Button>
           {unreadCount > 0 && (
             <span className="absolute -top-0.75 -right-0.75 w-4 h-4 inline-flex items-center justify-center text-xs font-bold leading-none text-white bg-red-600 rounded-full">

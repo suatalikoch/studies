@@ -22,7 +22,7 @@ export default function BillingCancelPage() {
           <CardTitle className="text-2xl mt-4">Payment Canceled</CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-gray-600 dark:text-gray-400">
+          <p className="text-muted-foreground">
             Your subscription process was canceled. No charges have been made.
             You can try again anytime to activate your plan.
           </p>

@@ -83,10 +83,8 @@ export default function Toolbar({
           ))}
         </ToggleGroup>
         <Separator orientation="vertical" />
-        <div className="flex items-center space-x-2">
-          <span className="text-sm text-gray-600 dark:text-gray-300">
-            Size:
-          </span>
+        <div className="flex items-center gap-2">
+          <span className="text-sm text-muted-foreground">Size:</span>
           <Slider
             min={1}
             max={99}
@@ -95,20 +93,18 @@ export default function Toolbar({
             onValueChange={(value) => setBrushSize(value[0])}
             className="w-20"
           />
-          <span className="text-sm text-gray-600 dark:text-gray-300 w-6">
-            {brushSize}
-          </span>
+          <span className="text-sm text-muted-foreground w-6">{brushSize}</span>
         </div>
         <Separator orientation="vertical" />
         <div className="flex items-center gap-2">
-          <Palette className="w-6 h-6 text-gray-600" />
+          <Palette className="w-6 h-6 text-neutral-600" />
           <div className="flex items-center gap-1">
             {PALETTE_COLORS.map((c) => (
               <Button
                 key={c}
                 onClick={() => setColor(c)}
                 className={`w-6 h-6 p-0 rounded-full border-1 ${
-                  color === c ? "border-indigo-600" : "border-gray-300"
+                  color === c ? "border-primary" : "border"
                 }`}
                 style={{ backgroundColor: c }}
                 type="button"

@@ -11,12 +11,12 @@ export default function PricingClient({ plans }: { plans: Plan[] }) {
 
   return (
     <div className="py-8 sm:py-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <div className="px-4 sm:px-6 lg:px-8 text-center">
         <div>
-          <h2 className="text-lg sm:text-3xl font-bold text-gray-900 dark:text-gray-100">
+          <h2 className="text-lg sm:text-3xl font-bold">
             Choose the plan that&apos;s right for you
           </h2>
-          <p className="mt-4 sm:text-lg text-gray-600 dark:text-gray-300">
+          <p className="mt-4 sm:text-lg text-muted-foreground">
             Flexible pricing options for students and educators.
           </p>
 

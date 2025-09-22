@@ -1,93 +1,33 @@
-"use client";
-
 import { testimonials } from "@/lib/constants";
-import { useEffect, useRef, useState } from "react";
+import {
+  Card,
+  CardContent,
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/UI";
 
 export default function Testimonials() {
-  const ref = useRef<HTMLDivElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  // Fade in on scroll
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.1 }
-    );
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, []);
-
-  // Carousel auto-rotation
-  useEffect(() => {
-    if (!isVisible) return;
-    const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % testimonials.length);
-    }, 6000); // 6 seconds per testimonial for breathing room
-    return () => clearInterval(interval);
-  }, [isVisible]);
-
   return (
-    <div>
-      <style jsx>
-        {`
-          @keyframes fadeInOut {
-            0% {
-              opacity: 0;
-              transform: translateY(20px);
-            }
-            10% {
-              opacity: 1;
-              transform: translateY(0);
-            }
-            90% {
-              opacity: 1;
-              transform: translateY(0);
-            }
-            100% {
-              opacity: 0;
-              transform: translateY(-20px);
-            }
-          }
-        `}
-      </style>
-      <section
-        ref={ref}
-        className="px-3 sm:px-6 py-10 sm:py-20 mx-auto text-center relative"
-        aria-label="Testimonials"
-      >
-        {isVisible && (
-          <blockquote
-            key={currentIndex}
-            className="text-2xl italic text-gray-800 dark:text-gray-200 font-light leading-relaxed tracking-wide px-8 py-10 bg-white dark:bg-gray-950 rounded-lg shadow-md animate-[fadeInOut_6s_ease-in-out]"
-          >
-            “{testimonials[currentIndex].quote}”
-            <p className="mt-8 font-semibold text-indigo-600 dark:text-indigo-500 tracking-wide">
-              {testimonials[currentIndex].author}
-            </p>
-          </blockquote>
-        )}
-        <div className="flex justify-center mt-5 sm:mt-10 space-x-4">
-          {testimonials.map((_, idx) => (
-            <button
-              key={idx}
-              onClick={() => setCurrentIndex(idx)}
-              className={`w-4 h-4 rounded-full transition-colors duration-300 focus:outline-none
-                ${
-                  idx === currentIndex
-                    ? "bg-indigo-600 shadow-lg shadow-indigo-300"
-                    : "bg-indigo-300 hover:bg-indigo-400"
-                }`}
-              aria-label={`Go to testimonial ${idx + 1}`}
-            />
+    <div className="w-full px-4 py-16">
+      <Carousel className="w-full max-w-lg mx-auto">
+        <CarouselContent>
+          {Array.from(testimonials).map((_, idx) => (
+            <CarouselItem key={idx}>
+              <Card className="p-6">
+                <CardContent className="flex flex-col gap-2 p-0">
+                  <p>“{testimonials[idx].quote}”</p>
+                  <p>{testimonials[idx].author}</p>
+                </CardContent>
+              </Card>
+            </CarouselItem>
           ))}
-        </div>
-      </section>
+        </CarouselContent>
+        <CarouselPrevious />
+        <CarouselNext />
+      </Carousel>
     </div>
   );
 }

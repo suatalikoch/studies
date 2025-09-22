@@ -24,7 +24,7 @@ export default function BillingSuccessPage() {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-gray-600 dark:text-gray-400">
+          <p className="text-muted-foreground">
             Thank you for subscribing! 🎉 Your plan is now active. You can start
             using all premium features immediately.
           </p>

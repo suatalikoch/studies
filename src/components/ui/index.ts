@@ -33,6 +33,13 @@ export {
   CardFooter,
 } from "@/components/UI/Library/card";
 export {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/UI/Library/carousel";
+export {
   ChartContainer,
   ChartTooltipContent,
 } from "@/components/UI/Library/chart";
@@ -46,6 +53,17 @@ export {
   ColorPickerOutput,
   ColorPickerSelection,
 } from "@/components/UI/Library/color-picker";
+export {
+  Command,
+  CommandDialog,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+  CommandSeparator,
+  CommandShortcut,
+} from "@/components/UI/Library/command";
 export {
   ContextMenu,
   ContextMenuItem,
@@ -61,6 +79,14 @@ export {
   ContextMenuSubContent,
   ContextMenuSubTrigger,
 } from "@/components/UI/Library/context-menu";
+export {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/components/UI/Library/dialog";
 export {
   DropdownMenu,
   DropdownMenuContent,
@@ -115,6 +141,7 @@ export {
 export { Skeleton } from "@/components/UI/Library/skeleton";
 export { Slider } from "@/components/UI/Library/slider";
 export { Toaster } from "@/components/UI/Library/sonner";
+export { Switch } from "@/components/UI/Library/switch";
 export { default as StatsCard } from "@/components/UI/Special/StatsCard";
 export { default as Testimonials } from "@/components/UI/Special/Testimonials";
 export {

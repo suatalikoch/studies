@@ -15,12 +15,14 @@ export default function Navbar() {
   const [activeTab, setActiveTab] = useState("home");
 
   return (
-    <nav className="sticky bottom-0 h-12 bg-white dark:bg-gray-950 border-t border-gray-200 dark:border-gray-600 sm:hidden">
+    <nav className="sticky bottom-0 h-12 bg-white dark:bg-neutral-950 border-t sm:hidden">
       <div className="flex h-full justify-around items-center overflow-x-auto">
         <Link
           href="/dashboard"
           onClick={() => setActiveTab("home")}
-          className={activeTab === "home" ? "text-indigo-600" : "text-gray-500"}
+          className={
+            activeTab === "home" ? "text-primary" : "text-muted-foreground"
+          }
         >
           <Home size={24} />
         </Link>
@@ -28,7 +30,7 @@ export default function Navbar() {
           href="/notes"
           onClick={() => setActiveTab("notes")}
           className={
-            activeTab === "notes" ? "text-indigo-600" : "text-gray-500"
+            activeTab === "notes" ? "text-primary" : "text-muted-foreground"
           }
         >
           <Paperclip size={24} />
@@ -37,7 +39,7 @@ export default function Navbar() {
           href="/lectures"
           onClick={() => setActiveTab("lectures")}
           className={
-            activeTab === "lectures" ? "text-indigo-600" : "text-gray-500"
+            activeTab === "lectures" ? "text-primary" : "text-muted-foreground"
           }
         >
           <Book size={24} />
@@ -46,7 +48,9 @@ export default function Navbar() {
           href="/assignments"
           onClick={() => setActiveTab("assignments")}
           className={
-            activeTab === "assignments" ? "text-indigo-600" : "text-gray-500"
+            activeTab === "assignments"
+              ? "text-primary"
+              : "text-muted-foreground"
           }
         >
           <BookOpen size={24} />
@@ -55,7 +59,7 @@ export default function Navbar() {
           href="/tasks"
           onClick={() => setActiveTab("tasks")}
           className={
-            activeTab === "tasks" ? "text-indigo-600" : "text-gray-500"
+            activeTab === "tasks" ? "text-primary" : "text-muted-foreground"
           }
         >
           <CheckSquare size={24} />
@@ -64,7 +68,7 @@ export default function Navbar() {
           href="/settings"
           onClick={() => setActiveTab("settings")}
           className={
-            activeTab === "settings" ? "text-indigo-600" : "text-gray-500"
+            activeTab === "settings" ? "text-primary" : "text-muted-foreground"
           }
         >
           <Menu size={24} />

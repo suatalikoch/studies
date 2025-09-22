@@ -1,9 +1,11 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { CalendarIcon, Plus, Triangle, X } from "lucide-react";
+import { CalendarIcon, Triangle, X } from "lucide-react";
 import { CalendarEvent, CalendarProps, EventFormProps, Exam } from "@/types";
 import {
   Button,
   Calendar as CalendarComponent,
+  Card,
+  CardContent,
   Input,
   Popover,
   PopoverContent,
@@ -143,27 +145,20 @@ export default function Calendar({ events = [], exams = [] }: CalendarProps) {
   }, []);
 
   return (
-    <div className="flex-1 bg-white dark:bg-gray-950 border border-gray-200 dark:border-gray-600 rounded-lg p-6">
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">
-          Calendar
-        </h2>
-        <Button onClick={() => openModal()} className="">
-          <Plus className="w-4 h-4" /> Add Event
-        </Button>
-      </div>
-      <div className="rounded-lg border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-950">
-        <div className="flex items-center justify-between px-4 py-3 border-b bg-gray-50 dark:bg-gray-800 rounded-t-lg">
-          <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-50">
-            {label}
-          </h2>
+    <div className="flex-1">
+      <div className="rounded-lg border bg-white dark:bg-neutral-950">
+        <div className="flex items-center justify-between px-4 py-3 border-b bg-neutral-100 dark:bg-neutral-900 rounded-t-lg">
+          <h2 className="text-lg font-semibold">{label}</h2>
           <div className="flex items-center gap-1">
             <Button
               onClick={() => goMonth(-1)}
               variant="ghost"
               aria-label="Previous month"
             >
-              <Triangle fill="currentColor" className="w-4 h-4 rotate-270" />
+              <Triangle
+                fill="currentColor"
+                className="w-4 h-4 text-primary rotate-270"
+              />
             </Button>
             <Button
               onClick={() => setViewDate(new Date())}
@@ -178,13 +173,16 @@ export default function Calendar({ events = [], exams = [] }: CalendarProps) {
               variant="ghost"
               aria-label="Next month"
             >
-              <Triangle fill="currentColor" className="w-3 h-3 rotate-90" />
+              <Triangle
+                fill="currentColor"
+                className="w-3 h-3 text-primary rotate-90"
+              />
             </Button>
           </div>
         </div>
-        <div className="grid grid-cols-7 gap-2 text-sm text-gray-500 bg-gray-100 dark:bg-gray-900 p-3 border-b border-gray-200 dark:border-gray-600">
+        <div className="grid grid-cols-7 gap-2 text-sm text-muted-foreground bg-neutral-100 dark:bg-neutral-900 p-3 border-b">
           {["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map((d) => (
-            <div key={d} className="text-center uppercase font-medium">
+            <div key={d} className="text-center uppercase">
               {d}
             </div>
           ))}
@@ -198,54 +196,47 @@ export default function Calendar({ events = [], exams = [] }: CalendarProps) {
               const isSelected = date === iso;
               const muted = !isSameMonth(iso);
               return (
-                <button
+                <Card
                   key={`${wi}-${di}`}
                   onClick={() => setDate(iso)}
-                  className={`relative flex flex-col items-start p-2 rounded-lg text-left border hover:shadow transition
+                  className={`p-2 relative hover:border-primary/50 hover:shadow cursor-pointer transition-colors duration-300
                   ${
-                    muted
-                      ? "text-gray-400 dark:text-gray-500 bg-gray-50 dark:bg-gray-800"
-                      : "bg-white dark:bg-gray-950 text-gray-800 dark:text-gray-50"
+                    muted &&
+                    "text-muted-foreground bg-neutral-50 dark:bg-neutral-950"
                   }
-                  ${isSelected ? "border-gray-500 bg-indigo-50" : ""}
-                  ${
-                    isToday
-                      ? "border-indigo-500"
-                      : "border-gray-200 dark:border-gray-600"
-                  }
+                  ${isSelected ? "border-neutral-500 bg-primary/10" : ""}
+                  ${isToday ? "border-primary" : "border"}
                 `}
                 >
-                  <div
-                    className={`text-sm font-medium ${
-                      isToday ? "text-indigo-600" : ""
-                    }`}
-                  >
-                    {day.getDate()}
-                  </div>
-                  <div className="mt-2 flex flex-wrap gap-1 w-full">
-                    {evs.slice(0, 3).map((e) => (
-                      <span
-                        key={e.id}
-                        title={`${e.time ? e.time + " • " : ""}${e.title}`}
-                        className={`text-xs px-2 py-0.5 rounded-lg truncate ${
-                          e.color ?? "bg-indigo-100 text-indigo-700"
-                        }`}
-                        style={{ maxWidth: "100%" }}
-                        onClick={(ev) => {
-                          ev.stopPropagation();
-                          openModal(e);
-                        }}
-                      >
-                        {e.title}
-                      </span>
-                    ))}
-                    {evs.length > 3 && (
-                      <span className="text-xs text-gray-500">
-                        +{evs.length - 3}
-                      </span>
-                    )}
-                  </div>
-                </button>
+                  <CardContent className="p-0 flex flex-col items-start text-left">
+                    <div className={`text-sm ${isToday && "text-primary"}`}>
+                      {day.getDate()}
+                    </div>
+                    <div className="mt-2 flex flex-wrap gap-1 w-full">
+                      {evs.slice(0, 3).map((e) => (
+                        <span
+                          key={e.id}
+                          title={`${e.time && e.time + " • "}${e.title}`}
+                          className={`text-xs px-2 py-0.5 rounded-lg truncate ${
+                            e.color ?? "bg-indigo-100 text-indigo-700"
+                          }`}
+                          style={{ maxWidth: "100%" }}
+                          onClick={(ev) => {
+                            ev.stopPropagation();
+                            openModal(e);
+                          }}
+                        >
+                          {e.title}
+                        </span>
+                      ))}
+                      {evs.length > 3 && (
+                        <span className="text-xs text-muted-foreground">
+                          +{evs.length - 3}
+                        </span>
+                      )}
+                    </div>
+                  </CardContent>
+                </Card>
               );
             })
           )}
@@ -253,7 +244,7 @@ export default function Calendar({ events = [], exams = [] }: CalendarProps) {
       </div>
       {modalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-          <div className="bg-white dark:bg-gray-950 rounded-lg p-6 w-96 relative">
+          <div className="bg-white dark:bg-neutral-950 rounded-lg p-6 w-96 relative">
             <Button
               variant="ghost"
               size="icon"

@@ -9,6 +9,8 @@ import {
   AlertDescription,
   AlertTitle,
   Button,
+  Card,
+  CardContent,
   Tabs,
   TabsContent,
   TabsList,
@@ -212,14 +214,16 @@ export default function SettingsClient() {
   };
 
   return (
-    <div className="flex-1 bg-gray-50 dark:bg-gray-800 p-3 sm:p-6">
-      <div className="max-w-5xl mx-auto bg-gradient-to-r from-indigo-600 dark:from-indigo-700 to-purple-600 dark:to-purple-700 rounded-lg p-6 text-white shadow-lg mb-3 sm:mb-6">
-        <h1 className="text-lg sm:text-3xl font-bold">Settings</h1>
-        <p className="text-indigo-100 mt-0 sm:mt-1">
-          Manage your preferences and account.
-        </p>
-      </div>
-      <div className="max-w-5xl mx-auto flex flex-col md:flex-row">
+    <div className="flex-1 bg-white dark:bg-neutral-950 p-3 sm:p-4">
+      <Card className="bg-primary mb-3 sm:mb-6">
+        <CardContent>
+          <h1 className="text-white text-lg sm:text-3xl font-bold">Settings</h1>
+          <p className="text-white mt-0 sm:mt-1">
+            Manage your preferences and account.
+          </p>
+        </CardContent>
+      </Card>
+      <div className="flex flex-col md:flex-row">
         <div className="flex-1">
           {error && (
             <Alert variant="destructive" className="mb-4">
@@ -244,49 +248,53 @@ export default function SettingsClient() {
                 <TabsTrigger value="appearance">Appearance</TabsTrigger>
                 <TabsTrigger value="danger">Danger Zone</TabsTrigger>
               </TabsList>
-              <TabsContent value="profile">
-                <ProfileTab
-                  isFetching={isFetching}
-                  avatar={avatar}
-                  name={name}
-                  email={email}
-                  loading={loading}
-                  setName={setName}
-                  setEmail={setEmail}
-                  handleAvatarChange={handleAvatarChange}
-                />
-              </TabsContent>
-              <TabsContent value="security">
-                <SecurityTab
-                  currentPassword={currentPassword}
-                  newPassword={newPassword}
-                  twoFactorAuth={twoFactorAuth}
-                  loading={loading}
-                  setCurrentPassword={setCurrentPassword}
-                  setNewPassword={setNewPassword}
-                  setTwoFactorAuth={setTwoFactorAuth}
-                />
-              </TabsContent>
-              <TabsContent value="notifications">
-                <NotificationsTab
-                  notifications={notifications}
-                  setNotifications={setNotifications}
-                  loading={loading}
-                />
-              </TabsContent>
-              <TabsContent value="appearance">
-                <AppearanceTab
-                  darkMode={darkMode}
-                  setDarkMode={setDarkMode}
-                  loading={loading}
-                />
-              </TabsContent>
-              <TabsContent value="danger">
-                <DangerTab
-                  handleDeleteAccount={handleDeleteAccount}
-                  loading={loading}
-                />
-              </TabsContent>
+              <Card>
+                <CardContent>
+                  <TabsContent value="profile">
+                    <ProfileTab
+                      isFetching={isFetching}
+                      avatar={avatar}
+                      name={name}
+                      email={email}
+                      loading={loading}
+                      setName={setName}
+                      setEmail={setEmail}
+                      handleAvatarChange={handleAvatarChange}
+                    />
+                  </TabsContent>
+                  <TabsContent value="security">
+                    <SecurityTab
+                      currentPassword={currentPassword}
+                      newPassword={newPassword}
+                      twoFactorAuth={twoFactorAuth}
+                      loading={loading}
+                      setCurrentPassword={setCurrentPassword}
+                      setNewPassword={setNewPassword}
+                      setTwoFactorAuth={setTwoFactorAuth}
+                    />
+                  </TabsContent>
+                  <TabsContent value="notifications">
+                    <NotificationsTab
+                      notifications={notifications}
+                      setNotifications={setNotifications}
+                      loading={loading}
+                    />
+                  </TabsContent>
+                  <TabsContent value="appearance">
+                    <AppearanceTab
+                      darkMode={darkMode}
+                      setDarkMode={setDarkMode}
+                      loading={loading}
+                    />
+                  </TabsContent>
+                  <TabsContent value="danger">
+                    <DangerTab
+                      handleDeleteAccount={handleDeleteAccount}
+                      loading={loading}
+                    />
+                  </TabsContent>
+                </CardContent>
+              </Card>
             </Tabs>
             <div className="flex justify-end">
               <Button variant="default" type="submit" disabled={loading}>

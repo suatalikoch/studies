@@ -5,16 +5,16 @@ export default function BillingToggle({
   setBillingCycle,
 }: BillingToggleProps) {
   return (
-    <div className="bg-white dark:bg-gray-950 border border-gray-300 dark:border-gray-600 rounded-full flex p-1">
+    <div className="bg-white dark:bg-neutral-950 border rounded-full flex gap-1 p-1">
       {["monthly", "yearly"].map((cycle) => (
         <button
           key={cycle}
           onClick={() => setBillingCycle(cycle as BillingCycle)}
           aria-pressed={billingCycle === cycle}
-          className={`px-6 py-2 rounded-full font-medium text-sm transition-all ${
+          className={`px-6 py-2 rounded-full text-sm transition-all ${
             billingCycle === cycle
-              ? "bg-indigo-600 dark:bg-indigo-500 text-white"
-              : "text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+              ? "bg-primary text-secondary"
+              : "text-muted-foreground hover:bg-neutral-100 dark:hover:bg-neutral-800"
           }`}
         >
           {cycle === "yearly" ? (
