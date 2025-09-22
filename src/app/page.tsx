@@ -5,7 +5,7 @@ import { Features, Hero, Preview, Testimonials } from "@/components/UI";
 
 export default function HomePage() {
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-800">
+    <div className="max-w-[120rem] min-h-screen mx-auto flex flex-col">
       <HeaderLanding />
       <Hero />
       <Features />
