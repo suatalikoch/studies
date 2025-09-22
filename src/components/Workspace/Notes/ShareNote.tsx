@@ -4,7 +4,8 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { toast } from "sonner";
-import { QRCode } from "@/components/UI";
+import { Button, Input, QRCode } from "@/components/UI";
+import { X } from "lucide-react";
 
 interface ShareNoteProps {
   noteId: string;
@@ -186,82 +187,80 @@ export default function ShareNote({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-      <div className="bg-white dark:bg-gray-800 p-6 rounded-lg w-[90%] max-w-md relative space-y-4">
-        <button
-          onClick={onClose}
-          className="cursor-pointer absolute top-5 right-6 text-gray-600 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white text-xl font-bold"
-        >
-          ✕
-        </button>
-        <h2 className="text-lg font-semibold">Share Note</h2>
-        <div className="flex items-center space-x-2">
-          <input
-            type="text"
-            value={shareUrl}
-            readOnly
-            className="flex-1 border rounded px-2 py-1 bg-gray-100 dark:bg-gray-700"
-          />
-          <button
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+      <div className="bg-white dark:bg-neutral-950 p-6 rounded-lg w-[90%] max-w-md relative space-y-4">
+        <div className="flex justify-between items-center">
+          <h2 className="text-lg font-semibold">Share Note</h2>
+          <Button variant="ghost" size="icon" onClick={onClose}>
+            <X />
+          </Button>
+        </div>
+        <div className="flex flex-row items-center gap-2">
+          <Input type="text" value={shareUrl} readOnly />
+          <Button
+            variant="destructive"
+            size="sm"
             onClick={copyLink}
-            className="px-3 py-1 bg-blue-500 text-white rounded hover:bg-blue-600"
+            className="bg-blue-500 hover:bg-blue-600 dark:bg-blue-600 dark:hover:bg-blue-700"
           >
             Copy
-          </button>
+          </Button>
         </div>
-        <div className="flex items-center space-x-2">
-          <label className="flex items-center space-x-2 cursor-pointer">
-            <input type="checkbox" checked={isPublic} onChange={togglePublic} />
+        <div className="flex items-center gap-2">
+          <label className="flex items-center gap-2 cursor-pointer">
+            <Input type="checkbox" checked={isPublic} onChange={togglePublic} />
             <span>{isPublic ? "Public" : "Private"}</span>
           </label>
         </div>
         {!isPublic && (
-          <div className="space-y-2">
-            <h3 className="font-medium">Allowed Users</h3>
-            <div className="flex space-x-2">
-              <input
+          <div className="flex flex-col gap-2">
+            <h3>Allowed Users</h3>
+            <div className="flex flex-row items-center gap-2">
+              <Input
                 type="email"
                 placeholder="user@example.com"
                 value={emailInput}
                 onChange={(e) => setEmailInput(e.target.value)}
-                className="flex-1 border rounded px-2 py-1 bg-gray-100 dark:bg-gray-700"
               />
-              <button
+              <Button
+                variant="destructive"
+                size="sm"
                 onClick={addUser}
-                className="px-3 py-1 bg-green-500 text-white rounded hover:bg-green-600"
+                className="bg-green-500 dark:bg-green-600 hover:bg-green-600 dark:hover:bg-green-700"
               >
                 Add
-              </button>
+              </Button>
             </div>
-            <ul className="space-y-1 max-h-40 overflow-y-auto">
+            <ul className="flex flex-col gap-2 max-h-40 overflow-y-auto">
               {users.map((uuid, idx) => (
                 <li
                   key={idx}
-                  className="flex justify-between items-center bg-gray-200 dark:bg-gray-700 px-2 py-1 rounded"
+                  className="flex justify-between items-center rounded-md gap-2"
                 >
-                  <span>{userEmails[uuid]}</span>
-                  <button
+                  <span className="w-full bg-neutral-100 dark:bg-neutral-800 px-4 py-2 rounded-md">
+                    {userEmails[uuid] || "errorfetchingemail@gmail.com"}
+                  </span>
+                  <Button
+                    variant="destructive"
+                    size="sm"
                     onClick={() => removeUser(userEmails[uuid])}
-                    className="text-red-500 hover:text-red-700"
+                    className="bg-red-500 hover:bg-red-600 dark:bg-red-600 dark:hover:bg-red-700"
                   >
                     Remove
-                  </button>
+                  </Button>
                 </li>
               ))}
             </ul>
           </div>
         )}
-        <button
-          onClick={() => setShowQR(!showQR)}
-          className="px-3 py-1 bg-gray-500 text-white rounded hover:bg-gray-600"
-        >
+        <Button onClick={() => setShowQR(!showQR)}>
           {showQR ? "Hide QR Code" : "Show QR Code"}
-        </button>
+        </Button>
         {showQR && (
           <div className="mt-4 flex justify-center">
             <QRCode
               data={shareUrl}
-              className="w-64 h-64 bg-gray-50 dark:bg-gray-950 p-4 rounded-md shadow-md"
+              className="w-64 h-64 bg-neutral-100 dark:bg-neutral-800 p-4 rounded-md shadow-md"
             />
           </div>
         )}

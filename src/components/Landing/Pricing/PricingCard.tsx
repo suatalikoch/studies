@@ -3,6 +3,8 @@ import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import AnimatedPrice from "./AnimatedPrice";
 import Link from "next/link";
+import { Button } from "@/components/UI";
+import { Check } from "lucide-react";
 
 export default function PricingCard({ plan, billingCycle }: PricingCardProps) {
   const [pop, setPop] = useState(false);
@@ -28,8 +30,8 @@ export default function PricingCard({ plan, billingCycle }: PricingCardProps) {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 20 }}
       transition={{ type: "spring", stiffness: 100, damping: 20 }}
-      className={`bg-white dark:bg-gray-950 rounded-lg shadow-lg border border-gray-200 dark:border-gray-600 flex flex-col relative ${
-        plan.highlighted ? "ring-2 ring-indigo-500 scale-105" : ""
+      className={`bg-white dark:bg-neutral-950 rounded-lg shadow-lg border flex flex-col relative ${
+        plan.highlighted ? "ring-2 ring-primary scale-105" : ""
       }`}
     >
       {plan.highlighted && (
@@ -37,17 +39,15 @@ export default function PricingCard({ plan, billingCycle }: PricingCardProps) {
           initial={{ scale: 0 }}
           animate={{ scale: pop ? 1.2 : 1.1 }}
           transition={{ type: "spring", stiffness: 300, damping: 20 }}
-          className="absolute top-4 right-4 bg-indigo-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg"
+          className="absolute top-4 right-4 bg-primary text-secondary text-xs font-bold px-3 py-1 rounded-full shadow-lg"
         >
           Best
         </motion.div>
       )}
       <div className="p-6 flex-1">
-        <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
-          {plan.name}
-        </h3>
+        <h3 className="text-xl font-semibold">{plan.name}</h3>
         <motion.p
-          className="mt-4 text-4xl font-bold text-indigo-600 flex items-baseline justify-center"
+          className="mt-4 text-4xl font-bold text-primary flex items-baseline justify-center"
           animate={{ scale: pop ? 1.1 : 1 }}
           transition={{ type: "spring", stiffness: 300, damping: 20 }}
         >
@@ -58,34 +58,30 @@ export default function PricingCard({ plan, billingCycle }: PricingCardProps) {
                 : plan.price_yearly
             }
           />
-          <span className="text-lg font-medium text-gray-500 dark:text-gray-400 ml-1">
+          <span className="text-lg text-muted-foreground ml-1">
             /{billingCycle === "monthly" ? "mo" : "yr"}
           </span>
         </motion.p>
-        <p className="mt-2 text-gray-600 dark:text-gray-300">
-          {plan.description}
-        </p>
-        <ul className="mt-6 space-y-3 text-gray-700 dark:text-gray-400">
+        <p className="mt-2 text-muted-foreground">{plan.description}</p>
+        <ul className="mt-6 space-y-3">
           {plan.features.map((feature) => (
-            <li key={feature} className="flex items-center space-x-2">
+            <li key={feature} className="flex items-center gap-2">
               <span className="text-green-500" aria-hidden="true">
-                ✔
+                <Check />
               </span>
               <span>{feature}</span>
             </li>
           ))}
         </ul>
       </div>
-      <div className="p-6 border-t border-gray-200 dark:border-gray-600">
-        <Link
-          href={plan.button_link}
-          className={`block w-full text-center py-3 rounded-lg font-medium transition-colors ${
-            plan.highlighted
-              ? "bg-indigo-600 text-white hover:bg-indigo-700"
-              : "bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-800"
-          }`}
-        >
-          {plan.button_text}
+      <div className="p-6 border-t">
+        <Link href={plan.button_link}>
+          <Button
+            variant={`${plan.highlighted ? "default" : "secondary"}`}
+            className="w-full"
+          >
+            {plan.button_text}
+          </Button>
         </Link>
       </div>
     </motion.div>

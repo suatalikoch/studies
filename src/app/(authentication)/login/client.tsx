@@ -9,11 +9,11 @@ export default function LoginClient() {
       <div className="flex flex-col gap-4 p-6 md:p-8 border border-l shadow-sm">
         <div className="flex justify-between items-center">
           <div className="flex justify-center gap-2 md:justify-start">
-            <Link href="/" className="flex items-center gap-2 font-medium">
+            <Link href="/" className="flex items-center gap-2">
               <div className="bg-primary text-primary-foreground flex items-center justify-center rounded-md p-1">
                 <GraduationCap className="size-6" />
               </div>
-              <h1 className="text-sm sm:text-2xl font-bold text-gray-900 dark:text-gray-100 whitespace-nowrap">
+              <h1 className="text-sm sm:text-2xl font-bold whitespace-nowrap">
                 Student Hub
               </h1>
             </Link>
@@ -52,10 +52,7 @@ export default function LoginClient() {
               complete.
             </h1>
             <div className="flex items-center gap-4">
-              <NotebookText
-                size={32}
-                className="text-green-600 dark:text-green-500"
-              />
+              <NotebookText size={32} className="text-primary" />
               <h3 className="font-bold text-muted-foreground">@suatalikoch</h3>
             </div>
           </div>

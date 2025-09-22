@@ -58,6 +58,7 @@ export default function ExamsClient({ examsDB }: { examsDB: Exam[] }) {
 
     if (error) {
       toast.error("Failed to add exam: " + error.message);
+
       return;
     }
 
@@ -86,7 +87,7 @@ export default function ExamsClient({ examsDB }: { examsDB: Exam[] }) {
   };
 
   return (
-    <div className="2xl:max-w-6xl mx-auto p-4 space-y-4">
+    <div className="p-4 space-y-4">
       <div className="flex gap-3 items-center">
         <Link href="/calendar">
           <Button variant="outline">
@@ -166,7 +167,7 @@ export default function ExamsClient({ examsDB }: { examsDB: Exam[] }) {
             {exams.map((exam) => (
               <Card
                 key={exam.id}
-                className="flex justify-between items-center hover:border-indigo-400 shadow-none hover:shadow-md transition-colors"
+                className="flex justify-between items-center hover:border-primary shadow-none hover:shadow-md transition-colors"
               >
                 <CardContent className="flex items-center gap-4 w-full justify-between">
                   <div>

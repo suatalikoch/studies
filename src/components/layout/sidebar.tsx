@@ -101,7 +101,7 @@ export default function Sidebar() {
 
   return (
     <aside
-      className={`hidden bg-white dark:bg-gray-950 border-r border-gray-200 dark:border-gray-600 sm:flex flex-col flex-shrink-0 ${
+      className={`hidden bg-white dark:bg-neutral-950 border-r sm:flex flex-col flex-shrink-0 ${
         collapsed ? "sm:w-16" : "sm:w-64"
       } transition-all duration-100 `}
     >
@@ -116,21 +116,19 @@ export default function Sidebar() {
             <Link
               href={`/${item.path}`}
               key={item.id}
-              className={`w-full flex items-center space-x-3 rounded-lg transition-colors text-gray-700 hover:bg-gray-100 cursor-pointer ${
+              className={`w-full flex items-center gap-3 rounded-lg transition-colors hover:bg-neutral-100 cursor-pointer ${
                 pathname === `/${item.path}`
-                  ? "text-indigo-700 bg-indigo-100 dark:bg-indigo-950 border border-indigo-200"
-                  : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-900"
+                  ? "text-primary bg-neutral-100 dark:bg-neutral-900 border"
+                  : "hover:bg-neutral-100 dark:hover:bg-neutral-900"
               } ${collapsed ? "justify-center aspect-square" : "px-4 py-3"}`}
             >
               <Icon className="w-5 h-5" />
-              {!collapsed && (
-                <span className="font-medium truncate">{item.label}</span>
-              )}
+              {!collapsed && <span className="truncate">{item.label}</span>}
             </Link>
           );
         })}
       </nav>
-      <div className="p-4 border-t border-gray-200 dark:border-gray-600">
+      <div className="p-4 border-t">
         {collapsed ? (
           <div className="flex flex-col gap-2 items-center">
             <Badge className="bg-red-100 text-red-800">3</Badge>
@@ -139,24 +137,24 @@ export default function Sidebar() {
           </div>
         ) : (
           <>
-            <h3 className="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-3 truncate">
+            <h3 className="text-sm font-semibold mb-3 truncate">
               Quick Statistics
             </h3>
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <span className="text-gray-600 dark:text-gray-300 text-sm truncate">
+                <span className="text-muted-foreground text-sm truncate">
                   Due Today
                 </span>
                 <Badge className="bg-red-100 text-red-800">3</Badge>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-gray-600 dark:text-gray-300 text-sm truncate">
+                <span className="text-muted-foreground text-sm truncate">
                   This Week
                 </span>
                 <Badge className="bg-yellow-100 text-yellow-800">7</Badge>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-gray-600 dark:text-gray-300 text-sm truncate">
+                <span className="text-muted-foreground text-sm truncate">
                   Completed
                 </span>
                 <Badge className="bg-green-100 text-green-800">12</Badge>
@@ -166,13 +164,13 @@ export default function Sidebar() {
         )}
       </div>
       <div
-        className={`border-t border-gray-200 dark:border-gray-600 relative ${
+        className={`border-t relative ${
           collapsed ? "p-2 aspect-square" : "p-4"
         }`}
         ref={flyoutRef}
       >
         {loading ? (
-          <div className="flex items-center w-full space-x-3 focus:outline-none cursor-pointer">
+          <div className="flex items-center w-full gap-3 focus:outline-none cursor-pointer">
             <Skeleton className="w-10 h-10 rounded-full" />
             <div className="flex flex-col gap-2 flex-1">
               <Skeleton className="w-[65%] h-3" />
@@ -184,9 +182,7 @@ export default function Sidebar() {
           <button
             onClick={() => setFlyoutOpen(!flyoutOpen)}
             className={`flex items-center w-full focus:outline-none cursor-pointer ${
-              collapsed
-                ? "flex items-center justify-center h-full"
-                : "space-x-3"
+              collapsed ? "flex items-center justify-center h-full" : "gap-3"
             }`}
           >
             <Image
@@ -198,10 +194,8 @@ export default function Sidebar() {
             />
             {!collapsed && (
               <div className="flex-1 text-left min-w-0">
-                <p className="text-gray-900 dark:text-gray-100 font-semibold text-sm truncate">
-                  {user?.name}
-                </p>
-                <p className="text-gray-600 dark:text-gray-300 text-xs truncate">
+                <p className="font-semibold text-sm truncate">{user?.name}</p>
+                <p className="text-muted-foreground text-xs truncate">
                   {user?.email}
                 </p>
               </div>
@@ -210,12 +204,12 @@ export default function Sidebar() {
               <div
                 className={`rounded-lg p-1 transition-colors ${
                   flyoutOpen
-                    ? "bg-gray-200 dark:bg-gray-700"
-                    : "hover:bg-gray-200 dark:hover:bg-gray-700"
+                    ? "bg-neutral-200 dark:bg-neutral-700"
+                    : "hover:bg-neutral-200 dark:hover:bg-neutral-700"
                 }`}
               >
                 <ChevronDown
-                  className={`w-5 h-5 text-gray-600 dark:text-gray-300 transition-transform ${
+                  className={`w-5 h-5 text-muted-foreground transition-transform ${
                     flyoutOpen ? "rotate-180" : ""
                   }`}
                 />
@@ -225,13 +219,13 @@ export default function Sidebar() {
         )}
         {flyoutOpen && (
           <div
-            className={`absolute left-full ml-2 w-40 bg-white dark:bg-gray-950 border border-gray-200 dark:border-gray-600 rounded-lg shadow-lg z-10 ${
+            className={`absolute left-full ml-2 w-40 bg-white dark:bg-neutral-950 border rounded-lg shadow-lg z-10 ${
               collapsed ? "-top-7" : "-top-5"
             }`}
           >
             <Link
               href="/settings"
-              className="flex items-center px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-900 text-gray-700 dark:text-gray-200 rounded-t-lg"
+              className="flex items-center px-4 py-2 hover:bg-neutral-100 dark:hover:bg-neutral-900 text-neutral-700 dark:text-neutral-200 rounded-t-lg"
               onClick={() => setFlyoutOpen(false)}
             >
               <Settings className="w-4 h-4 mr-2" />
@@ -239,7 +233,7 @@ export default function Sidebar() {
             </Link>
             <button
               onClick={handleLogout}
-              className="flex items-center w-full rounded-b-lg px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-900 text-gray-700 dark:text-gray-200 cursor-pointer"
+              className="flex items-center w-full rounded-b-lg px-4 py-2 hover:bg-neutral-100 dark:hover:bg-neutral-900 text-neutral-700 dark:text-neutral-200 cursor-pointer"
             >
               <LogOut className="w-4 h-4 mr-2" />
               Logout

@@ -17,13 +17,11 @@ export default function TasksHeader({
   setFilter,
 }: TasksHeaderProps) {
   return (
-    <div className="p-4 items-center justify-between border-b border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-950 hidden sm:flex">
-      <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">
-        Tasks
-      </h2>
+    <div className="p-4 items-center justify-between border-b bg-white dark:bg-neutral-950 hidden sm:flex">
+      <h2 className="text-xl font-bold">Tasks</h2>
       <div className="flex items-center gap-2">
-        <div className="flex items-center space-x-2">
-          <Funnel className="w-5 h-5 text-gray-600 dark:text-gray-300" />
+        <div className="flex items-center gap-2">
+          <Funnel className="w-5 h-5 text-muted-foreground" />
           <Select
             value={filter}
             onValueChange={(value) => setFilter(value as TaskFilter)}

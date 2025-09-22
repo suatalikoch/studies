@@ -6,20 +6,17 @@ export default function Hero() {
   const { user } = useUser();
 
   return (
-    <section
-      className="relative bg-gradient-to-r from-indigo-600 to-purple-600 text-white"
-      role="banner"
-    >
+    <section className="relative" role="banner">
       <div aria-hidden="true" className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-20 -left-20 w-96 h-96 bg-indigo-500 rounded-full opacity-50 animate-pulse"></div>
-        <div className="absolute top-25 right-20 w-36 h-36 bg-purple-500 rounded-full opacity-50 animate-pulse delay-2000"></div>
+        <div className="absolute -top-20 -left-20 w-96 h-96 bg-primary rounded-full opacity-50 animate-pulse"></div>
+        <div className="absolute top-25 right-20 w-36 h-36 bg-primary rounded-full opacity-50 animate-pulse delay-2000"></div>
       </div>
-      <div className="relative max-w-7xl mx-auto px-3 sm:px-6 py-10 sm:py-28 text-center">
+      <div className="relative px-3 sm:px-6 py-10 sm:py-28 text-center">
         <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-7xl font-bold mb-2">
-          All-in-One
+          All in one
         </h1>
-        <h1 className="dark:text-primary text-2xl sm:text-4xl md:text-5xl lg:text-7xl font-bold mb-8">
-          Study Workspace
+        <h1 className="text-primary text-2xl sm:text-4xl md:text-5xl lg:text-7xl font-bold mb-8">
+          Study workspace
         </h1>
         <p className="sm:text-lg max-w-2xl mx-auto mb-8">
           Organize your notes, track assignments, and boost your productivity

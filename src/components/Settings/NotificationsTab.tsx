@@ -8,9 +8,9 @@ export default function NotificationsTab({
   loading,
 }: NotificationsTabProps) {
   return (
-    <div className="bg-neutral-100 dark:bg-gray-950 rounded-lg shadow-sm p-6">
+    <div>
       <h2 className="text-xl font-semibold flex items-center gap-2 mb-6">
-        <Bell className="w-6 h-6 text-indigo-600" /> Notifications
+        <Bell className="w-6 h-6 text-primary" /> Notifications
       </h2>
       <div className="space-y-4 max-w-md">
         {Object.entries(notifications).map(([key, value]) => {
@@ -28,10 +28,7 @@ export default function NotificationsTab({
                 }
                 disabled={loading}
               />
-              <Label
-                htmlFor={key}
-                className="text-gray-700 dark:text-gray-400 capitalize"
-              >
+              <Label htmlFor={key} className="text-muted-foreground capitalize">
                 {key} notifications
               </Label>
             </div>

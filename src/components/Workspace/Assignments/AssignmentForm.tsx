@@ -11,6 +11,8 @@ import {
 import {
   Button,
   Calendar,
+  Card,
+  CardContent,
   Input,
   Label,
   Popover,
@@ -76,16 +78,7 @@ export default function AssignmentForm({
     if (error) {
       alert("Failed to add assignment: " + error.message);
 
-      toast.error("Failed to add assignment!", {
-        duration: 5000,
-        position: "bottom-right",
-        richColors: true,
-        closeButton: true,
-        action: {
-          label: "Close",
-          onClick: () => console.log("Closed toast."),
-        },
-      });
+      toast.error("Failed to add assignment!");
 
       return;
     }
@@ -99,163 +92,142 @@ export default function AssignmentForm({
       due_date: "",
     });
 
-    toast.success("Note added successfully!", {
-      duration: 5000,
-      position: "bottom-right",
-      richColors: true,
-      closeButton: true,
-      action: {
-        label: "Close",
-        onClick: () => console.log("Closed toast."),
-      },
-    });
+    toast.success("Note added successfully!");
   };
 
   return (
     <div className="flex-1 p-4 flex flex-col gap-4">
-      <div className="bg-white dark:bg-gray-950 rounded-lg border border-gray-200 dark:border-gray-600 p-6 mb-6">
-        <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">
-          Add New Assignment
-        </h3>
-        <form
-          className="space-y-4"
-          onSubmit={(e) => {
-            e.preventDefault();
-            addAssignment();
-          }}
-        >
-          <div>
-            <Label
-              htmlFor="title"
-              className="text-gray-700 dark:text-gray-400 mb-2"
-            >
-              Title
-            </Label>
-            <Input
-              ref={titleRef}
-              type="text"
-              id="title"
-              placeholder="Enter assignment title..."
-              value={form.title}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setField("title", e.target.value)
-              }
-            />
-          </div>
-          <div>
-            <Label
-              htmlFor="subject"
-              className="text-gray-700 dark:text-gray-400 mb-2"
-            >
-              Subject
-            </Label>
-            <Textarea
-              id="subject"
-              rows={3}
-              placeholder="Enter subject..."
-              value={form.subject}
-              onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
-                setField("subject", e.target.value)
-              }
-            />
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      <Card>
+        <CardContent>
+          <h3 className="text-lg font-semibold mb-4">Add New Assignment</h3>
+          <form
+            className="space-y-4"
+            onSubmit={(e) => {
+              e.preventDefault();
+              addAssignment();
+            }}
+          >
             <div>
-              <Label
-                htmlFor="status"
-                className="text-gray-700 dark:text-gray-400 mb-2"
-              >
-                Status
+              <Label htmlFor="title" className="text-muted-foreground mb-2">
+                Title
               </Label>
-              <Select
-                value={form.status}
-                onValueChange={(value) =>
-                  setField("status", value as AssignmentStatus)
+              <Input
+                ref={titleRef}
+                type="text"
+                id="title"
+                placeholder="Enter assignment title..."
+                value={form.title}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                  setField("title", e.target.value)
                 }
-              >
-                <SelectTrigger id="status" className="w-full">
-                  <SelectValue placeholder="Select status" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    <SelectItem value="Not Started">Not Started</SelectItem>
-                    <SelectItem value="In Progress">In Progress</SelectItem>
-                    <SelectItem value="Completed">Completed</SelectItem>
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
+              />
             </div>
             <div>
-              <Label
-                htmlFor="priority"
-                className="text-gray-700 dark:text-gray-400 mb-2"
-              >
-                Priority
+              <Label htmlFor="subject" className="text-muted-foreground mb-2">
+                Subject
               </Label>
-              <Select
-                value={form.priority}
-                onValueChange={(value) => setField("priority", value)}
-              >
-                <SelectTrigger id="priority" className="w-full">
-                  <SelectValue placeholder="Select priority" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    <SelectItem value="low">Low</SelectItem>
-                    <SelectItem value="medium">Medium</SelectItem>
-                    <SelectItem value="high">High</SelectItem>
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
+              <Textarea
+                id="subject"
+                rows={3}
+                placeholder="Enter subject..."
+                value={form.subject}
+                onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
+                  setField("subject", e.target.value)
+                }
+              />
             </div>
-            <div>
-              <Label
-                htmlFor="dueDate"
-                className="text-gray-700 dark:text-gray-400 mb-2"
-              >
-                Due Date
-              </Label>
-              <Popover open={open} onOpenChange={setOpen}>
-                <PopoverTrigger asChild className="w-full">
-                  <Button
-                    variant="outline"
-                    id="dueDate"
-                    className="justify-between font-normal"
-                  >
-                    {date ? date.toLocaleDateString() : "Select date"}
-                    <CalendarIcon className="ml-auto h-4 w-4" />
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent
-                  className="w-auto overflow-hidden p-0"
-                  align="start"
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div>
+                <Label htmlFor="status" className="text-muted-foreground mb-2">
+                  Status
+                </Label>
+                <Select
+                  value={form.status}
+                  onValueChange={(value) =>
+                    setField("status", value as AssignmentStatus)
+                  }
                 >
-                  <Calendar
-                    mode="single"
-                    selected={date}
-                    onSelect={(selectedDate) => {
-                      setDate(selectedDate);
-                      setOpen(false);
-                      setField(
-                        "due_date",
-                        selectedDate?.toISOString().split("T")[0] || ""
-                      );
-                    }}
-                  />
-                </PopoverContent>
-              </Popover>
+                  <SelectTrigger id="status" className="w-full">
+                    <SelectValue placeholder="Select status" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      <SelectItem value="Not Started">Not Started</SelectItem>
+                      <SelectItem value="In Progress">In Progress</SelectItem>
+                      <SelectItem value="Completed">Completed</SelectItem>
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div>
+                <Label
+                  htmlFor="priority"
+                  className="text-muted-foreground mb-2"
+                >
+                  Priority
+                </Label>
+                <Select
+                  value={form.priority}
+                  onValueChange={(value) => setField("priority", value)}
+                >
+                  <SelectTrigger id="priority" className="w-full">
+                    <SelectValue placeholder="Select priority" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      <SelectItem value="low">Low</SelectItem>
+                      <SelectItem value="medium">Medium</SelectItem>
+                      <SelectItem value="high">High</SelectItem>
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div>
+                <Label htmlFor="dueDate" className="text-muted-foreground mb-2">
+                  Due Date
+                </Label>
+                <Popover open={open} onOpenChange={setOpen}>
+                  <PopoverTrigger asChild className="w-full">
+                    <Button
+                      variant="outline"
+                      id="dueDate"
+                      className="justify-between font-normal"
+                    >
+                      {date ? date.toLocaleDateString() : "Select date"}
+                      <CalendarIcon className="ml-auto h-4 w-4" />
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent
+                    className="w-auto overflow-hidden p-0"
+                    align="start"
+                  >
+                    <Calendar
+                      mode="single"
+                      selected={date}
+                      onSelect={(selectedDate) => {
+                        setDate(selectedDate);
+                        setOpen(false);
+                        setField(
+                          "due_date",
+                          selectedDate?.toISOString().split("T")[0] || ""
+                        );
+                      }}
+                    />
+                  </PopoverContent>
+                </Popover>
+              </div>
             </div>
-          </div>
-          <div className="flex items-center space-x-3">
-            <Button variant="default" type="submit">
-              Add Assignment
-            </Button>
-            <Button variant="secondary" onClick={onCancel} type="button">
-              Cancel
-            </Button>
-          </div>
-        </form>
-      </div>
+            <div className="flex items-center gap-3">
+              <Button variant="default" type="submit">
+                Add Assignment
+              </Button>
+              <Button variant="secondary" onClick={onCancel} type="button">
+                Cancel
+              </Button>
+            </div>
+          </form>
+        </CardContent>
+      </Card>
     </div>
   );
 }

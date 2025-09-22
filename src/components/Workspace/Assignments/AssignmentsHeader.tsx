@@ -19,15 +19,13 @@ export default function AssignmentsHeader({
   setFilter,
 }: AssignmentsHeaderProps) {
   return (
-    <div className="flex-col gap-4 p-4 bg-white dark:bg-gray-950 border-b border-gray-200 dark:border-gray-600 hidden sm:flex">
+    <div className="flex-col gap-4 p-4 bg-white dark:bg-neutral-950 border-b hidden sm:flex">
       <div className="flex items-center justify-between">
         {!showDetails ? (
           <>
-            <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">
-              Assignments
-            </h2>
+            <h2 className="text-xl font-bold">Assignments</h2>
             <div className="flex gap-2">
-              <Funnel className="w-5 h-5 text-gray-600 dark:text-gray-300 self-center" />
+              <Funnel className="w-5 h-5 text-muted-foreground self-center" />
               <Select
                 value={filter}
                 onValueChange={(value) => setFilter(value as AssignmentFilter)}

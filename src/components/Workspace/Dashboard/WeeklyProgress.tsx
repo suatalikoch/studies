@@ -1,3 +1,4 @@
+import { Card, CardContent } from "@/components/UI";
 import type { ProgressDay } from "@/types";
 import { TrendingUp } from "lucide-react";
 
@@ -7,47 +8,41 @@ interface WeeklyProgressProps {
 
 export default function WeeklyProgress({ progress }: WeeklyProgressProps) {
   return (
-    <section
-      className="bg-white dark:bg-gray-950 rounded-lg border border-gray-200 dark:border-gray-600"
-      aria-labelledby="weekly-progress-title"
-    >
-      <header className="p-6 border-b border-gray-200 dark:border-gray-600 flex items-center justify-between">
-        <h3
-          id="weekly-progress-title"
-          className="text-lg font-semibold text-gray-900 dark:text-gray-100"
-        >
-          Weekly Progress
-        </h3>
-        <TrendingUp className="w-5 h-5 text-green-500" aria-hidden="true" />
-      </header>
-      <div className="p-6">
-        <div className="flex items-end justify-between gap-2">
-          {progress.length > 0 ? (
-            progress.map(({ day, completed, total }) => (
-              <div key={day} className="flex flex-col items-center flex-1">
-                <div
-                  className="w-full bg-gray-200 dark:bg-gray-800 rounded-t-lg relative"
-                  style={{ height: "84px" }}
-                  aria-label={`${day} progress`}
-                >
+    <Card className="p-0" aria-labelledby="weekly-progress-title">
+      <CardContent className="p-0">
+        <header className="p-6 border-b flex items-center justify-between">
+          <h3 id="weekly-progress-title" className="text-lg font-semibold">
+            Weekly Progress
+          </h3>
+          <TrendingUp className="w-5 h-5 text-green-500" aria-hidden="true" />
+        </header>
+        <div className="p-6">
+          <div className="flex items-end justify-between gap-2">
+            {progress.length > 0 ? (
+              progress.map(({ day, completed, total }) => (
+                <div key={day} className="flex flex-col items-center flex-1">
                   <div
-                    className="bg-indigo-600 dark:bg-indigo-700 rounded-t-lg absolute bottom-0 w-full transition-all duration-300"
-                    style={{ height: `${(completed / total) * 100}%` }}
-                  />
+                    className="w-full bg-neutral-100 dark:bg-neutral-950 rounded-t-lg relative"
+                    style={{ height: "84px" }}
+                    aria-label={`${day} progress`}
+                  >
+                    <div
+                      className="bg-primary rounded-t-lg absolute bottom-0 w-full transition-all duration-300"
+                      style={{ height: `${(completed / total) * 100}%` }}
+                    />
+                  </div>
+                  <p className="text-xs mt-2">{day}</p>
+                  <p className="text-xs text-muted-foreground">
+                    {completed}/{total}
+                  </p>
                 </div>
-                <p className="text-xs font-medium text-gray-600 dark:text-gray-300 mt-2">
-                  {day}
-                </p>
-                <p className="text-xs text-gray-500 dark:text-gray-400">
-                  {completed}/{total}
-                </p>
-              </div>
-            ))
-          ) : (
-            <h3>No weekly progress data yet.</h3>
-          )}
+              ))
+            ) : (
+              <h3>No weekly progress data yet.</h3>
+            )}
+          </div>
         </div>
-      </div>
-    </section>
+      </CardContent>
+    </Card>
   );
 }

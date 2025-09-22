@@ -1,5 +1,7 @@
+import { Button } from "@/components/UI";
 import { formatPrice } from "@/lib/utils/pricing";
 import { FeatureComparisonTableProps } from "@/types";
+import { Check, X } from "lucide-react";
 import Link from "next/link";
 
 export default function FeatureComparisonTable({
@@ -10,31 +12,29 @@ export default function FeatureComparisonTable({
 
   return (
     <div className="mt-12 overflow-x-auto rounded-lg">
-      <table className="w-full bg-white dark:bg-gray-950 rounded-lg shadow-md overflow-hidden text-left">
+      <table className="w-full bg-white dark:bg-neutral-950 rounded-lg shadow-md overflow-hidden text-left">
         <thead>
           <tr>
-            <th className="border border-gray-200 dark:border-gray-600 p-4">
-              Features
-            </th>
+            <th className="border p-4">Features</th>
             {plans.map((plan) => (
               <th
                 key={plan.name}
-                className={`border border-gray-200 dark:border-gray-600 p-4 text-center ${
-                  plan.highlighted ? "bg-indigo-50 dark:bg-indigo-300" : ""
+                className={`border p-4 text-center ${
+                  plan.highlighted && "bg-primary/10"
                 }`}
               >
                 <div className="text-xl font-semibold">{plan.name}</div>
-                <div className="mt-2 text-3xl font-bold text-indigo-600">
+                <div className="mt-2 text-3xl font-bold text-primary">
                   {formatPrice(plan, billingCycle)}
-                  <span className="text-lg text-gray-500">
+                  <span className="text-lg text-muted-foreground">
                     /{billingCycle === "monthly" ? "mo" : "yr"}
                   </span>
                 </div>
-                <p className="text-gray-600 dark:text-gray-300 text-sm mt-1">
+                <p className="text-muted-foreground text-sm mt-1">
                   {plan.description}
                 </p>
                 {plan.highlighted && (
-                  <div className="mt-2 bg-indigo-600 text-white text-xs font-bold px-2 py-1 rounded-full inline-block">
+                  <div className="mt-2 bg-primary text-secondary text-xs font-bold px-2 py-1 rounded-full inline-block">
                     Best
                   </div>
                 )}
@@ -45,35 +45,30 @@ export default function FeatureComparisonTable({
         <tbody>
           {allFeatures.map((feature) => (
             <tr key={feature}>
-              <td className="border border-gray-200 dark:border-gray-600 p-4 text-gray-700 dark:text-gray-400">
-                {feature}
-              </td>
+              <td className="border p-4 text-muted-foreground">{feature}</td>
               {plans.map((plan) => (
-                <td
-                  key={plan.name + feature}
-                  className="border border-gray-200 dark:border-gray-600 p-4 text-center"
-                >
-                  {plan.features.includes(feature) ? "✔" : "—"}
+                <td key={plan.name + feature} className="border p-4">
+                  <div className="flex items-center justify-center">
+                    {plan.features.includes(feature) ? (
+                      <Check className="text-green-500" />
+                    ) : (
+                      <X className="text-red-500" />
+                    )}
+                  </div>
                 </td>
               ))}
             </tr>
           ))}
           <tr>
-            <td className="border border-gray-200 dark:border-gray-600 p-4"></td>
+            <td className="border p-4"></td>
             {plans.map((plan) => (
-              <td
-                key={plan.name + "btn"}
-                className="border border-gray-200 dark:border-gray-600 p-4 text-center"
-              >
-                <Link
-                  href={plan.button_link}
-                  className={`px-4 py-2 rounded-lg font-medium inline-block ${
-                    plan.highlighted
-                      ? "bg-indigo-600 text-white hover:bg-indigo-700"
-                      : "bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-800"
-                  }`}
-                >
-                  {plan.button_text}
+              <td key={plan.name + "btn"} className="border p-4 text-center">
+                <Link href={plan.button_link}>
+                  <Button
+                    variant={`${plan.highlighted ? "default" : "secondary"}`}
+                  >
+                    {plan.button_text}
+                  </Button>
                 </Link>
               </td>
             ))}

@@ -19,7 +19,7 @@ export default function TasksList({
         />
       ))}
       {tasks.length === 0 && (
-        <div className="text-center text-gray-500 py-8">
+        <div className="text-center text-muted-foreground py-8">
           No tasks found for this view.
         </div>
       )}

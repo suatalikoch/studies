@@ -49,8 +49,8 @@ export default function DrawingBoardClient() {
   };
 
   return (
-    <div className="h-full flex flex-col bg-gray-50 dark:bg-gray-800 transition-colors duration-300">
-      <div className="bg-white dark:bg-gray-950 border-b border-gray-200 dark:border-gray-600 p-4 overflow-x-auto sm:overflow-x-visible">
+    <div className="h-full flex flex-col bg-white dark:bg-neutral-950 transition-colors duration-300">
+      <div className="bg-white dark:bg-neutral-950 border-b p-4 overflow-x-auto sm:overflow-x-visible">
         <Toolbar
           tool={tool}
           setTool={setTool}
