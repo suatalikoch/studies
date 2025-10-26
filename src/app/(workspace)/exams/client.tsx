@@ -8,11 +8,11 @@ import { Exam } from "@/types";
 import {
   Trash2,
   Check,
-  ArrowLeft,
   X,
   MapPin,
   Clock,
   CalendarIcon,
+  ChevronLeft,
 } from "lucide-react";
 import {
   Badge,
@@ -87,11 +87,11 @@ export default function ExamsClient({ examsDB }: { examsDB: Exam[] }) {
   };
 
   return (
-    <div className="p-4 space-y-4">
+    <div className="flex flex-col gap-4 p-4">
       <div className="flex gap-3 items-center">
         <Link href="/calendar">
-          <Button variant="outline">
-            <ArrowLeft />
+          <Button variant="secondary">
+            <ChevronLeft />
             Back
           </Button>
         </Link>
@@ -101,7 +101,7 @@ export default function ExamsClient({ examsDB }: { examsDB: Exam[] }) {
         <CardHeader>
           <CardTitle>Add New Exam</CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="flex flex-col gap-4">
           <div className="flex gap-4">
             <div className="grid w-full items-center gap-3">
               <Label htmlFor="subject">Subject</Label>
@@ -156,13 +156,14 @@ export default function ExamsClient({ examsDB }: { examsDB: Exam[] }) {
           </div>
           <Button
             onClick={() => addExam("e52e5151-a495-4bda-86bd-43ccf1394c32")}
+            className="w-fit"
           >
             Add Exam
           </Button>
         </CardContent>
       </Card>
       {exams.length > 0 ? (
-        <div className="space-y-4">
+        <div className="flex flex-col gap-4">
           <Suspense fallback={<div>Loading exams...</div>}>
             {exams.map((exam) => (
               <Card

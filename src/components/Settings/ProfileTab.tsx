@@ -20,7 +20,7 @@ export default function ProfileTab({
         Profile Information
       </h2>
       <div className="flex items-center gap-6 mb-6">
-        <div className="w-20 h-20 rounded-full overflow-hidden bg-neutral-200 flex items-center justify-center">
+        <div className="w-16 h-16 rounded-full overflow-hidden bg-neutral-200 flex items-center justify-center">
           {isFetching ? (
             <div>
               <Skeleton />
@@ -29,8 +29,8 @@ export default function ProfileTab({
             <Image
               src={avatar || "/images/avatar.png"}
               alt="Avatar"
-              width={80}
-              height={80}
+              width={64}
+              height={64}
               className="object-cover"
             />
           )}
@@ -50,7 +50,7 @@ export default function ProfileTab({
           />
         </label>
       </div>
-      <div className="space-y-5 max-w-lg">
+      <div className="flex flex-col gap-4 max-w-lg">
         <div>
           <Label htmlFor="fullName" className="text-muted-foreground mb-2">
             Full Name

@@ -8,7 +8,7 @@ export const metadata: Metadata = {
 export default function PrivacyPage() {
   return (
     <div className="px-3 py-6 sm:p-4 flex items-center justify-center">
-      <div className="w-full space-y-8">
+      <div className="flex flex-col gap-8 w-full">
         <div className="pt-12">
           <h1 className="text-lg sm:text-4xl font-bold mb-0 sm:mb-8">
             Privacy Policy

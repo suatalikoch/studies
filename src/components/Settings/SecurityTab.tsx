@@ -16,7 +16,7 @@ export default function SecurityTab({
       <h2 className="text-xl font-semibold flex items-center gap-2 mb-6">
         <Lock className="w-6 h-6 text-primary" /> Security
       </h2>
-      <div className="space-y-5 max-w-md">
+      <div className="flex flex-col gap-4 max-w-md">
         <div>
           <Label
             htmlFor="currentPassword"

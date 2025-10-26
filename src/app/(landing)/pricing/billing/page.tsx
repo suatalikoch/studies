@@ -69,7 +69,7 @@ export default function BillingPage() {
         <CardHeader>
           <CardTitle>Payment Information</CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4">
+        <CardContent className="flex flex-col gap-4">
           <div className="grid gap-2">
             <Label htmlFor="card-number">Card Number</Label>
             <Input id="card-number" placeholder="1234 5678 9012 3456" />

@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { blogPosts } from "@/lib/constants";
 import { Card, CardContent } from "@/components/UI";
-import { Rocket } from "lucide-react";
+import { ChevronLeft, Rocket } from "lucide-react";
 
 export default async function BlogPostPage({
   params,
@@ -19,13 +19,15 @@ export default async function BlogPostPage({
     <div className="px-3 sm:px-6 py-6 sm:py-12">
       <Card>
         <CardContent>
-          <div className="space-y-6">
-            <Link href="/blog" className="text-primary hover:underline">
-              ← Back to Blog
+          <div className="flex flex-col gap-6">
+            <Link
+              href="/blog"
+              className="flex items-center gap-1 text-primary hover:underline"
+            >
+              <ChevronLeft />
+              Back to Blog
             </Link>
-
             <h1 className="sm:text-4xl font-bold">{post.title}</h1>
-
             <div className="sm:flex justify-between items-center text-muted-foreground text-xs sm:text-sm">
               <time dateTime={post.date}>
                 {new Date(post.date).toLocaleDateString()}
@@ -41,9 +43,7 @@ export default async function BlogPostPage({
                 ))}
               </div>
             </div>
-
             <p className="sm:text-lg leading-relaxed">{post.excerpt}</p>
-
             <div className="flex items-center gap-2">
               <Rocket className="text-muted-foreground" />
               <p className="text-muted-foreground text-xs sm:text-sm">

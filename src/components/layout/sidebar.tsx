@@ -2,13 +2,14 @@
 
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
+import { usePathname, useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
-import { Settings, LogOut, ChevronDown } from "lucide-react";
 import { useKeyboardShortcuts, usePersistentState } from "@/hooks";
 import { sidebarItems } from "@/lib/constants";
 import { Badge, Skeleton } from "@/components/UI";
+import UserDropdownMenu from "@/components//UI/Special/UserDropdownMenu";
+import { ChevronDown } from "lucide-react";
 
 export default function Sidebar() {
   const router = useRouter();
@@ -54,33 +55,6 @@ export default function Sidebar() {
     fetchUser();
   }, [supabase.auth]);
 
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (
-        flyoutRef.current &&
-        !flyoutRef.current.contains(event.target as Node)
-      ) {
-        setFlyoutOpen(false);
-      }
-    }
-
-    function handleEscKey(event: KeyboardEvent) {
-      if (event.key === "Escape") {
-        setFlyoutOpen(false);
-      }
-    }
-
-    if (flyoutOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
-      document.addEventListener("keydown", handleEscKey);
-    }
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-      document.removeEventListener("keydown", handleEscKey);
-    };
-  }, [flyoutOpen]);
-
   useKeyboardShortcuts({
     shortcuts: [
       { combo: "ctrl+s", handler: () => setCollapsed((prev) => !prev) },
@@ -92,11 +66,12 @@ export default function Sidebar() {
     const { error } = await supabase.auth.signOut();
     if (error) {
       alert("Error logging out: " + error.message);
-    } else {
-      setUser(null);
-      setFlyoutOpen(false);
-      router.push("/login");
+      return;
     }
+
+    setUser(null);
+    setFlyoutOpen(false);
+    router.push("/login");
   }
 
   return (
@@ -106,7 +81,7 @@ export default function Sidebar() {
       } transition-all duration-100 `}
     >
       <nav
-        className={`space-y-2 overflow-y-auto flex-1 ${
+        className={`flex flex-col gap-2 overflow-y-auto flex-1 ${
           collapsed ? "p-2" : "p-4"
         }`}
       >
@@ -140,7 +115,7 @@ export default function Sidebar() {
             <h3 className="text-sm font-semibold mb-3 truncate">
               Quick Statistics
             </h3>
-            <div className="space-y-2">
+            <div className="flex flex-col gap-2">
               <div className="flex items-center justify-between">
                 <span className="text-muted-foreground text-sm truncate">
                   Due Today
@@ -179,66 +154,44 @@ export default function Sidebar() {
             <Skeleton className="rounded-lg w-7 h-7" />
           </div>
         ) : (
-          <button
-            onClick={() => setFlyoutOpen(!flyoutOpen)}
-            className={`flex items-center w-full focus:outline-none cursor-pointer ${
-              collapsed ? "flex items-center justify-center h-full" : "gap-3"
-            }`}
-          >
-            <Image
-              src={user?.avatar || "/images/avatar.png"}
-              alt="User Avatar"
-              width={40}
-              height={40}
-              className="rounded-full object-cover"
-            />
-            {!collapsed && (
-              <div className="flex-1 text-left min-w-0">
-                <p className="font-semibold text-sm truncate">{user?.name}</p>
-                <p className="text-muted-foreground text-xs truncate">
-                  {user?.email}
-                </p>
-              </div>
-            )}
-            {!collapsed && (
-              <div
-                className={`rounded-lg p-1 transition-colors ${
-                  flyoutOpen
-                    ? "bg-neutral-200 dark:bg-neutral-700"
-                    : "hover:bg-neutral-200 dark:hover:bg-neutral-700"
-                }`}
-              >
-                <ChevronDown
-                  className={`w-5 h-5 text-muted-foreground transition-transform ${
-                    flyoutOpen ? "rotate-180" : ""
-                  }`}
-                />
-              </div>
-            )}
-          </button>
-        )}
-        {flyoutOpen && (
-          <div
-            className={`absolute left-full ml-2 w-40 bg-white dark:bg-neutral-950 border rounded-lg shadow-lg z-10 ${
-              collapsed ? "-top-7" : "-top-5"
-            }`}
-          >
-            <Link
-              href="/settings"
-              className="flex items-center px-4 py-2 hover:bg-neutral-100 dark:hover:bg-neutral-900 text-neutral-700 dark:text-neutral-200 rounded-t-lg"
-              onClick={() => setFlyoutOpen(false)}
-            >
-              <Settings className="w-4 h-4 mr-2" />
-              Settings
-            </Link>
+          <UserDropdownMenu align="start" onLogout={handleLogout}>
             <button
-              onClick={handleLogout}
-              className="flex items-center w-full rounded-b-lg px-4 py-2 hover:bg-neutral-100 dark:hover:bg-neutral-900 text-neutral-700 dark:text-neutral-200 cursor-pointer"
+              className={`flex items-center w-full focus:outline-none cursor-pointer ${
+                collapsed ? "flex items-center justify-center h-full" : "gap-3"
+              }`}
             >
-              <LogOut className="w-4 h-4 mr-2" />
-              Logout
+              <Image
+                src={user?.avatar || "/images/avatar.png"}
+                alt="User Avatar"
+                width={40}
+                height={40}
+                className="rounded-full object-cover"
+              />
+              {!collapsed && (
+                <div className="flex-1 text-left min-w-0">
+                  <p className="font-semibold text-sm truncate">{user?.name}</p>
+                  <p className="text-muted-foreground text-xs truncate">
+                    {user?.email}
+                  </p>
+                </div>
+              )}
+              {!collapsed && (
+                <div
+                  className={`rounded-lg p-1 transition-colors ${
+                    flyoutOpen
+                      ? "bg-neutral-200 dark:bg-neutral-700"
+                      : "hover:bg-neutral-200 dark:hover:bg-neutral-700"
+                  }`}
+                >
+                  <ChevronDown
+                    className={`w-5 h-5 text-muted-foreground transition-transform ${
+                      flyoutOpen ? "rotate-180" : ""
+                    }`}
+                  />
+                </div>
+              )}
             </button>
-          </div>
+          </UserDropdownMenu>
         )}
       </div>
     </aside>
