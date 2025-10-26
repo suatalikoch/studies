@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { NoteCardProps } from "@/types";
 import { Star } from "lucide-react";
 import ShareNote from "./ShareNote";
@@ -13,7 +14,6 @@ import {
   ContextMenuItem,
   ContextMenuLabel,
   ContextMenuRadioGroup,
-  ContextMenuRadioItem,
   ContextMenuSeparator,
   ContextMenuShortcut,
   ContextMenuSub,
@@ -205,10 +205,11 @@ export default function NoteCard({
                       )}
                     </div>
                     <div>
-                      <img
-                        src={"https://avatar.iran.liara.run/public/boy"}
+                      <Image
+                        src="https://avatar.iran.liara.run/public/boy"
                         alt={note.user_id || "Owner"}
-                        className="w-5 h-5 rounded-full border"
+                        width={18}
+                        height={18}
                       />
                     </div>
                   </div>
@@ -235,6 +236,7 @@ export default function NoteCard({
           <ContextMenuSubContent className="w-44">
             <ContextMenuSub>
               <ContextMenuItem
+                inset
                 onClick={(e) => {
                   e.stopPropagation();
                   setShareOpen(true);
@@ -242,13 +244,14 @@ export default function NoteCard({
               >
                 Share
               </ContextMenuItem>
-              <ContextMenuItem>Save Page...</ContextMenuItem>
-              <ContextMenuItem>Create Shortcut...</ContextMenuItem>
-              <ContextMenuItem>Name Window...</ContextMenuItem>
+              <ContextMenuItem inset>Save Page...</ContextMenuItem>
+              <ContextMenuItem inset>Create Shortcut...</ContextMenuItem>
+              <ContextMenuItem inset>Name Window...</ContextMenuItem>
               <ContextMenuSeparator />
-              <ContextMenuItem>Developer Tools</ContextMenuItem>
+              <ContextMenuItem inset>Developer Tools</ContextMenuItem>
               <ContextMenuSeparator />
               <ContextMenuItem
+                inset
                 variant="destructive"
                 onClick={() => console.log("Note deleted successfully!")}
               >
@@ -264,23 +267,25 @@ export default function NoteCard({
         <ContextMenuCheckboxItem>Show Full URLs</ContextMenuCheckboxItem>
         <ContextMenuSeparator />
         <ContextMenuRadioGroup value="pedro">
-          <ContextMenuLabel inset>People</ContextMenuLabel>
+          <ContextMenuLabel inset>Shared People</ContextMenuLabel>
           <ContextMenuItem>
-            <div className="flex flex-row items-center gap-1">
-              <img
+            <div className="flex flex-row items-center gap-3">
+              <Image
                 src="https://avatar.iran.liara.run/public/boy"
-                alt=""
-                className="w-6 h-6"
+                alt="Shared Person"
+                width={24}
+                height={24}
               />
               <span>Suat Alikoch</span>
             </div>
           </ContextMenuItem>
           <ContextMenuItem>
-            <div className="flex flex-row items-center gap-1">
-              <img
-                src="https://avatar.iran.liara.run/public/boy"
-                alt=""
-                className="w-6 h-6"
+            <div className="flex flex-row items-center gap-3">
+              <Image
+                src="https://avatar.iran.liara.run/public/girl"
+                alt="Shared Person"
+                width={24}
+                height={24}
               />
               <span>Anton Dimitrov</span>
             </div>
@@ -292,15 +297,17 @@ export default function NoteCard({
               <ContextMenuSubTrigger inset>More...</ContextMenuSubTrigger>
               <ContextMenuSubContent>
                 {sharedUsers.slice(0, 3).map((user) => (
-                  <ContextMenuRadioItem key={user.id} value={user.id}>
+                  <ContextMenuItem key={user.id}>
                     <div className="flex flex-row justify-between">
-                      <img
+                      <Image
                         src="https://avatar.iran.liara.run/public/boy"
-                        alt=""
+                        alt="Shared Person"
+                        width={24}
+                        height={24}
                       />
                       {user.name}
                     </div>
-                  </ContextMenuRadioItem>
+                  </ContextMenuItem>
                 ))}
               </ContextMenuSubContent>
             </ContextMenuSub>
@@ -313,6 +320,7 @@ export default function NoteCard({
           noteId={note.id}
           isPublic={note.is_public}
           allowedUsers={note.shared_with || []}
+          shareOpen={shareOpen}
           onClose={() => setShareOpen(false)}
         />
       )}
