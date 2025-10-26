@@ -117,7 +117,7 @@ export default function NoteEditor({ note }: NoteEditorProps) {
     <div className="flex flex-col h-full bg-white dark:bg-neutral-950">
       <div className="p-4 border-b flex justify-between items-center sticky top-0 bg-white dark:bg-neutral-950 z-10">
         <Button
-          variant="outline"
+          variant="secondary"
           onClick={() => {
             if (isEditing && !confirm("Discard unsaved changes?")) {
               return;
@@ -141,13 +141,13 @@ export default function NoteEditor({ note }: NoteEditorProps) {
             <Button onClick={() => setIsEditing(true)}>Edit</Button>
           ) : (
             <>
-              <Button onClick={() => setIsEditing(false)} variant="outline">
+              <Button variant="secondary" onClick={() => setIsEditing(false)}>
                 Cancel
               </Button>
-              <Button onClick={undo} variant="outline">
+              <Button variant="secondary" onClick={undo}>
                 Undo
               </Button>
-              <Button onClick={redo} variant="outline">
+              <Button variant="secondary" onClick={redo}>
                 Redo
               </Button>
               <Button onClick={save}>Save</Button>
@@ -166,7 +166,10 @@ export default function NoteEditor({ note }: NoteEditorProps) {
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
-                <AlertDialogAction onClick={deleteNote}>
+                <AlertDialogAction
+                  onClick={deleteNote}
+                  className="bg-destructive hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60"
+                >
                   Delete
                 </AlertDialogAction>
                 <AlertDialogCancel>Cancel</AlertDialogCancel>

@@ -45,7 +45,7 @@ export default function UpcomingDeadlines({
             </Link>
           </div>
         </header>
-        <div className="p-6 space-y-4">
+        <div className="flex flex-col gap-4 p-6">
           {deadlines.length > 0 ? (
             deadlines.slice(0, 3).map((deadline) => (
               <Sheet key={deadline.id}>
@@ -55,7 +55,7 @@ export default function UpcomingDeadlines({
                     tabIndex={0}
                     aria-pressed="false"
                     onClick={() => setSelectedDeadline(deadline)}
-                    className="p-4 bg-neutral-50 dark:bg-neutral-950 hover:bg-neutral-100 dark:hover:bg-neutral-800 cursor-pointer transition-colors duration-300"
+                    className="p-4 bg-neutral-50 dark:bg-neutral-800 hover:bg-neutral-100 dark:hover:bg-neutral-700 cursor-pointer transition-colors duration-300"
                   >
                     <CardContent className="p-0 flex items-center justify-between">
                       <div className="flex-1">
@@ -64,15 +64,15 @@ export default function UpcomingDeadlines({
                           {deadline.subject}
                         </p>
                       </div>
-                      <div className="text-right">
-                        <p className="text-sm text-muted-foreground">
+                      <div className="flex flex-col gap-1">
+                        <p className="self-end text-xs text-muted-foreground">
                           Due{" "}
                           {formatDistanceToNow(new Date(deadline.due_date), {
                             addSuffix: true,
                           })}
                         </p>
-                        <span
-                          className={`inline-block px-2 py-1 rounded-full text-xs ${
+                        <Badge
+                          className={`self-end inline-block text-xs ${
                             deadline.priority === "high"
                               ? "bg-red-100 text-red-800"
                               : deadline.priority === "medium"
@@ -81,7 +81,7 @@ export default function UpcomingDeadlines({
                           }`}
                         >
                           {deadline.priority}
-                        </span>
+                        </Badge>
                       </div>
                     </CardContent>
                   </Card>
@@ -97,7 +97,7 @@ export default function UpcomingDeadlines({
                         })}
                       </SheetDescription>
                     </SheetHeader>
-                    <div className="p-4 space-y-2 text-sm">
+                    <div className="flex flex-col gap-2 p-4 text-sm">
                       <p>
                         <strong>Due Date:</strong>{" "}
                         {format(parseISO(deadline.due_date), "PPP")}

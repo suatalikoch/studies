@@ -73,11 +73,12 @@ function MarkdownImage({ src, alt }: { src?: string | Blob; alt?: string }) {
       />
       {open && (
         <span
-          className="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
+          className="fixed inset-0 bg-black/50 flex items-center justify-center z-51"
           onClick={() => setOpen(false)}
         >
           <Button
-            variant="ghost"
+            variant="secondary"
+            size="icon"
             className="absolute top-5 right-5"
             onClick={() => setOpen(false)}
           >

@@ -10,7 +10,7 @@ export default function WeeklyProgress({ progress }: WeeklyProgressProps) {
   return (
     <Card className="p-0" aria-labelledby="weekly-progress-title">
       <CardContent className="p-0">
-        <header className="p-6 border-b flex items-center justify-between">
+        <header className="p-4 border-b flex items-center justify-between">
           <h3 id="weekly-progress-title" className="text-lg font-semibold">
             Weekly Progress
           </h3>
@@ -22,7 +22,7 @@ export default function WeeklyProgress({ progress }: WeeklyProgressProps) {
               progress.map(({ day, completed, total }) => (
                 <div key={day} className="flex flex-col items-center flex-1">
                   <div
-                    className="w-full bg-neutral-100 dark:bg-neutral-950 rounded-t-lg relative"
+                    className="w-full bg-neutral-50 dark:bg-neutral-800 hover:bg-neutral-100 hover:dark:bg-neutral-700 rounded-t-lg relative transition-colors duration-300 cursor-pointer"
                     style={{ height: "84px" }}
                     aria-label={`${day} progress`}
                   >

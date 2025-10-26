@@ -38,13 +38,13 @@ export default function RecentNotes({ notes }: RecentNotesProps) {
                 tabIndex={0}
                 aria-pressed="false"
               >
-                <Card className="p-4 bg-neutral-50 dark:bg-neutral-950 hover:bg-neutral-100 dark:hover:bg-neutral-800 cursor-pointer transition-colors duration-300">
+                <Card className="p-4 bg-neutral-50 dark:bg-neutral-800 hover:bg-neutral-100 dark:hover:bg-neutral-700 cursor-pointer transition-colors duration-300">
                   <CardContent className="p-0 flex items-center justify-between">
                     <div className="flex-1">
                       <h4>{title}</h4>
                       <p className="text-sm text-muted-foreground">{subject}</p>
                     </div>
-                    <p className="text-sm text-muted-foreground">
+                    <p className="text-xs text-muted-foreground">
                       {Date.parse(updated_at)
                         ? formatDistanceToNow(new Date(updated_at), {
                             addSuffix: true,

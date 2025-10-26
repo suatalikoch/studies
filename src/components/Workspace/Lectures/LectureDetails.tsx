@@ -52,7 +52,7 @@ export default function LectureDetails({ lecture }: LectureDetailsProps) {
             </Button>
           </div>
         </div>
-        <div className="flex-1 p-6 overflow-y-auto space-y-6">
+        <div className="flex-1 flex flex-col gap-6 p-6 overflow-y-auto">
           <div className="bg-neutral-100 dark:bg-neutral-900 rounded-lg aspect-video flex items-center justify-center">
             <div className="text-center">
               <Play className="w-14 h-14 mx-auto mb-4" />
@@ -77,7 +77,7 @@ export default function LectureDetails({ lecture }: LectureDetailsProps) {
           </div>
           <div>
             <h2 className="text-xl font-semibold mb-2">Resources</h2>
-            <ul className="list-disc list-inside space-y-1 text-muted-foreground">
+            <ul className="flex flex-col gap-1 list-disc list-inside text-muted-foreground">
               <li>
                 <Link
                   href="https://en.wikipedia.org/wiki/Biology"

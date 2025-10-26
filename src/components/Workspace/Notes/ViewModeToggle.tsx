@@ -12,7 +12,7 @@ export default function ViewModeToggle({
 
   return (
     <Button
-      variant="outline"
+      variant="secondary"
       size="icon"
       onClick={toggleMode}
       aria-label="Toggle view mode"
