@@ -12,7 +12,7 @@ export default function NotificationsTab({
       <h2 className="text-xl font-semibold flex items-center gap-2 mb-6">
         <Bell className="w-6 h-6 text-primary" /> Notifications
       </h2>
-      <div className="space-y-4 max-w-md">
+      <div className="flex flex-col gap-4 max-w-md">
         {Object.entries(notifications).map(([key, value]) => {
           const checked = Boolean(value);
           return (

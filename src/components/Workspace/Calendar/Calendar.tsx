@@ -1,11 +1,16 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { CalendarIcon, Triangle, X } from "lucide-react";
+import { CalendarIcon, Triangle } from "lucide-react";
 import { CalendarEvent, CalendarProps, EventFormProps, Exam } from "@/types";
 import {
   Button,
   Calendar as CalendarComponent,
   Card,
   CardContent,
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
   Input,
   Popover,
   PopoverContent,
@@ -47,13 +52,18 @@ function examsToCalendarEvents(exams: Exam[]): CalendarEvent[] {
   }));
 }
 
-export default function Calendar({ events = [], exams = [] }: CalendarProps) {
+export default function Calendar({
+  events = [],
+  exams = [],
+  modalOpen = false,
+  openModal,
+  closeModal,
+  editingEvent,
+}: CalendarProps) {
   const [date, setDate] = useState<string>(toISO(new Date()));
 
   const todayISO = toISO(new Date());
   const [viewDate, setViewDate] = useState<Date>(new Date());
-  const [modalOpen, setModalOpen] = useState(false);
-  const [editingEvent, setEditingEvent] = useState<CalendarEvent | null>(null);
   const [eventList, setEventList] = useState<CalendarEvent[]>(events);
 
   const monthMatrix = useMemo(() => {
@@ -118,26 +128,19 @@ export default function Calendar({ events = [], exams = [] }: CalendarProps) {
     );
   };
 
-  // --- Modal handlers ---
-  const openModal = (ev?: CalendarEvent) => {
-    setEditingEvent(ev ?? null);
-    setModalOpen(true);
-  };
-
   const saveEvent = (e: CalendarEvent) => {
     setEventList((prev) => {
       if (editingEvent) {
-        // edit existing
         return prev.map((ev) => (ev.id === editingEvent.id ? e : ev));
       }
       return [...prev, e];
     });
-    setModalOpen(false);
+    closeModal();
   };
 
   const deleteEvent = (id: string) => {
     setEventList((prev) => prev.filter((ev) => ev.id !== id));
-    setModalOpen(false);
+    closeModal();
   };
 
   useEffect(() => {
@@ -146,136 +149,159 @@ export default function Calendar({ events = [], exams = [] }: CalendarProps) {
 
   return (
     <div className="flex-1">
-      <div className="rounded-lg border bg-white dark:bg-neutral-950">
-        <div className="flex items-center justify-between px-4 py-3 border-b bg-neutral-100 dark:bg-neutral-900 rounded-t-lg">
-          <h2 className="text-lg font-semibold">{label}</h2>
-          <div className="flex items-center gap-1">
-            <Button
-              onClick={() => goMonth(-1)}
-              variant="ghost"
-              aria-label="Previous month"
-            >
-              <Triangle
-                fill="currentColor"
-                className="w-4 h-4 text-primary rotate-270"
-              />
-            </Button>
-            <Button
-              onClick={() => setViewDate(new Date())}
-              variant="outline"
-              className="shadow-none"
-              aria-label="Current Date"
-            >
-              Today
-            </Button>
-            <Button
-              onClick={() => goMonth(1)}
-              variant="ghost"
-              aria-label="Next month"
-            >
-              <Triangle
-                fill="currentColor"
-                className="w-3 h-3 text-primary rotate-90"
-              />
-            </Button>
-          </div>
-        </div>
-        <div className="grid grid-cols-7 gap-2 text-sm text-muted-foreground bg-neutral-100 dark:bg-neutral-900 p-3 border-b">
-          {["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map((d) => (
-            <div key={d} className="text-center uppercase">
-              {d}
+      <Card className="p-0">
+        <CardContent className="p-0">
+          <div className="flex items-center justify-between px-4 py-3 border-b">
+            <h2 className="text-lg font-semibold">{label}</h2>
+            <div className="flex items-center gap-1">
+              <Button
+                onClick={() => goMonth(-1)}
+                variant="ghost"
+                aria-label="Previous month"
+              >
+                <Triangle
+                  fill="currentColor"
+                  className="w-4 h-4 text-primary rotate-270"
+                />
+              </Button>
+              <Button
+                onClick={() => setViewDate(new Date())}
+                variant="secondary"
+                aria-label="Current Date"
+              >
+                Today
+              </Button>
+              <Button
+                onClick={() => goMonth(1)}
+                variant="ghost"
+                aria-label="Next month"
+              >
+                <Triangle
+                  fill="currentColor"
+                  className="w-3 h-3 text-primary rotate-90"
+                />
+              </Button>
             </div>
-          ))}
-        </div>
-        <div className="p-3 grid grid-cols-7 gap-2">
-          {monthMatrix.map((week, wi) =>
-            week.map((iso, di) => {
-              const day = new Date(iso);
-              const evs = eventsByDate.get(iso) ?? [];
-              const isToday = iso === todayISO;
-              const isSelected = date === iso;
-              const muted = !isSameMonth(iso);
-              return (
-                <Card
-                  key={`${wi}-${di}`}
-                  onClick={() => setDate(iso)}
-                  className={`p-2 relative hover:border-primary/50 hover:shadow cursor-pointer transition-colors duration-300
+          </div>
+          <div className="grid grid-cols-7 gap-2 text-sm text-muted-foreground p-3 border-b">
+            {["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map(
+              (day, idx) => {
+                const today = new Date();
+                const todayIndex = (today.getDay() + 6) % 7;
+                return (
+                  <div
+                    key={day}
+                    className={`text-center uppercase ${
+                      idx === todayIndex ? "text-primary" : ""
+                    }`}
+                  >
+                    {day}
+                  </div>
+                );
+              }
+            )}
+          </div>
+          <div className="p-3 grid grid-cols-7 gap-2">
+            {monthMatrix.map((week, wi) =>
+              week.map((iso, di) => {
+                const day = new Date(iso);
+                const evs = eventsByDate.get(iso) ?? [];
+                const isToday = iso === todayISO;
+                const isSelected = date === iso;
+                const muted = !isSameMonth(iso);
+                return (
+                  <Card
+                    key={`${wi}-${di}`}
+                    onClick={() => setDate(iso)}
+                    className={`p-2 relative bg-neutral-50 dark:bg-neutral-800 hover:bg-neutral-100 hover:dark:bg-neutral-700 hover:shadow cursor-pointer transition-colors duration-300
                   ${
                     muted &&
-                    "text-muted-foreground bg-neutral-50 dark:bg-neutral-950"
+                    "text-muted-foreground bg-white dark:bg-neutral-900 hover:bg-neutral-50 hover:dark:bg-neutral-800"
                   }
                   ${isSelected ? "border-neutral-500 bg-primary/10" : ""}
-                  ${isToday ? "border-primary" : "border"}
+                  ${
+                    isToday
+                      ? "border-primary hover:bg-primary/20 hover:dark:bg-primary/20"
+                      : "border"
+                  }
                 `}
-                >
-                  <CardContent className="p-0 flex flex-col items-start text-left">
-                    <div className={`text-sm ${isToday && "text-primary"}`}>
-                      {day.getDate()}
-                    </div>
-                    <div className="mt-2 flex flex-wrap gap-1 w-full">
-                      {evs.slice(0, 3).map((e) => (
-                        <span
-                          key={e.id}
-                          title={`${e.time && e.time + " • "}${e.title}`}
-                          className={`text-xs px-2 py-0.5 rounded-lg truncate ${
-                            e.color ?? "bg-indigo-100 text-indigo-700"
-                          }`}
-                          style={{ maxWidth: "100%" }}
-                          onClick={(ev) => {
-                            ev.stopPropagation();
-                            openModal(e);
-                          }}
-                        >
-                          {e.title}
-                        </span>
-                      ))}
-                      {evs.length > 3 && (
-                        <span className="text-xs text-muted-foreground">
-                          +{evs.length - 3}
-                        </span>
-                      )}
-                    </div>
-                  </CardContent>
-                </Card>
-              );
-            })
-          )}
-        </div>
-      </div>
-      {modalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-          <div className="bg-white dark:bg-neutral-950 rounded-lg p-6 w-96 relative">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => setModalOpen(false)}
-              className="absolute top-6 right-6 cursor-pointer"
-            >
-              <X />
-            </Button>
-            <h3 className="text-lg font-semibold mb-4">
-              {editingEvent ? "Edit Event" : "Add Event"}
-            </h3>
-            <EventForm
-              event={editingEvent}
-              onSave={saveEvent}
-              onDelete={
-                editingEvent ? () => deleteEvent(editingEvent.id) : undefined
-              }
-              selectedDate={date}
-            />
+                  >
+                    <CardContent className="p-0 flex flex-col items-start text-left">
+                      <div className={`text-sm ${isToday && "text-primary"}`}>
+                        {day.getDate()}
+                      </div>
+                      <div className="mt-2 flex flex-wrap gap-1 w-full">
+                        {evs.slice(0, 3).map((e) => (
+                          <span
+                            key={e.id}
+                            title={`${e.time && e.time + " • "}${e.title}`}
+                            className={`text-xs px-2 py-0.5 rounded-lg truncate ${
+                              e.color ?? "bg-indigo-100 text-indigo-700"
+                            }`}
+                            style={{ maxWidth: "100%" }}
+                            onClick={(ev) => {
+                              ev.stopPropagation();
+                              openModal(e);
+                            }}
+                          >
+                            {e.title}
+                          </span>
+                        ))}
+                        {evs.length > 3 && (
+                          <span className="text-xs text-muted-foreground">
+                            +{evs.length - 3}
+                          </span>
+                        )}
+                      </div>
+                    </CardContent>
+                  </Card>
+                );
+              })
+            )}
           </div>
-        </div>
-      )}
+        </CardContent>
+      </Card>
+      <Dialog open={modalOpen} onOpenChange={() => closeModal()}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>
+              {editingEvent ? "Edit event" : "Add event"}
+            </DialogTitle>
+          </DialogHeader>
+          <EventForm
+            event={editingEvent}
+            onSave={saveEvent}
+            onDelete={
+              editingEvent ? () => deleteEvent(editingEvent.id) : undefined
+            }
+            selectedDate={date}
+          />
+          <DialogFooter>
+            <Button type="submit" size="sm">
+              Save
+            </Button>
+            {editingEvent && (
+              <Button
+                type="button"
+                size="sm"
+                variant="destructive"
+                onClick={() => deleteEvent(editingEvent.id)}
+              >
+                Delete
+              </Button>
+            )}
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
 
-function EventForm({ event, onSave, onDelete, selectedDate }: EventFormProps) {
+function EventForm({ event, onSave, selectedDate }: EventFormProps) {
   const [title, setTitle] = useState(event?.title || "");
   const [time, setTime] = useState(event?.time || "");
   const [color, setColor] = useState(
-    event?.color || "bg-indigo-100 text-indigo-700"
+    event?.color || "bg-primary text-secondary"
   );
   const [date, setDate] = useState(event?.date || selectedDate);
   const [open, setOpen] = useState(false);
@@ -346,16 +372,6 @@ function EventForm({ event, onSave, onDelete, selectedDate }: EventFormProps) {
           </SelectGroup>
         </SelectContent>
       </Select>
-      <div className="flex justify-between items-center">
-        {onDelete && (
-          <Button type="button" onClick={onDelete} variant="destructive">
-            Delete
-          </Button>
-        )}
-        <Button type="submit" variant="default">
-          Save
-        </Button>
-      </div>
     </form>
   );
 }

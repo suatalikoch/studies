@@ -239,7 +239,7 @@ export default function SettingsClient() {
               <AlertDescription>{success}</AlertDescription>
             </Alert>
           )}
-          <form onSubmit={handleSave} className="space-y-6">
+          <form onSubmit={handleSave} className="flex flex-col gap-6">
             <Tabs defaultValue="profile">
               <TabsList className="mb-3 shadow-xs">
                 <TabsTrigger value="profile">Profile</TabsTrigger>

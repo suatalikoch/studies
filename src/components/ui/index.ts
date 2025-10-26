@@ -22,7 +22,22 @@ export {
   AlertTitle,
   AlertDescription,
 } from "@/components/UI/Library/alert";
+export {
+  Avatar,
+  AvatarImage,
+  AvatarFallback,
+} from "@/components/UI/Library/avatar";
+export { default as AnnouncementBar } from "@/components/Landing/Home/AnnouncementBar";
 export { Badge } from "@/components/UI/Library/badge";
+export {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+  BreadcrumbEllipsis,
+} from "@/components/UI/Library/breadcrumb";
 export { Button, buttonVariants } from "@/components/UI/Library/button";
 export { Calendar } from "@/components/UI/Library/calendar";
 export {
@@ -94,9 +109,28 @@ export {
   DropdownMenuLabel,
   DropdownMenuItem,
   DropdownMenuSeparator,
+  DropdownMenuGroup,
+  DropdownMenuShortcut,
+  DropdownMenuSubTrigger,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
 } from "@/components/UI/Library/dropdown-menu";
-export { default as Features } from "@/components/UI/Special/Features";
-export { default as Hero } from "@/components/UI/Special/Hero";
+export {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/UI/Library/form";
+export {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/UI/Library/hover-card";
+export { default as Features } from "@/components/Landing/Home/Features";
+export { default as Hero } from "@/components/Landing/Home/Hero";
 export { Input } from "@/components/UI/Library/input";
 export { Label } from "@/components/UI/Library/label";
 export {
@@ -127,7 +161,7 @@ export {
   SelectItem,
 } from "@/components/UI/Library/select";
 export { Separator } from "@/components/UI/Library/separator";
-export { default as Preview } from "@/components/UI/Special/Preview";
+export { default as Preview } from "@/components/Landing/Home/Preview";
 export {
   Sheet,
   SheetClose,
@@ -143,7 +177,16 @@ export { Slider } from "@/components/UI/Library/slider";
 export { Toaster } from "@/components/UI/Library/sonner";
 export { Switch } from "@/components/UI/Library/switch";
 export { default as StatsCard } from "@/components/UI/Special/StatsCard";
-export { default as Testimonials } from "@/components/UI/Special/Testimonials";
+export { default as Testimonials } from "@/components/Landing/Home/Testimonials";
+export {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/UI/Library/table";
 export {
   Tabs,
   TabsContent,
@@ -156,6 +199,12 @@ export {
   ToggleGroupItem,
 } from "@/components/UI/Library/toggle-group";
 export { Toggle, toggleVariants } from "@/components/UI/Library/toggle";
+export {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/UI/Library/tooltip";
 export { ThemeToggle } from "@/components/UI/Theme/ThemeToggle";
 export { default as NotificationMenu } from "@/components/UI/Notification/NotificationMenu";
 export { QRCode } from "@/components/UI/Library/qr-code";

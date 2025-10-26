@@ -44,13 +44,13 @@ export default function RevisionSessionClient({
   const [isRunning, setIsRunning] = useState(false);
   const [totalTime, setTotalTime] = useState<number>(25 * 60);
   const [cyclesCompleted, setCyclesCompleted] = useState<number>(0);
-  const [totalCycles, setTotalCycles] = useState<number>(4);
-  const [breakTime, setBreakTime] = useState<number>(5 * 60);
+  const totalCycles = 4;
+  const breakTime = 5 * 60;
   const [onBreak, setOnBreak] = useState(false);
   const [showCompletion, setShowCompletion] = useState(false);
   const [streak, setStreak] = useState<number>(0);
   const [points, setPoints] = useState<number>(0);
-  const [showEmojis, setShowEmojis] = useState(false); // for emoji confetti
+  const [showEmojis, setShowEmojis] = useState(false);
 
   const nearestExam = useMemo(() => {
     return examsDb.sort(
@@ -161,7 +161,7 @@ export default function RevisionSessionClient({
       )}
       {sessionStarted && (
         <Card className="bg-primary text-white shadow-xl rounded-2xl w-full max-w-md relative overflow-hidden">
-          <CardContent className="flex flex-col items-center p-6 space-y-6">
+          <CardContent className="flex flex-col gap-6 items-center p-6">
             {showEmojis && (
               <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-20">
                 {Array.from({ length: 20 }).map((_, i) => (
@@ -187,7 +187,7 @@ export default function RevisionSessionClient({
                 </h2>
               </div>
             )}
-            <div className="flex flex-col items-center space-y-2">
+            <div className="flex flex-col gap-2 items-center">
               <h2 className="text-3xl md:text-4xl font-bold">{selectedExam}</h2>
               <Badge
                 variant="secondary"
@@ -276,7 +276,7 @@ export default function RevisionSessionClient({
           <DialogHeader>
             <DialogTitle>Start Revision Session</DialogTitle>
           </DialogHeader>
-          <div className="space-y-4 mt-4">
+          <div className="flex flex-col gap-4 mt-4">
             <p className="text-sm text-muted-foreground">
               Choose subject to revise:
             </p>

@@ -1,6 +1,6 @@
-import { redirect } from "next/navigation";
+import { notFound } from "next/navigation";
+import { getProfileByUsername } from "@/lib/supabase/crud";
 import ProfileClient from "./client";
-import { getCurrentUser } from "@/lib/supabase/crud";
 
 export interface ProfilePageProps {
   params: Promise<{ username: string }>;
@@ -9,9 +9,9 @@ export interface ProfilePageProps {
 export default async function ProfilePage({ params }: ProfilePageProps) {
   const { username } = await params;
 
-  const user = await getCurrentUser();
+  const profile = await getProfileByUsername(username);
 
-  if (!user) redirect("/login");
+  if (!profile) return notFound();
 
-  return <ProfileClient user={user} />;
+  return <ProfileClient profile={profile} />;
 }

@@ -1,23 +1,24 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
-import { Bell } from "lucide-react";
+import { Bell, BellDot, Inbox } from "lucide-react";
 import { Notification } from "@/types";
 import { createClient } from "@/lib/supabase/client";
 import { useUser } from "@/hooks";
 import {
   Button,
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
 } from "@/components/UI";
 
 export default function NotificationMenu() {
   const [notifications, setNotifications] = useState<Notification[]>([]);
+  const [archivedNotifications] = useState<Notification[]>([]);
   const [loading, setLoading] = useState(true);
   const { user } = useUser();
 
@@ -76,8 +77,8 @@ export default function NotificationMenu() {
   const unreadCount = notifications.filter((n) => !n.is_read).length;
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
+    <Popover>
+      <PopoverTrigger asChild>
         <div className="relative">
           <Button title="Notifications" variant="ghost" size="icon">
             <Bell className="w-5 h-5 dark:text-muted-foreground" />
@@ -88,19 +89,93 @@ export default function NotificationMenu() {
             </span>
           )}
         </div>
-      </DropdownMenuTrigger>
-
-      <DropdownMenuContent className="mt-5 mr-1 sm:w-96">
-        <DropdownMenuLabel>Notifications</DropdownMenuLabel>
+      </PopoverTrigger>
+      <PopoverContent align="end" className="sm:w-108 p-0">
+        <div className="flex flex-col gap-3">
+          <p className="mx-4 mt-4">Notifications</p>
+          <Tabs defaultValue="inbox">
+            <TabsList className="mx-4">
+              <TabsTrigger value="inbox">
+                Inbox
+                <span className="w-4 h-4 inline-flex items-center justify-center text-xs font-bold leading-none text-white bg-red-600 rounded-full">
+                  {notifications.length}
+                </span>
+              </TabsTrigger>
+              <TabsTrigger value="archived">Archived</TabsTrigger>
+            </TabsList>
+            <TabsContent value="inbox" className="border-t dark:bg-neutral-950">
+              {loading ? (
+                <span>Loading...</span>
+              ) : notifications.length > 0 ? (
+                notifications.map((notification) => (
+                  <div
+                    key={notification.id}
+                    className="flex flex-col hover:bg-neutral-100 hover:dark:bg-neutral-800 cursor-pointer transition-colors duration-300"
+                  >
+                    <div className="flex items-center gap-2 px-3 py-2.5">
+                      <BellDot size={16} />
+                      <span className="text-sm">{notification.message}</span>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <div className="h-92 flex flex-col items-center justify-center text-center gap-1">
+                  <Inbox size={28} className="text-muted-foreground" />
+                  <p className="text-muted-foreground text-sm">All caught up</p>
+                  <span className="max-w-xs text-muted-foreground/75 text-xs">
+                    you will be notified here for any notices on your
+                    organizations and projects
+                  </span>
+                </div>
+              )}
+            </TabsContent>
+            <TabsContent
+              value="archived"
+              className="border-t dark:bg-neutral-950 p-4"
+            >
+              {loading ? (
+                <span>Loading...</span>
+              ) : archivedNotifications.length > 0 ? (
+                archivedNotifications.map((archivedNotification) => (
+                  <div
+                    key={archivedNotification.id}
+                    className="flex flex-col hover:bg-neutral-100 hover:dark:bg-neutral-800 cursor-pointer transition-colors duration-300"
+                  >
+                    <div className="flex items-center gap-2 px-3 py-2.5">
+                      <BellDot size={16} />
+                      <span className="text-sm">
+                        {archivedNotification.message}
+                      </span>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <div className="h-92 flex flex-col items-center justify-center text-center gap-1">
+                  <Inbox size={28} className="text-muted-foreground" />
+                  <p className="text-muted-foreground text-sm">
+                    No archived notifications
+                  </p>
+                  <span className="max-w-xs text-muted-foreground/75 text-xs">
+                    Notifications that you have previously archived will be
+                    shown here
+                  </span>
+                </div>
+              )}
+            </TabsContent>
+          </Tabs>
+        </div>
+        {/* 
+          <DropdownMenuLabel>Notifications</DropdownMenuLabel>
         <DropdownMenuSeparator />
         {loading ? (
           <DropdownMenuItem disabled>Loading...</DropdownMenuItem>
         ) : notifications.length > 0 ? (
-          notifications
-            .slice(0, 5)
-            .map((n) => (
-              <DropdownMenuItem key={n.id}>{n.message}</DropdownMenuItem>
-            ))
+          notifications.slice(0, 5).map((n) => (
+            <DropdownMenuItem key={n.id}>
+              <BellDot />
+              {n.message}
+            </DropdownMenuItem>
+          ))
         ) : (
           <DropdownMenuItem disabled>No notifications</DropdownMenuItem>
         )}
@@ -108,7 +183,8 @@ export default function NotificationMenu() {
         <DropdownMenuItem asChild>
           <Link href="/notifications">View all</Link>
         </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+          */}
+      </PopoverContent>
+    </Popover>
   );
 }

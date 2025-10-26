@@ -20,8 +20,11 @@ import {
   CommandSeparator,
   CommandShortcut,
 } from "@/components/UI";
+import { useRouter } from "next/navigation";
 
 export default function CommandMenu() {
+  const router = useRouter();
+
   const [openCommand, setOpenCommand] = useState(false);
 
   useKeyboardShortcuts({
@@ -36,7 +39,7 @@ export default function CommandMenu() {
         variant="secondary"
         size="sm"
         onClick={() => setOpenCommand((prev) => !prev)}
-        className="relative hover:bg-secondary text-muted-foreground hidden sm:block"
+        className="relative text-muted-foreground hidden sm:block transition-colors duration-300"
         aria-label="Search"
         aria-expanded={openCommand}
       >
@@ -71,17 +74,19 @@ export default function CommandMenu() {
           </CommandGroup>
           <CommandSeparator />
           <CommandGroup heading="Settings">
-            <CommandItem>
+            <CommandItem
+              onSelect={() => router.push(`/profile/${"bimosiness7caa"}`)}
+            >
               <User />
               <span>Profile</span>
               <CommandShortcut>⌘P</CommandShortcut>
             </CommandItem>
-            <CommandItem>
+            <CommandItem onSelect={() => router.push("/pricing/billing")}>
               <CreditCard />
               <span>Billing</span>
               <CommandShortcut>⌘B</CommandShortcut>
             </CommandItem>
-            <CommandItem>
+            <CommandItem onSelect={() => router.push("/settings")}>
               <Settings />
               <span>Settings</span>
               <CommandShortcut>⌘S</CommandShortcut>

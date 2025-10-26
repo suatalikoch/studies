@@ -4,7 +4,7 @@ import { Rocket, Star, ToolCase } from "lucide-react";
 export default function AboutClient() {
   return (
     <div className="flex flex-col items-center justify-center px-3 sm:px-6 py-6 sm:py-12">
-      <div className="w-full bg-white dark:bg-neutral-950 rounded-lg p-6 sm:p-8 space-y-6">
+      <div className="flex flex-col gap-6 w-full bg-white dark:bg-neutral-950 p-6 sm:p-8">
         <h1 className="sm:text-3xl font-bold text-center">
           About This Project
         </h1>
@@ -24,7 +24,7 @@ export default function AboutClient() {
                 <Star className="text-indigo-700" />
                 <h3 className="font-semibold text-indigo-700">Features</h3>
               </div>
-              <ul className="list-disc list-inside text-neutral-700 mt-2 space-y-">
+              <ul className="flex flex-col gap-1 list-disc list-inside text-neutral-700 mt-2">
                 <li>List & Grid views for notes</li>
                 <li>Edit titles, subjects, content</li>
                 <li>Tag management</li>
@@ -39,7 +39,7 @@ export default function AboutClient() {
                 <ToolCase className="text-green-700" />
                 <h3 className="font-semibold text-green-700">Tech Stack</h3>
               </div>
-              <ul className="list-disc list-inside text-neutral-700 mt-2 space-y-1">
+              <ul className="flex flex-col gap-1 list-disc list-inside text-neutral-700 mt-2">
                 <li>Next.js + TypeScript</li>
                 <li>Tailwind CSS</li>
                 <li>Supabase (backend & DB)</li>

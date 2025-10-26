@@ -4,13 +4,21 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { toast } from "sonner";
-import { Button, Input, QRCode } from "@/components/UI";
-import { X } from "lucide-react";
+import {
+  Button,
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  Input,
+  QRCode,
+} from "@/components/UI";
 
 interface ShareNoteProps {
   noteId: string;
   isPublic: boolean;
   allowedUsers?: string[];
+  shareOpen: boolean;
   onClose: () => void;
 }
 
@@ -18,6 +26,7 @@ export default function ShareNote({
   noteId,
   isPublic: initialPublic,
   allowedUsers: initialUsers = [],
+  shareOpen,
   onClose,
 }: ShareNoteProps) {
   const router = useRouter();
@@ -187,14 +196,11 @@ export default function ShareNote({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-      <div className="bg-white dark:bg-neutral-950 p-6 rounded-lg w-[90%] max-w-md relative space-y-4">
-        <div className="flex justify-between items-center">
-          <h2 className="text-lg font-semibold">Share Note</h2>
-          <Button variant="ghost" size="icon" onClick={onClose}>
-            <X />
-          </Button>
-        </div>
+    <Dialog open={shareOpen} onOpenChange={onClose}>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Share note</DialogTitle>
+        </DialogHeader>
         <div className="flex flex-row items-center gap-2">
           <Input type="text" value={shareUrl} readOnly />
           <Button
@@ -253,9 +259,11 @@ export default function ShareNote({
             </ul>
           </div>
         )}
-        <Button onClick={() => setShowQR(!showQR)}>
-          {showQR ? "Hide QR Code" : "Show QR Code"}
-        </Button>
+        <div>
+          <Button onClick={() => setShowQR(!showQR)}>
+            {showQR ? "Hide QR Code" : "Show QR Code"}
+          </Button>
+        </div>
         {showQR && (
           <div className="mt-4 flex justify-center">
             <QRCode
@@ -264,7 +272,7 @@ export default function ShareNote({
             />
           </div>
         )}
-      </div>
-    </div>
+      </DialogContent>
+    </Dialog>
   );
 }

@@ -67,7 +67,7 @@ export default function AssignmentDetails({
           </div>
         </div>
         <div className="flex-1 p-6 overflow-y-auto">
-          <div className="space-y-6">
+          <div className="flex flex-col gap-6">
             <div>
               <h3 className="text-lg font-semibold mb-3">Description</h3>
               <p className="text-muted-foreground leading-relaxed">
@@ -76,7 +76,7 @@ export default function AssignmentDetails({
             </div>
             <div>
               <h3 className="text-lg font-semibold mb-3">Attachments</h3>
-              <div className="space-y-2">
+              <div className="flex flex-col gap-2">
                 <div className="flex items-center gap-3 p-3 bg-neutral-100 dark:bg-neutral-900 rounded-lg">
                   <File className="w-5 h-5" />
                   <span className="flex-1">filename.pdf</span>

@@ -45,7 +45,7 @@ export default function CookieConsent() {
   if (!visible) return null;
 
   return (
-    <div className="fixed bottom-8 right-8 w-full max-w-sm z-50">
+    <div className="fixed bottom-4 right-4 w-full max-w-sm z-50">
       <Card className="py-4">
         <CardContent className="px-5">
           <div className="flex flex-col gap-3">
@@ -79,7 +79,7 @@ export default function CookieConsent() {
                 size="sm"
                 variant="ghost"
                 onClick={() => setSettingsOpen(true)}
-                className="text-xs"
+                className="text-xs text-muted-foreground"
               >
                 Settings
               </Button>

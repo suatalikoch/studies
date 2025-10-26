@@ -101,7 +101,7 @@ export default function AssignmentForm({
         <CardContent>
           <h3 className="text-lg font-semibold mb-4">Add New Assignment</h3>
           <form
-            className="space-y-4"
+            className="flex flex-col gap-4"
             onSubmit={(e) => {
               e.preventDefault();
               addAssignment();

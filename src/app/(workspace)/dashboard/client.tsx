@@ -62,7 +62,7 @@ export default function DashboardClient({
   const weekStudyHours = 5;
 
   return (
-    <div className="p-4 space-y-4">
+    <div className="flex flex-col gap-4 p-4">
       <Welcome deadlinesCount={deadlines.length} />
       <Cards
         noteCount={notes.length}

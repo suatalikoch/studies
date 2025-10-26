@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 export default function TermsPage() {
   return (
     <div className="px-3 py-6 sm:p-4 flex items-center justify-center">
-      <div className="w-full space-y-8">
+      <div className="flex flex-col gap-8 w-full">
         <div className="pt-12">
           <h1 className="text-lg sm:text-4xl font-bold mb-0 sm:mb-8">
             Terms of Service
@@ -76,7 +76,7 @@ export default function TermsPage() {
             <h2 className="sm:text-xl font-semibold mb-2">
               2. User Responsibilities
             </h2>
-            <ul className="list-disc pl-6 text-muted-foreground space-y-1">
+            <ul className="flex flex-col gap-1 list-disc pl-6 text-muted-foreground">
               <li>
                 You are responsible for maintaining the confidentiality of your
                 account credentials.
