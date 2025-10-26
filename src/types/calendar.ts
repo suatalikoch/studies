@@ -12,6 +12,10 @@ export type CalendarEvent = {
 export interface CalendarProps {
   events?: CalendarEvent[];
   exams?: Exam[];
+  modalOpen: boolean;
+  openModal: (ev?: CalendarEvent) => void;
+  closeModal: () => void;
+  editingEvent: CalendarEvent | null;
 }
 
 export interface EventFormProps {

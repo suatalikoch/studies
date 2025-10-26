@@ -7,6 +7,8 @@ export * from "@/types/lectures";
 export * from "@/types/note";
 export * from "@/types/notification";
 export * from "@/types/plan";
+export * from "@/types/post";
+export * from "@/types/profile";
 export * from "@/types/progress";
 export * from "@/types/settings";
 export * from "@/types/task";
