@@ -1,5 +1,3 @@
----
-
 ![Student Hub Banner](public/images/banner.png)
 
 # 🎓 Student Hub
